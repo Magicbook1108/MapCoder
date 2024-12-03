@@ -251,7 +251,13 @@ Your response must follow the following xml format-
             input_for_problem_planning = [
                 {
                     "role": "user",
-                    "content": f"Given a competitive programming problem generate a concrete planning to solve the problem.\n# Problem:\n{example_problem}\n# Planning:\n{example_planning}\n{algorithm_prompt}\n## Problem to be solved:\n{self.data.get_prompt(item)}\n{sample_io_prompt}\n## Planning:\n\n----------------\nImportant: You should give only the planning to solve the problem. Do not add extra explanation or words."
+                    "content": f"""
+                    Given a competitive programming problem generate a concrete planning to solve the problem.
+                    \n# Problem:\n{example_problem}\n# Planning:\n{example_planning}\n{algorithm_prompt}
+                    \n## Problem to be solved:\n{self.data.get_prompt(item)}\n{sample_io_prompt}
+                    \n## Planning:\n\n----------------
+                    \nImportant: You should give only the planning to solve the problem. Do not add extra explanation or words.
+                    """
                 }
             ]
 

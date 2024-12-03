@@ -34,10 +34,13 @@ class BaseStrategy(object):
         pass
 
     def run(self):
+        
         num_items = len(self.data)
         num_success = 0
 
-        for i, item in enumerate(self.data):
+        num_items = 1
+
+        for i, item in enumerate(self.data[:num_items]):
             print("", flush=True, end="")
 
             # if i < len(self.results):

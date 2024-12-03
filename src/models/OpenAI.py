@@ -204,5 +204,5 @@ class GPT4(OpenAIModel):
 
 class ChatGPT(OpenAIModel):
     def prompt(self, processed_input: list[dict]):
-        self.model_params["model"] = "GPT-35-TURBO-1106"
+        self.model_params["model"] = "gpt-3.5-turbo-1106"
         return super().prompt(processed_input)
