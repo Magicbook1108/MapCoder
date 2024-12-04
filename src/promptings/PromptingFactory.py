@@ -5,6 +5,7 @@ from promptings.SelfPlanning import SelfPlanningStrategy
 from promptings.MapCoder import MapCoder as MapCoder
 
 from promptings.MapCoder_v1 import MapCoder as MapCoder_test
+from promptings.MapCoder_v2 import MapCoder as MapCoder_v2
 
 class PromptingFactory:
     @staticmethod
@@ -20,6 +21,6 @@ class PromptingFactory:
         elif prompting_name == "SelfPlanning":
             return SelfPlanningStrategy
         elif prompting_name == "MapCoder_test":
-            return MapCoder_test
+            return MapCoder_v2
         else:
             raise Exception(f"Unknown prompting name {prompting_name}")

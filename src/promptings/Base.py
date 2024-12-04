@@ -38,7 +38,7 @@ class BaseStrategy(object):
         num_items = len(self.data)
         num_success = 0
 
-        num_items = 1
+        num_items = 10
 
         for i, item in enumerate(self.data[:num_items]):
             print("", flush=True, end="")
@@ -89,8 +89,19 @@ class BaseStrategy(object):
             while cur_pass < self.pass_at_k and not is_solved:
                 # for _ in range(10):
                 #     try:
-                response, prompt_tokens, completion_tokens = self.run_single_pass(
-                    item)
+                
+                #############################
+                # MapCoder_v1
+                # Workflow:
+                #       Single pass ->
+                #               passed -> return
+                #               not passed ->
+                #                   manager agent (Divide the complicate task into small ones) ->
+                #                       For each task run a single pass -> 
+                #                           Code reviewer to gather the code together
+                ###########################
+                response, prompt_tokens, completion_tokens = self.run_pass(item)
+                # response, prompt_tokens, completion_tokens = self.run_single_pass(item)
                 #     break
                 # except Exception as e:
                 #     time.sleep(5)
