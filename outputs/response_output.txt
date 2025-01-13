@@ -1,0 +1,167 @@
+Given a problem, provide relevant problems then identify the algorithm behind it and also explain the tutorial of the algorithm.
+# Problem:
+Andi and Budi were given an assignment to tidy up their bookshelf of n books. Each book is represented by the book title — a string s_i numbered from 1 to n, each with length m. Andi really wants to sort the book lexicographically ascending, while Budi wants to sort it lexicographically descending.
+
+Settling their fight, they decided to combine their idea and sort it asc-desc-endingly, where the odd-indexed characters will be compared ascendingly, and the even-indexed characters will be compared descendingly.
+
+A string a occurs before a string b in asc-desc-ending order if and only if in the first position where a and b differ, the following holds:
+
+  * if it is an odd position, the string a has a letter that appears earlier in the alphabet than the corresponding letter in b; 
+  * if it is an even position, the string a has a letter that appears later in the alphabet than the corresponding letter in b. 
+
+Input
+
+The first line contains two integers n and m (1 ≤ n ⋅ m ≤ 10^6).
+
+The i-th of the next n lines contains a string s_i consisting of m uppercase Latin letters — the book title. The strings are pairwise distinct.
+
+Output
+
+Output n integers — the indices of the strings after they are sorted asc-desc-endingly.
+
+Example
+
+Input
+
+
+5 2
+AA
+AB
+BB
+BA
+AZ
+
+
+Output
+
+
+5 2 1 3 4
+
+
+-------
+Important Note: You must follow the input output format. Input must be taken from standard input and output must be given to standard output. The code will be tested against multiple test cases and all the test cases must be passed.
+
+# Exemplars:
+Recall three (03) relevant and distinct problems (different from problem mentioned above). For each problem,
+1. describe it
+2. generate Python3 code step by step to solve that problem
+3. finally generate a planning to solve that problem
+
+# Algorithm:
+
+----------------
+Important:
+Your response must follow the following xml format-
+
+<root>
+<problem>
+# Recall three (03) relevant and distinct problems (different from problem mentioned above). 
+# Write each problem in the following format.
+<description>
+# Describe the problem.
+</description>
+<code>
+# Let's think step by step to solve this problem in Python3 programming language.
+</code>
+<planning>
+# Planning to solve this problem.
+</planning>
+</problem>
+
+# similarly add more problems here...
+
+<algorithm>
+# Identify the algorithm (Brute-force, Dynamic Programming, Divide-and-conquer, Greedy, Backtracking, Recursive, Binary search, and so on)
+that needs to be used to solve the original problem.
+# Write a useful tutorial about the above mentioned algorithms.
+# Provide a high level generic tutorial for solving this types of problem. 
+# Do not generate code.
+</algorithm>
+</root>
+
+<root>
+<problem>
+<description><![CDATA[
+Problem 1: Finding the largest number in an array
+]]></description>
+<code><![CDATA[
+
+
+# Step 1: Create an array of numbers
+arr = [5, 3, 9, 2, 8]
+
+# Step 2: Initialize a variable to store the largest number
+max_num = arr[0]
+
+# Step 3: Iterate through the array and compare each number with the current largest number
+for num in arr:
+    if num > max_num:
+        max_num = num
+
+# Step 4: Print the largest number
+print(max_num)
+]]></code>
+<planning><![CDATA[
+To solve this problem, we can iterate through the array and keep track of the largest number encountered so far. We can start by assuming the first number in the array is the largest, and then compare it with the rest of the numbers in the array. If we find a number that is larger, we update our variable to store the largest number. Finally, we print the largest number after iterating through the entire array.
+]]></planning>
+</problem>
+
+<problem>
+<description><![CDATA[
+Problem 2: Finding the factorial of a number
+]]></description>
+<code><![CDATA[
+
+
+# Step 1: Define a function to calculate the factorial
+def factorial(n):
+    if n == 0 or n == 1:
+        return 1
+    else:
+        return n * factorial(n-1)
+
+# Step 2: Call the function with a number
+result = factorial(5)
+
+# Step 3: Print the result
+print(result)
+]]></code>
+<planning><![CDATA[
+To solve this problem, we can use a recursive function to calculate the factorial of a number. The base case is when the number is 0 or 1, in which case the factorial is 1. Otherwise, we recursively call the function with n-1 and multiply it with n to get the factorial.
+]]></planning>
+</problem>
+
+<problem>
+<description><![CDATA[
+Problem 3: Finding the intersection of two arrays
+]]></description>
+<code><![CDATA[
+
+
+# Step 1: Create two arrays
+arr1 = [1, 2, 3, 4, 5]
+arr2 = [3, 4, 5, 6, 7]
+
+# Step 2: Use set intersection to find the common elements
+intersection = list(set(arr1) & set(arr2))
+
+# Step 3: Print the intersection
+print(intersection)
+]]></code>
+<planning><![CDATA[
+To solve this problem, we can use the set data structure in Python to find the intersection of two arrays. We convert both arrays into sets and then use the set intersection operation to find the common elements. Finally, we convert the result back to a list and print the intersection.
+]]></planning>
+</problem>
+
+<algorithm><![CDATA[
+The algorithm that needs to be used to solve the original problem is a custom sorting algorithm based on the given conditions. It involves comparing the strings in a specific manner and then sorting them accordingly.
+
+Tutorial:
+To solve the original problem, we can create a custom sorting function that compares the strings based on the given conditions. We can use the sorted() function in Python and provide a custom comparison function as the key parameter. This custom comparison function will compare the strings in the required manner and sort them accordingly.
+
+High level generic tutorial:
+1. Define a custom comparison function that compares the strings based on the given conditions (odd-indexed characters ascending, even-indexed characters descending).
+2. Use the sorted() function in Python and provide the custom comparison function as the key parameter to sort the strings.
+3. Print the sorted indices of the strings after they are sorted asc-desc-endingly.
+]]></algorithm>
+</root>
