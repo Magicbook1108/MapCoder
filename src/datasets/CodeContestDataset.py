@@ -35,6 +35,7 @@ class CodeContestDataset(Dataset):
             tests=item["sample_io"],
             lang=language
         )
+    
 
     @staticmethod
     def get_prompt(item):

@@ -461,6 +461,6 @@ Your response must follow the following xml format-
                     break
                 
             if passed:
-                break
+               break
         print("________________________\n\n", flush=True)
         return code, pr_tok, com_tok
