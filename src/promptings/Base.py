@@ -38,9 +38,7 @@ class BaseStrategy(object):
         num_items = len(self.data)
         num_success = 0
 
-        num_items = 1
-
-        for i, item in enumerate(self.data[:num_items]):
+        for i, item in enumerate(self.data):
             print("", flush=True, end="")
 
             # if i < len(self.results):

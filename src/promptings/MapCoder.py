@@ -164,9 +164,6 @@ class MapCoder(BaseStrategy):
         return sample_io
 
     def run_single_pass(self, item: dict):
-        output_dir = os.path.join("C:\\Users\\31646\\Desktop\\MapCoder", "outputs")
-        output_file = os.path.join(output_dir, "response_output.txt")
-        os.makedirs(output_dir, exist_ok=True)
         print("", flush=True)
 
         input_kb_exemplars = [
@@ -190,8 +187,7 @@ Your response must follow the following xml format-
 
 <root>
 <problem>
-# Recall {mapping[self.k]} relevant and distinct problems (different from problem mentioned above). 
-# Write each problem in the following format.
+# Recall {mapping[self.k]} relevant and distinct problems (different from problem mentioned above). Write each problem in the following format.
 <description>
 # Describe the problem.
 </description>
@@ -206,11 +202,8 @@ Your response must follow the following xml format-
 # similarly add more problems here...
 
 <algorithm>
-# Identify the algorithm (Brute-force, Dynamic Programming, Divide-and-conquer, Greedy, Backtracking, Recursive, Binary search, and so on)
-that needs to be used to solve the original problem.
-# Write a useful tutorial about the above mentioned algorithms.
-# Provide a high level generic tutorial for solving this types of problem. 
-# Do not generate code.
+# Identify the algorithm (Brute-force, Dynamic Programming, Divide-and-conquer, Greedy, Backtracking, Recursive, Binary search, and so on) that needs to be used to solve the original problem.
+# Write a useful tutorial about the above mentioned algorithms. Provide a high level generic tutorial for solving this types of problem. Do not generate code.
 </algorithm>
 </root>
 """,
@@ -220,8 +213,7 @@ that needs to be used to solve the original problem.
         print("\n\n________________________")
         print("Input for knowledge base and exemplars: ")
         print(input_kb_exemplars[0]['content'], flush=True)
-        with open(output_file, "a", encoding="utf-8") as file:
-            file.write(str(input_kb_exemplars[0]['content']) + "\n")
+
         response, pr_tok, com_tok = self.gpt_chat(
             processed_input=input_kb_exemplars
         )
@@ -245,11 +237,6 @@ that needs to be used to solve the original problem.
         print("Response from knowledge base and exemplars: ")
         print(response, flush=True)
 
-        # Write response into txt file
-        
-        with open(output_file, "a", encoding="utf-8") as file:
-            file.write(str(response) + "\n")
-            
         response = self.parse_xml(response)
 
         algorithm_prompt = f"## Relevant Algorithm to solve the next problem:\n{ response['algorithm']}"
@@ -264,13 +251,7 @@ that needs to be used to solve the original problem.
             input_for_problem_planning = [
                 {
                     "role": "user",
-                    "content": f"""
-                    Given a competitive programming problem generate a concrete planning to solve the problem.
-                    \n# Problem:\n{example_problem}\n# Planning:\n{example_planning}\n{algorithm_prompt}
-                    \n## Problem to be solved:\n{self.data.get_prompt(item)}\n{sample_io_prompt}
-                    \n## Planning:\n\n----------------
-                    \nImportant: You should give only the planning to solve the problem. Do not add extra explanation or words.
-                    """
+                    "content": f"Given a competitive programming problem generate a concrete planning to solve the problem.\n# Problem:\n{example_problem}\n# Planning:\n{example_planning}\n{algorithm_prompt}\n## Problem to be solved:\n{self.data.get_prompt(item)}\n{sample_io_prompt}\n## Planning:\n\n----------------\nImportant: You should give only the planning to solve the problem. Do not add extra explanation or words."
                 }
             ]
 

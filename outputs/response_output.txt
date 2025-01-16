@@ -165,3 +165,2584 @@ High level generic tutorial:
 3. Print the sorted indices of the strings after they are sorted asc-desc-endingly.
 ]]></algorithm>
 </root>
+Given a problem, provide relevant problems then identify the algorithm behind it and also explain the tutorial of the algorithm.
+# Problem:
+Andi and Budi were given an assignment to tidy up their bookshelf of n books. Each book is represented by the book title — a string s_i numbered from 1 to n, each with length m. Andi really wants to sort the book lexicographically ascending, while Budi wants to sort it lexicographically descending.
+
+Settling their fight, they decided to combine their idea and sort it asc-desc-endingly, where the odd-indexed characters will be compared ascendingly, and the even-indexed characters will be compared descendingly.
+
+A string a occurs before a string b in asc-desc-ending order if and only if in the first position where a and b differ, the following holds:
+
+  * if it is an odd position, the string a has a letter that appears earlier in the alphabet than the corresponding letter in b; 
+  * if it is an even position, the string a has a letter that appears later in the alphabet than the corresponding letter in b. 
+
+Input
+
+The first line contains two integers n and m (1 ≤ n ⋅ m ≤ 10^6).
+
+The i-th of the next n lines contains a string s_i consisting of m uppercase Latin letters — the book title. The strings are pairwise distinct.
+
+Output
+
+Output n integers — the indices of the strings after they are sorted asc-desc-endingly.
+
+Example
+
+Input
+
+
+5 2
+AA
+AB
+BB
+BA
+AZ
+
+
+Output
+
+
+5 2 1 3 4
+
+
+-------
+Important Note: You must follow the input output format. Input must be taken from standard input and output must be given to standard output. The code will be tested against multiple test cases and all the test cases must be passed.
+
+# Exemplars:
+Recall three (03) relevant and distinct problems (different from problem mentioned above). For each problem,
+1. describe it
+2. generate Python3 code step by step to solve that problem
+3. finally generate a planning to solve that problem
+
+# Algorithm:
+
+----------------
+Important:
+Your response must follow the following xml format-
+
+<root>
+<problem>
+# Recall three (03) relevant and distinct problems (different from problem mentioned above). 
+# Write each problem in the following format.
+<description>
+# Describe the problem.
+</description>
+<code>
+# Let's think step by step to solve this problem in Python3 programming language.
+</code>
+<planning>
+# Planning to solve this problem.
+</planning>
+</problem>
+
+# similarly add more problems here...
+
+<algorithm>
+# Identify the algorithm (Brute-force, Dynamic Programming, Divide-and-conquer, Greedy, Backtracking, Recursive, Binary search, and so on)
+that needs to be used to solve the original problem.
+# Write a useful tutorial about the above mentioned algorithms.
+# Provide a high level generic tutorial for solving this types of problem. 
+# Do not generate code.
+</algorithm>
+</root>
+
+<root>
+<problem>
+<description><![CDATA[
+Problem 1: Finding the largest number in an array
+]]></description>
+<code><![CDATA[
+
+
+# Step 1: Create an array of numbers
+arr = [5, 3, 9, 2, 8]
+
+# Step 2: Initialize a variable to store the largest number
+max_num = arr[0]
+
+# Step 3: Iterate through the array and compare each number with the current largest number
+for num in arr:
+    if num > max_num:
+        max_num = num
+
+# Step 4: Print the largest number
+print(max_num)
+]]></code>
+<planning><![CDATA[
+To solve this problem, we can iterate through the array and keep track of the largest number encountered so far. We can start by assuming the first number in the array is the largest, and then compare it with the rest of the numbers in the array. If we find a number that is larger, we update our variable to store the largest number. Finally, we print the largest number after iterating through the entire array.
+]]></planning>
+</problem>
+
+<problem>
+<description><![CDATA[
+Problem 2: Finding the second largest number in an array
+]]></description>
+<code><![CDATA[
+
+
+# Step 1: Create an array of numbers
+arr = [5, 3, 9, 2, 8]
+
+# Step 2: Sort the array in descending order
+arr.sort(reverse=True)
+
+# Step 3: Print the second largest number
+print(arr[1])
+]]></code>
+<planning><![CDATA[
+To solve this problem, we can first sort the array in descending order using the sort() method with the reverse parameter set to True. Then, we can simply print the second element in the sorted array, which will be the second largest number.
+]]></planning>
+</problem>
+
+<problem>
+<description><![CDATA[
+Problem 3: Finding the most frequent element in an array
+]]></description>
+<code><![CDATA[
+
+
+# Step 1: Create an array of elements
+arr = [3, 5, 2, 5, 8, 5, 5, 3, 2, 5]
+
+# Step 2: Create a dictionary to store the frequency of each element
+freq = {}
+
+# Step 3: Iterate through the array and update the frequency dictionary
+for num in arr:
+    if num in freq:
+        freq[num] += 1
+    else:
+        freq[num] = 1
+
+# Step 4: Find the element with the highest frequency
+most_frequent = max(freq, key=freq.get)
+
+# Step 5: Print the most frequent element
+print(most_frequent)
+]]></code>
+<planning><![CDATA[
+To solve this problem, we can create a dictionary to store the frequency of each element in the array. We can then iterate through the array and update the frequency dictionary accordingly. After that, we can find the element with the highest frequency using the max() function with the key parameter set to the get() method of the frequency dictionary. Finally, we print the most frequent element.
+]]></planning>
+</problem>
+
+<algorithm><![CDATA[
+The algorithm that needs to be used to solve the original problem is a custom sorting algorithm based on the given conditions. This algorithm involves comparing the strings based on their odd and even indexed characters and sorting them accordingly.
+
+Tutorial:
+To solve the original problem, we can create a custom sorting function that compares the strings based on their odd and even indexed characters. We can use the sorted() function in Python and pass our custom sorting function as the key parameter to achieve the desired sorting order.
+
+High level generic tutorial:
+1. Define a custom sorting function that takes two strings as input and compares them based on their odd and even indexed characters.
+2. Use the sorted() function in Python and pass the custom sorting function as the key parameter to sort the strings in the desired order.
+3. Print the sorted indices of the strings after they are sorted asc-desc-endingly.
+]]></algorithm>
+</root>
+Given a problem, provide relevant problems then identify the algorithm behind it and also explain the tutorial of the algorithm.
+# Problem:
+Andi and Budi were given an assignment to tidy up their bookshelf of n books. Each book is represented by the book title — a string s_i numbered from 1 to n, each with length m. Andi really wants to sort the book lexicographically ascending, while Budi wants to sort it lexicographically descending.
+
+Settling their fight, they decided to combine their idea and sort it asc-desc-endingly, where the odd-indexed characters will be compared ascendingly, and the even-indexed characters will be compared descendingly.
+
+A string a occurs before a string b in asc-desc-ending order if and only if in the first position where a and b differ, the following holds:
+
+  * if it is an odd position, the string a has a letter that appears earlier in the alphabet than the corresponding letter in b; 
+  * if it is an even position, the string a has a letter that appears later in the alphabet than the corresponding letter in b. 
+
+Input
+
+The first line contains two integers n and m (1 ≤ n ⋅ m ≤ 10^6).
+
+The i-th of the next n lines contains a string s_i consisting of m uppercase Latin letters — the book title. The strings are pairwise distinct.
+
+Output
+
+Output n integers — the indices of the strings after they are sorted asc-desc-endingly.
+
+Example
+
+Input
+
+
+5 2
+AA
+AB
+BB
+BA
+AZ
+
+
+Output
+
+
+5 2 1 3 4
+
+
+-------
+Important Note: You must follow the input output format. Input must be taken from standard input and output must be given to standard output. The code will be tested against multiple test cases and all the test cases must be passed.
+
+# Exemplars:
+Recall three (03) relevant and distinct problems (different from problem mentioned above). For each problem,
+1. describe it
+2. generate Python3 code step by step to solve that problem
+3. finally generate a planning to solve that problem
+
+# Algorithm:
+
+----------------
+Important:
+Your response must follow the following xml format-
+
+<root>
+<problem>
+# Recall three (03) relevant and distinct problems (different from problem mentioned above). 
+# Write each problem in the following format.
+<description>
+# Describe the problem.
+</description>
+<code>
+# Let's think step by step to solve this problem in Python3 programming language.
+</code>
+<planning>
+# Planning to solve this problem.
+</planning>
+</problem>
+
+# similarly add more problems here...
+
+<algorithm>
+# Identify the algorithm (Brute-force, Dynamic Programming, Divide-and-conquer, Greedy, Backtracking, Recursive, Binary search, and so on)
+that needs to be used to solve the original problem.
+# Write a useful tutorial about the above mentioned algorithms.
+# Provide a high level generic tutorial for solving this types of problem. 
+# Do not generate code.
+</algorithm>
+</root>
+
+```xml
+<root>
+<problem>
+<description><![CDATA[
+The problem is to sort a list of strings based on a custom lexicographical order where odd-indexed characters are sorted in ascending order and even-indexed characters are sorted in descending order. Given n distinct strings of length m, the task is to determine the order of these strings based on the defined sorting criteria.
+]]></description>
+<code><![CDATA[
+# Step 1: Read the input values for n and m.
+n, m = map(int, input().split())
+
+# Step 2: Read the n strings into a list.
+strings = [input().strip() for _ in range(n)]
+
+# Step 3: Define a custom sorting key function.
+def custom_sort_key(s):
+    # Create a tuple for sorting based on the defined criteria.
+    return tuple((s[i] if i % 2 == 0 else -ord(s[i])) for i in range(m))
+
+# Step 4: Sort the strings using the custom key.
+sorted_strings = sorted(strings, key=custom_sort_key)
+
+# Step 5: Get the original indices of the sorted strings.
+sorted_indices = [strings.index(s) + 1 for s in sorted_strings]
+
+# Step 6: Print the sorted indices.
+print(" ".join(map(str, sorted_indices)))
+]]></code>
+<planning><![CDATA[
+1. Read the integers n and m from input.
+2. Read the n strings into a list.
+3. Define a custom sorting function that creates a tuple for each string based on the sorting criteria.
+4. Use the sorted function with the custom key to sort the strings.
+5. Retrieve the original indices of the sorted strings.
+6. Print the indices in the required format.
+]]></planning>
+</problem>
+
+<problem>
+<description><![CDATA[
+The problem is to find the longest common subsequence (LCS) between two strings. Given two strings, the task is to determine the length of the longest subsequence that appears in both strings in the same order, but not necessarily consecutively.
+]]></description>
+<code><![CDATA[
+# Step 1: Read the two strings from input.
+s1 = input().strip()
+s2 = input().strip()
+
+# Step 2: Initialize a 2D array to store lengths of LCS.
+m, n = len(s1), len(s2)
+dp = [[0] * (n + 1) for _ in range(m + 1)]
+
+# Step 3: Fill the dp array using dynamic programming.
+for i in range(1, m + 1):
+    for j in range(1, n + 1):
+        if s1[i - 1] == s2[j - 1]:
+            dp[i][j] = dp[i - 1][j - 1] + 1
+        else:
+            dp[i][j] = max(dp[i - 1][j], dp[i][j - 1])
+
+# Step 4: The length of the LCS is in dp[m][n].
+print(dp[m][n])
+]]></code>
+<planning><![CDATA[
+1. Read the two strings from input.
+2. Initialize a 2D list (dp) to store the lengths of LCS for substrings.
+3. Use nested loops to fill the dp array based on the LCS conditions.
+4. The value in the bottom-right cell of the dp array will be the length of the LCS.
+5. Print the length of the LCS.
+]]></planning>
+</problem>
+
+<problem>
+<description><![CDATA[
+The problem is to find the maximum sum of a contiguous subarray within a one-dimensional array of numbers. Given an array of integers, the task is to find the contiguous subarray that has the largest sum and return that sum.
+]]></description>
+<code><![CDATA[
+# Step 1: Read the input array of integers.
+arr = list(map(int, input().strip().split()))
+
+# Step 2: Initialize variables to track the maximum sum and current sum.
+max_sum = current_sum = arr[0]
+
+# Step 3: Iterate through the array to find the maximum subarray sum.
+for num in arr[1:]:
+    current_sum = max(num, current_sum + num)
+    max_sum = max(max_sum, current_sum)
+
+# Step 4: Print the maximum sum found.
+print(max_sum)
+]]></code>
+<planning><![CDATA[
+1. Read the input array of integers.
+2. Initialize variables to keep track of the maximum sum and the current sum.
+3. Iterate through the array, updating the current sum and maximum sum based on the conditions.
+4. Print the maximum sum found.
+]]></planning>
+</problem>
+
+<algorithm><![CDATA[
+The algorithm used to solve the original problem is a custom sorting algorithm that leverages Python's built-in sorting capabilities with a custom key function. The key function defines how to compare the strings based on the specified odd/even character sorting criteria.
+
+Tutorial:
+1. **Understanding Sorting**: Sorting is the process of arranging elements in a specific order. In this case, we need to define a custom order based on character positions.
+2. **Custom Key Function**: A key function transforms each element before comparison. In our case, we create a tuple where odd-indexed characters are kept as is, and even-indexed characters are negated (to sort them in descending order).
+3. **Sorting Mechanism**: Python's `sorted()` function uses Timsort, which is efficient and stable. It sorts based on the tuples generated by the key function.
+4. **Retrieving Original Indices**: After sorting, we need to map the sorted strings back to their original indices for output.
+
+For problems involving custom sorting, always define a clear comparison strategy and utilize Python's sorting capabilities effectively.
+]]></algorithm>
+</root>
+```
+Given a problem, provide relevant problems then identify the algorithm behind it and also explain the tutorial of the algorithm.
+# Problem:
+Mr. Chanek lives in a city represented as a plane. He wants to build an amusement park in the shape of a circle of radius r. The circle must touch the origin (point (0, 0)).
+
+There are n bird habitats that can be a photo spot for the tourists in the park. The i-th bird habitat is at point p_i = (x_i, y_i). 
+
+Find the minimum radius r of a park with at least k bird habitats inside. 
+
+A point is considered to be inside the park if and only if the distance between p_i and the center of the park is less than or equal to the radius of the park. Note that the center and the radius of the park do not need to be integers.
+
+In this problem, it is guaranteed that the given input always has a solution with r ≤ 2 ⋅ 10^5.
+
+Input
+
+The first line contains two integers n and k (1 ≤ n ≤ 10^5, 1 ≤ k ≤ n) — the number of bird habitats in the city and the number of bird habitats required to be inside the park.
+
+The i-th of the next n lines contains two integers x_i and y_i (0 ≤ |x_i|, |y_i| ≤ 10^5) — the position of the i-th bird habitat.
+
+Output
+
+Output a single real number r denoting the minimum radius of a park with at least k bird habitats inside. It is guaranteed that the given input always has a solution with r ≤ 2 ⋅ 10^5.
+
+Your answer is considered correct if its absolute or relative error does not exceed 10^{-4}.
+
+Formally, let your answer be a, and the jury's answer be b. Your answer is accepted if and only if \frac{|a - b|}{max{(1, |b|)}} ≤ 10^{-4}.
+
+Examples
+
+Input
+
+
+8 4
+-3 1
+-4 4
+1 5
+2 2
+2 -2
+-2 -4
+-1 -1
+-6 0
+
+
+Output
+
+
+3.1622776589
+
+
+Input
+
+
+1 1
+0 0
+
+
+Output
+
+
+0.0000000000
+
+Note
+
+In the first example, Mr. Chanek can put the center of the park at (-3, -1) with radius √{10} ≈ 3.162. It can be proven this is the minimum r.
+
+The following illustrates the first example. The blue points represent bird habitats and the red circle represents the amusement park.
+
+
+-------
+Important Note: You must follow the input output format. Input must be taken from standard input and output must be given to standard output. The code will be tested against multiple test cases and all the test cases must be passed.
+
+# Exemplars:
+Recall three (03) relevant and distinct problems (different from problem mentioned above). For each problem,
+1. describe it
+2. generate Python3 code step by step to solve that problem
+3. finally generate a planning to solve that problem
+
+# Algorithm:
+
+----------------
+Important:
+Your response must follow the following xml format-
+
+<root>
+<problem>
+# Recall three (03) relevant and distinct problems (different from problem mentioned above). 
+# Write each problem in the following format.
+<description>
+# Describe the problem.
+</description>
+<code>
+# Let's think step by step to solve this problem in Python3 programming language.
+</code>
+<planning>
+# Planning to solve this problem.
+</planning>
+</problem>
+
+# similarly add more problems here...
+
+<algorithm>
+# Identify the algorithm (Brute-force, Dynamic Programming, Divide-and-conquer, Greedy, Backtracking, Recursive, Binary search, and so on)
+that needs to be used to solve the original problem.
+# Write a useful tutorial about the above mentioned algorithms.
+# Provide a high level generic tutorial for solving this types of problem. 
+# Do not generate code.
+</algorithm>
+</root>
+
+```xml
+<root>
+<problem>
+<description><![CDATA[
+The problem is to find the maximum area of a rectangle that can be formed using a given set of points on a 2D plane. The rectangle must have its sides parallel to the axes, and it should contain at least a specified number of points from the given set.
+]]></description>
+<code><![CDATA[
+# Step 1: Read the number of points and the required number of points inside the rectangle.
+n, k = map(int, input().split())
+points = [tuple(map(int, input().split())) for _ in range(n)]
+
+# Step 2: Sort the points based on their x-coordinates.
+points.sort()
+
+# Step 3: Initialize variables to track the maximum area.
+max_area = 0
+
+# Step 4: Use a sliding window approach to find the maximum area rectangle.
+for i in range(n):
+    for j in range(i, n):
+        # Calculate the width of the rectangle.
+        width = points[j][0] - points[i][0]
+        
+        # Count how many points are within the current rectangle.
+        count = sum(1 for x, y in points if points[i][0] <= x <= points[j][0])
+        
+        # If the count is at least k, calculate the area.
+        if count >= k:
+            height = max(y for x, y in points if points[i][0] <= x <= points[j][0]) - min(y for x, y in points if points[i][0] <= x <= points[j][0])
+            area = width * height
+            max_area = max(max_area, area)
+
+# Step 5: Output the maximum area found.
+print(max_area)
+]]></code>
+<planning><![CDATA[
+1. Read the input values for the number of points and the required number of points.
+2. Store the points in a list and sort them based on their x-coordinates.
+3. Initialize a variable to keep track of the maximum area found.
+4. Use a nested loop to consider all pairs of points as potential corners of the rectangle.
+5. For each pair, calculate the width and count how many points fall within the rectangle defined by the current pair.
+6. If the count of points is at least k, calculate the height and area of the rectangle.
+7. Update the maximum area if the current area is larger.
+8. Print the maximum area after checking all pairs.
+]]></planning>
+</problem>
+
+<problem>
+<description><![CDATA[
+The problem is to find the shortest path in a weighted graph from a starting node to a target node. The graph is represented as an adjacency list, and the weights are non-negative integers.
+]]></description>
+<code><![CDATA[
+# Step 1: Read the number of nodes and edges.
+n, m = map(int, input().split())
+from collections import defaultdict
+import heapq
+
+# Step 2: Create an adjacency list for the graph.
+graph = defaultdict(list)
+for _ in range(m):
+    u, v, w = map(int, input().split())
+    graph[u].append((v, w))
+    graph[v].append((u, w))  # For undirected graph
+
+# Step 3: Initialize the distance array and priority queue.
+dist = {i: float('inf') for i in range(1, n + 1)}
+start, target = map(int, input().split())
+dist[start] = 0
+pq = [(0, start)]  # (distance, node)
+
+# Step 4: Implement Dijkstra's algorithm.
+while pq:
+    current_dist, current_node = heapq.heappop(pq)
+    
+    if current_dist > dist[current_node]:
+        continue
+    
+    for neighbor, weight in graph[current_node]:
+        distance = current_dist + weight
+        
+        if distance < dist[neighbor]:
+            dist[neighbor] = distance
+            heapq.heappush(pq, (distance, neighbor))
+
+# Step 5: Output the shortest distance to the target node.
+print(dist[target])
+]]></code>
+<planning><![CDATA[
+1. Read the number of nodes and edges from the input.
+2. Construct the graph using an adjacency list.
+3. Initialize a distance dictionary to keep track of the shortest distance to each node.
+4. Use a priority queue to implement Dijkstra's algorithm.
+5. Continuously extract the node with the smallest distance and update the distances of its neighbors.
+6. If a shorter path to a neighbor is found, update its distance and add it to the priority queue.
+7. After processing all nodes, print the shortest distance to the target node.
+]]></planning>
+</problem>
+
+<problem>
+<description><![CDATA[
+The problem is to find the longest increasing subsequence (LIS) in a given sequence of integers. The LIS is defined as a subsequence of the original sequence where each element is greater than the preceding one.
+]]></description>
+<code><![CDATA[
+# Step 1: Read the length of the sequence and the sequence itself.
+n = int(input())
+sequence = list(map(int, input().split()))
+
+# Step 2: Initialize a list to store the LIS lengths.
+lis = [1] * n
+
+# Step 3: Compute the LIS using dynamic programming.
+for i in range(1, n):
+    for j in range(i):
+        if sequence[i] > sequence[j]:
+            lis[i] = max(lis[i], lis[j] + 1)
+
+# Step 4: The length of the longest increasing subsequence is the maximum value in lis.
+print(max(lis))
+]]></code>
+<planning><![CDATA[
+1. Read the input values for the length of the sequence and the sequence itself.
+2. Initialize a list to keep track of the lengths of the longest increasing subsequences ending at each index.
+3. Use a nested loop to compare each element with all previous elements.
+4. If the current element is greater than a previous element, update the LIS length for the current element.
+5. After processing all elements, find and print the maximum value in the LIS list, which represents the length of the longest increasing subsequence.
+]]></planning>
+</problem>
+
+<algorithm><![CDATA[
+The algorithm used to solve the original problem is a combination of sorting and a binary search approach. The key steps involve calculating the distances of each bird habitat from the origin and then determining the minimum radius that can encompass at least k habitats.
+
+### Tutorial on the Algorithm:
+1. **Sorting**: First, we calculate the distance of each habitat from the origin using the Euclidean distance formula. This allows us to sort the habitats based on their distance from the origin.
+
+2. **Binary Search**: After sorting, we can use binary search to efficiently find the minimum radius that can include at least k habitats. The idea is to check the distance of the k-th closest habitat after sorting, which gives us the required radius.
+
+3. **Distance Calculation**: The distance from the origin to a point (x, y) is calculated as sqrt(x^2 + y^2). This is crucial for determining which habitats fall within the circle defined by the radius.
+
+4. **Precision Handling**: Since the output requires a precision of 10^-4, we need to ensure that our calculations maintain this level of accuracy, especially when dealing with floating-point numbers.
+
+### High-Level Generic Tutorial:
+- **Step 1**: Read and parse the input data.
+- **Step 2**: Transform the data into a suitable format (e.g., calculating distances).
+- **Step 3**: Sort the data based on the criteria relevant to the problem (e.g., distance).
+- **Step 4**: Apply an appropriate algorithm (e.g., binary search, dynamic programming) to find the solution.
+- **Step 5**: Format and output the result with the required precision.
+]]></algorithm>
+</root>
+```
+Given a problem, provide relevant problems then identify the algorithm behind it and also explain the tutorial of the algorithm.
+# Problem:
+Denote a cyclic sequence of size n as an array s such that s_n is adjacent to s_1. The segment s[r, l] where l < r is the concatenation of s[r, n] and s[1, l].
+
+You are given an array a consisting of n integers. Define b as the cyclic sequence obtained from concatenating m copies of a. Note that b has size n ⋅ m.
+
+You are given an integer k where k = 1 or k is a prime number. Find the number of different segments in b where the sum of elements in the segment is divisible by k.
+
+Two segments are considered different if the set of indices of the segments are different. For example, when n = 3 and m = 2, the set of indices for segment s[2, 5] is \{2, 3, 4, 5\}, and for segment s[5, 2] is \{5, 6, 1, 2\}. In particular, the segments s[1, 6], s[2,1], …, s[6, 5] are considered as the same segment.
+
+Output the answer modulo 10^9 + 7.
+
+Input
+
+The first line contains three integers n, m, and k (1 ≤ n, m, k ≤ 2 ⋅ 10^5, k = 1 or k is a prime number).
+
+The second line contains n integers a_1, a_2, …, a_n (0 ≤ a_i ≤ 2 ⋅ 10^5).
+
+Output
+
+Output an integer denoting the number of different segments in b where the sum of elements in the segment is divisible by k, modulo 10^9 + 7.
+
+Examples
+
+Input
+
+
+5 1 5
+1 2 3 4 3
+
+
+Output
+
+
+4
+
+
+Input
+
+
+5 1 5
+1 2 3 4 5
+
+
+Output
+
+
+5
+
+
+Input
+
+
+5 4 5
+1 2 3 4 5
+
+
+Output
+
+
+125
+
+Note
+
+In the first example, all valid segments are [1,4], [2, 3], [3, 5], and [4, 2].
+
+In the second example, one of the valid segments is [1, 5].
+
+-------
+Important Note: You must follow the input output format. Input must be taken from standard input and output must be given to standard output. The code will be tested against multiple test cases and all the test cases must be passed.
+
+# Exemplars:
+Recall three (03) relevant and distinct problems (different from problem mentioned above). For each problem,
+1. describe it
+2. generate Python3 code step by step to solve that problem
+3. finally generate a planning to solve that problem
+
+# Algorithm:
+
+----------------
+Important:
+Your response must follow the following xml format-
+
+<root>
+<problem>
+# Recall three (03) relevant and distinct problems (different from problem mentioned above). 
+# Write each problem in the following format.
+<description>
+# Describe the problem.
+</description>
+<code>
+# Let's think step by step to solve this problem in Python3 programming language.
+</code>
+<planning>
+# Planning to solve this problem.
+</planning>
+</problem>
+
+# similarly add more problems here...
+
+<algorithm>
+# Identify the algorithm (Brute-force, Dynamic Programming, Divide-and-conquer, Greedy, Backtracking, Recursive, Binary search, and so on)
+that needs to be used to solve the original problem.
+# Write a useful tutorial about the above mentioned algorithms.
+# Provide a high level generic tutorial for solving this types of problem. 
+# Do not generate code.
+</algorithm>
+</root>
+
+```xml
+<root>
+<problem>
+<description><![CDATA[
+Given an array of integers, find the maximum sum of any contiguous subarray. This is a classic problem known as the "Maximum Subarray Problem" or "Kadane's Algorithm". The goal is to find the contiguous subarray that has the largest sum and return that sum.
+]]></description>
+<code><![CDATA[
+# Step 1: Initialize two variables, max_sum and current_sum, to the first element of the array.
+# Step 2: Iterate through the array starting from the second element.
+# Step 3: For each element, update current_sum to be the maximum of the current element and the sum of current_sum and the current element.
+# Step 4: Update max_sum to be the maximum of max_sum and current_sum.
+# Step 5: After iterating through the array, return max_sum.
+def max_subarray_sum(arr):
+    max_sum = current_sum = arr[0]
+    for num in arr[1:]:
+        current_sum = max(num, current_sum + num)
+        max_sum = max(max_sum, current_sum)
+    return max_sum
+]]></code>
+<planning><![CDATA[
+
+# 1. Read the input array.
+# 2. Implement the max_subarray_sum function as described.
+# 3. Call the function with the input array and print the result.
+]]></planning>
+</problem>
+
+<problem>
+<description><![CDATA[
+Given a list of integers, find the longest increasing subsequence (LIS). The LIS is a subsequence of a sequence in which the elements are in sorted order, and the subsequence is not necessarily contiguous.
+]]></description>
+<code><![CDATA[
+# Step 1: Create an array dp where dp[i] will hold the length of the longest increasing subsequence that ends with arr[i].
+# Step 2: Initialize all elements of dp to 1 since the minimum length of LIS is 1 (the element itself).
+# Step 3: Iterate through the array with two nested loops to compare each pair of elements.
+# Step 4: If arr[j] < arr[i], update dp[i] to be the maximum of dp[i] and dp[j] + 1.
+# Step 5: The length of the longest increasing subsequence will be the maximum value in dp.
+def longest_increasing_subsequence(arr):
+    n = len(arr)
+    dp = [1] * n
+    for i in range(n):
+        for j in range(i):
+            if arr[j] < arr[i]:
+                dp[i] = max(dp[i], dp[j] + 1)
+    return max(dp)
+]]></code>
+<planning><![CDATA[
+
+# 1. Read the input list of integers.
+# 2. Implement the longest_increasing_subsequence function as described.
+# 3. Call the function with the input list and print the result.
+]]></planning>
+</problem>
+
+<problem>
+<description><![CDATA[
+Given a set of intervals, merge all overlapping intervals and return the resulting list of intervals. This problem is often encountered in scheduling and resource allocation scenarios.
+]]></description>
+<code><![CDATA[
+# Step 1: Sort the intervals based on the starting times.
+# Step 2: Initialize a list to hold the merged intervals.
+# Step 3: Iterate through the sorted intervals and compare the current interval with the last merged interval.
+# Step 4: If they overlap, merge them by updating the end of the last merged interval.
+# Step 5: If they do not overlap, add the current interval to the merged list.
+def merge_intervals(intervals):
+    intervals.sort(key=lambda x: x[0])
+    merged = []
+    for interval in intervals:
+        if not merged or merged[-1][1] < interval[0]:
+            merged.append(interval)
+        else:
+            merged[-1][1] = max(merged[-1][1], interval[1])
+    return merged
+]]></code>
+<planning><![CDATA[
+
+# 1. Read the input list of intervals.
+# 2. Implement the merge_intervals function as described.
+# 3. Call the function with the input intervals and print the result.
+]]></planning>
+</problem>
+
+<algorithm><![CDATA[
+# The algorithm used to solve the original problem is a combination of prefix sums and modular arithmetic.
+# The key idea is to use a hashmap to count the occurrences of prefix sums modulo k, which allows us to efficiently count the number of valid segments.
+# 
+# Tutorial:
+# 1. **Prefix Sum**: This technique involves maintaining a running total of the elements in an array. It allows us to quickly calculate the sum of any subarray by subtracting two prefix sums.
+# 2. **Modular Arithmetic**: When dealing with divisibility, we can use the properties of modular arithmetic. If the difference between two prefix sums is divisible by k, then the corresponding subarray sum is also divisible by k.
+# 3. **Hashmap for Counting**: By using a hashmap to count occurrences of each prefix sum modulo k, we can efficiently determine how many times a certain sum has occurred, which helps in counting valid segments.
+# 
+# High-level generic tutorial for solving similar problems:
+# - Identify the problem type (e.g., subarray, subsequence, interval).
+# - Consider using prefix sums for range queries.
+# - Use modular arithmetic for divisibility problems.
+# - Utilize data structures like hashmaps for counting occurrences.
+# - Optimize the solution to handle large inputs efficiently.
+]]></algorithm>
+</root>
+```
+Given a problem, provide relevant problems then identify the algorithm behind it and also explain the tutorial of the algorithm.
+# Problem:
+Mr. Chanek has an integer represented by a string s. Zero or more digits have been erased and are denoted by the character _. There are also zero or more digits marked by the character X, meaning they're the same digit.
+
+Mr. Chanek wants to count the number of possible integer s, where s is divisible by 25. Of course, s must not contain any leading zero. He can replace the character _ with any digit. He can also replace the character X with any digit, but it must be the same for every character X.
+
+As a note, a leading zero is any 0 digit that comes before the first nonzero digit in a number string in positional notation. For example, 0025 has two leading zeroes. An exception is the integer zero, (0 has no leading zero, but 0000 has three leading zeroes).
+
+Input
+
+One line containing the string s (1 ≤ |s| ≤ 8). The string s consists of the characters 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, _, and X.
+
+Output
+
+Output an integer denoting the number of possible integer s.
+
+Examples
+
+Input
+
+
+25
+
+
+Output
+
+
+1
+
+
+Input
+
+
+_00
+
+
+Output
+
+
+9
+
+
+Input
+
+
+_XX
+
+
+Output
+
+
+9
+
+
+Input
+
+
+0
+
+
+Output
+
+
+1
+
+
+Input
+
+
+0_25
+
+
+Output
+
+
+0
+
+Note
+
+In the first example, the only possible s is 25.
+
+In the second and third example, s ∈ \{100, 200,300,400,500,600,700,800,900\}.
+
+In the fifth example, all possible s will have at least one leading zero.
+
+-------
+Important Note: You must follow the input output format. Input must be taken from standard input and output must be given to standard output. The code will be tested against multiple test cases and all the test cases must be passed.
+
+# Exemplars:
+Recall three (03) relevant and distinct problems (different from problem mentioned above). For each problem,
+1. describe it
+2. generate Python3 code step by step to solve that problem
+3. finally generate a planning to solve that problem
+
+# Algorithm:
+
+----------------
+Important:
+Your response must follow the following xml format-
+
+<root>
+<problem>
+# Recall three (03) relevant and distinct problems (different from problem mentioned above). 
+# Write each problem in the following format.
+<description>
+# Describe the problem.
+</description>
+<code>
+# Let's think step by step to solve this problem in Python3 programming language.
+</code>
+<planning>
+# Planning to solve this problem.
+</planning>
+</problem>
+
+# similarly add more problems here...
+
+<algorithm>
+# Identify the algorithm (Brute-force, Dynamic Programming, Divide-and-conquer, Greedy, Backtracking, Recursive, Binary search, and so on)
+that needs to be used to solve the original problem.
+# Write a useful tutorial about the above mentioned algorithms.
+# Provide a high level generic tutorial for solving this types of problem. 
+# Do not generate code.
+</algorithm>
+</root>
+
+```xml
+<root>
+<problem>
+<description><![CDATA[
+The problem is to find the number of distinct ways to arrange a given string of characters, which may include letters and special characters, such that the arrangement is a valid permutation. The string can contain duplicates, and the output should account for these duplicates in the count of unique permutations.
+]]></description>
+<code><![CDATA[
+# Step 1: Import the necessary library for factorial calculation.
+from math import factorial
+
+# Step 2: Define a function to calculate the number of unique permutations.
+def unique_permutations_count(s):
+    # Step 3: Count the frequency of each character in the string.
+    char_count = {}
+    for char in s:
+        if char in char_count:
+            char_count[char] += 1
+        else:
+            char_count[char] = 1
+
+    # Step 4: Calculate the total permutations using factorial.
+    total_permutations = factorial(len(s))
+    
+    # Step 5: Divide by the factorial of the counts of each character to account for duplicates.
+    for count in char_count.values():
+        total_permutations //= factorial(count)
+
+    return total_permutations
+
+# Step 6: Take input and call the function.
+input_string = input().strip()
+print(unique_permutations_count(input_string))
+]]></code>
+<planning><![CDATA[
+
+# 1. Read the input string.
+# 2. Create a dictionary to count the occurrences of each character.
+# 3. Calculate the total number of permutations using the factorial of the length of the string.
+# 4. For each unique character, divide the total permutations by the factorial of its count.
+# 5. Return the final count of unique permutations.
+]]></planning>
+</problem>
+
+<problem>
+<description><![CDATA[
+The problem is to find the longest palindromic substring in a given string. A palindrome is a string that reads the same forwards and backwards. The goal is to return the longest substring that is a palindrome.
+]]></description>
+<code><![CDATA[
+# Step 1: Define a function to check if a substring is a palindrome.
+def is_palindrome(s):
+    return s == s[::-1]
+
+# Step 2: Define a function to find the longest palindromic substring.
+def longest_palindrome(s):
+    max_length = 0
+    longest_substr = ""
+    
+    # Step 3: Iterate through all possible substrings.
+    for i in range(len(s)):
+        for j in range(i, len(s)):
+            substr = s[i:j+1]
+            # Step 4: Check if the substring is a palindrome and update if it's the longest found.
+            if is_palindrome(substr) and len(substr) > max_length:
+                max_length = len(substr)
+                longest_substr = substr
+                
+    return longest_substr
+
+# Step 5: Take input and call the function.
+input_string = input().strip()
+print(longest_palindrome(input_string))
+]]></code>
+<planning><![CDATA[
+
+# 1. Define a helper function to check for palindromes.
+# 2. Create a main function to iterate through all possible substrings of the input string.
+# 3. For each substring, check if it is a palindrome.
+# 4. Keep track of the longest palindromic substring found.
+# 5. Return the longest palindromic substring.
+]]></planning>
+</problem>
+
+<problem>
+<description><![CDATA[
+The problem is to find the maximum sum of a contiguous subarray within a one-dimensional array of numbers. This is known as the "Maximum Subarray Problem" and can be solved using Kadane's algorithm.
+]]></description>
+<code><![CDATA[
+# Step 1: Define a function to find the maximum sum of a contiguous subarray.
+def max_subarray_sum(arr):
+    max_current = max_global = arr[0]
+    
+    # Step 2: Iterate through the array starting from the second element.
+    for i in range(1, len(arr)):
+        max_current = max(arr[i], max_current + arr[i])
+        # Step 3: Update the global maximum if the current maximum is greater.
+        if max_current > max_global:
+            max_global = max_current
+            
+    return max_global
+
+# Step 4: Take input and call the function.
+input_array = list(map(int, input().strip().split()))
+print(max_subarray_sum(input_array))
+]]></code>
+<planning><![CDATA[
+
+# 1. Read the input array of integers.
+# 2. Initialize two variables to keep track of the current maximum and global maximum sums.
+# 3. Iterate through the array, updating the current maximum sum at each step.
+# 4. If the current maximum exceeds the global maximum, update the global maximum.
+# 5. Return the global maximum sum as the result.
+]]></planning>
+</problem>
+
+<algorithm><![CDATA[
+The algorithm used to solve the original problem is a combinatorial approach that involves generating all possible combinations of digits to replace the placeholders in the string while ensuring the resulting number is divisible by 25 and does not have leading zeros.
+
+Tutorial:
+1. **Understanding the Problem**: The first step is to clearly understand the requirements, including the constraints on leading zeros and the conditions for divisibility.
+2. **Generating Combinations**: Use a systematic way to generate all possible combinations of digits for the placeholders. This can be done using recursion or iterative methods.
+3. **Checking Conditions**: For each generated combination, check if the resulting number meets the conditions (divisibility by 25 and no leading zeros).
+4. **Counting Valid Combinations**: Maintain a count of all valid combinations that satisfy the conditions.
+5. **Output the Result**: Finally, return the count of valid combinations.
+
+High-Level Generic Tutorial:
+- Start by parsing the input and identifying the placeholders.
+- Use combinatorial techniques to explore all possible replacements for the placeholders.
+- Implement checks for the specific conditions required by the problem.
+- Optimize the solution to avoid unnecessary computations, especially when dealing with constraints like leading zeros.
+- Test the solution against various edge cases to ensure robustness.
+]]></algorithm>
+</root>
+```
+Given a problem, provide relevant problems then identify the algorithm behind it and also explain the tutorial of the algorithm.
+# Problem:
+There is a city park represented as a tree with n attractions as its vertices and n - 1 rails as its edges. The i-th attraction has happiness value a_i.
+
+Each rail has a color. It is either black if t_i = 0, or white if t_i = 1. Black trains only operate on a black rail track, and white trains only operate on a white rail track. If you are previously on a black train and want to ride a white train, or you are previously on a white train and want to ride a black train, you need to use 1 ticket.
+
+The path of a tour must be a simple path — it must not visit an attraction more than once. You do not need a ticket the first time you board a train. You only have k tickets, meaning you can only switch train types at most k times. In particular, you do not need a ticket to go through a path consisting of one rail color.
+
+Define f(u, v) as the sum of happiness values of the attractions in the tour (u, v), which is a simple path that starts at the u-th attraction and ends at the v-th attraction. Find the sum of f(u,v) for all valid tours (u, v) (1 ≤ u ≤ v ≤ n) that does not need more than k tickets, modulo 10^9 + 7.
+
+Input
+
+The first line contains two integers n and k (2 ≤ n ≤ 2 ⋅ 10^5, 0 ≤ k ≤ n-1) — the number of attractions in the city park and the number of tickets you have.
+
+The second line contains n integers a_1, a_2,…, a_n (0 ≤ a_i ≤ 10^9) — the happiness value of each attraction.
+
+The i-th of the next n - 1 lines contains three integers u_i, v_i, and t_i (1 ≤ u_i, v_i ≤ n, 0 ≤ t_i ≤ 1) — an edge between vertices u_i and v_i with color t_i. The given edges form a tree.
+
+Output
+
+Output an integer denoting the total happiness value for all valid tours (u, v) (1 ≤ u ≤ v ≤ n), modulo 10^9 + 7.
+
+Examples
+
+Input
+
+
+5 0
+1 3 2 6 4
+1 2 1
+1 4 0
+3 2 1
+2 5 0
+
+
+Output
+
+
+45
+
+
+Input
+
+
+3 1
+1 1 1
+1 2 1
+3 2 0
+
+
+Output
+
+
+10
+
+-------
+Important Note: You must follow the input output format. Input must be taken from standard input and output must be given to standard output. The code will be tested against multiple test cases and all the test cases must be passed.
+
+# Exemplars:
+Recall three (03) relevant and distinct problems (different from problem mentioned above). For each problem,
+1. describe it
+2. generate Python3 code step by step to solve that problem
+3. finally generate a planning to solve that problem
+
+# Algorithm:
+
+----------------
+Important:
+Your response must follow the following xml format-
+
+<root>
+<problem>
+# Recall three (03) relevant and distinct problems (different from problem mentioned above). 
+# Write each problem in the following format.
+<description>
+# Describe the problem.
+</description>
+<code>
+# Let's think step by step to solve this problem in Python3 programming language.
+</code>
+<planning>
+# Planning to solve this problem.
+</planning>
+</problem>
+
+# similarly add more problems here...
+
+<algorithm>
+# Identify the algorithm (Brute-force, Dynamic Programming, Divide-and-conquer, Greedy, Backtracking, Recursive, Binary search, and so on)
+that needs to be used to solve the original problem.
+# Write a useful tutorial about the above mentioned algorithms.
+# Provide a high level generic tutorial for solving this types of problem. 
+# Do not generate code.
+</algorithm>
+</root>
+
+```xml
+<root>
+<problem>
+<description><![CDATA[
+The problem involves finding the longest path in a tree where each edge has a weight. The goal is to find the maximum sum of weights along any simple path in the tree.
+]]></description>
+<code><![CDATA[
+# Step 1: Define a function to perform a depth-first search (DFS) to find the longest path.
+def dfs(node, parent, graph, weights):
+    max_length = 0
+    for neighbor in graph[node]:
+        if neighbor != parent:
+            length = dfs(neighbor, node, graph, weights) + weights[(node, neighbor)]
+            max_length = max(max_length, length)
+    return max_length
+
+# Step 2: Build the graph from the input.
+def build_graph(n, edges):
+    graph = {i: [] for i in range(1, n + 1)}
+    weights = {}
+    for u, v, w in edges:
+        graph[u].append(v)
+        graph[v].append(u)
+        weights[(u, v)] = w
+        weights[(v, u)] = w
+    return graph, weights
+
+# Step 3: Implement the main function to find the longest path.
+def longest_path(n, edges):
+    graph, weights = build_graph(n, edges)
+    return dfs(1, -1, graph, weights)
+
+# Example usage:
+n = 5
+edges = [(1, 2, 3), (1, 3, 2), (2, 4, 1), (2, 5, 4)]
+print(longest_path(n, edges))  # Output the longest path weight.
+]]></code>
+<planning><![CDATA[
+# 1. Read the number of nodes and edges from input.
+# 2. Read the edges and their weights.
+# 3. Build a graph representation using adjacency lists.
+# 4. Implement a DFS function to explore all paths and calculate their weights.
+# 5. Keep track of the maximum weight found during the DFS.
+# 6. Return the maximum weight as the result.
+]]></planning>
+</problem>
+
+<problem>
+<description><![CDATA[
+The problem is to find the number of distinct paths in a directed acyclic graph (DAG) from a source node to a target node. Each path must be simple, meaning it cannot revisit any node.
+]]></description>
+<code><![CDATA[
+# Step 1: Define a function to perform DFS and count paths.
+def count_paths_dfs(node, target, graph, memo):
+    if node == target:
+        return 1
+    if node in memo:
+        return memo[node]
+    
+    total_paths = 0
+    for neighbor in graph[node]:
+        total_paths += count_paths_dfs(neighbor, target, graph, memo)
+    
+    memo[node] = total_paths
+    return total_paths
+
+# Step 2: Build the graph from the input.
+def build_graph(n, edges):
+    graph = {i: [] for i in range(n)}
+    for u, v in edges:
+        graph[u].append(v)
+    return graph
+
+# Step 3: Implement the main function to count paths.
+def count_paths(n, edges, source, target):
+    graph = build_graph(n, edges)
+    memo = {}
+    return count_paths_dfs(source, target, graph, memo)
+
+# Example usage:
+n = 5
+edges = [(0, 1), (0, 2), (1, 3), (2, 3), (3, 4)]
+source = 0
+target = 4
+print(count_paths(n, edges, source, target))  # Output the number of distinct paths.
+]]></code>
+<planning><![CDATA[
+# 1. Read the number of nodes and edges from input.
+# 2. Read the edges to form the directed graph.
+# 3. Build a graph representation using adjacency lists.
+# 4. Implement a DFS function to count paths from source to target.
+# 5. Use memoization to store results of previously computed paths.
+# 6. Return the total number of distinct paths as the result.
+]]></planning>
+</problem>
+
+<problem>
+<description><![CDATA[
+The problem is to find the minimum spanning tree (MST) of a weighted undirected graph using Prim's algorithm. The goal is to return the total weight of the MST.
+]]></description>
+<code><![CDATA[
+# Step 1: Define a function to implement Prim's algorithm.
+import heapq
+
+def prim_mst(n, edges):
+    graph = {i: [] for i in range(n)}
+    for u, v, w in edges:
+        graph[u].append((w, v))
+        graph[v].append((w, u))
+    
+    total_weight = 0
+    visited = [False] * n
+    min_heap = [(0, 0)]  # (weight, node)
+    
+    while min_heap:
+        weight, node = heapq.heappop(min_heap)
+        if visited[node]:
+            continue
+        visited[node] = True
+        total_weight += weight
+        
+        for edge_weight, neighbor in graph[node]:
+            if not visited[neighbor]:
+                heapq.heappush(min_heap, (edge_weight, neighbor))
+    
+    return total_weight
+
+# Example usage:
+n = 4
+edges = [(0, 1, 10), (0, 2, 6), (0, 3, 5), (1, 3, 15), (2, 3, 4)]
+print(prim_mst(n, edges))  # Output the total weight of the MST.
+]]></code>
+<planning><![CDATA[
+# 1. Read the number of nodes and edges from input.
+# 2. Read the edges to form the weighted undirected graph.
+# 3. Build a graph representation using adjacency lists.
+# 4. Initialize a min-heap to store edges and a visited list to track included nodes.
+# 5. Implement Prim's algorithm to find the MST by adding the smallest edge to the MST.
+# 6. Return the total weight of the MST as the result.
+]]></planning>
+</problem>
+
+<algorithm><![CDATA[
+The algorithm to be used for the original problem is a combination of Depth-First Search (DFS) and Dynamic Programming (DP) techniques. The DFS will be used to explore all possible paths in the tree, while DP will help in storing intermediate results to avoid redundant calculations.
+
+### Tutorial on DFS and Dynamic Programming:
+1. **Depth-First Search (DFS)**:
+   - DFS is a traversal algorithm used for exploring nodes and edges of a graph. It starts at a selected node and explores as far as possible along each branch before backtracking.
+   - It can be implemented using recursion or an explicit stack.
+   - DFS is useful for problems involving paths, connectivity, and tree structures.
+
+2. **Dynamic Programming (DP)**:
+   - DP is a method for solving complex problems by breaking them down into simpler subproblems. It is applicable when the problem can be divided into overlapping subproblems that can be solved independently.
+   - The key idea is to store the results of subproblems to avoid redundant calculations, typically using a table or memoization.
+   - DP is often used in optimization problems, such as finding the shortest path, longest path, or maximum/minimum values.
+
+### High-Level Generic Tutorial for Solving Tree Problems:
+1. **Understand the Problem**: Clearly define what is being asked and identify the constraints.
+2. **Model the Tree**: Represent the tree using an appropriate data structure (e.g., adjacency list).
+3. **Choose an Algorithm**: Decide whether to use DFS, BFS, or another algorithm based on the problem requirements.
+4. **Implement the Algorithm**: Write the code to traverse the tree and compute the required values.
+5. **Optimize**: If necessary, apply DP or memoization to improve efficiency.
+6. **Test**: Validate the solution with various test cases to ensure correctness.
+]]></algorithm>
+</root>
+```
+Given a problem, provide relevant problems then identify the algorithm behind it and also explain the tutorial of the algorithm.
+# Problem:
+Mr. Chanek opened a letter from his fellow, who is currently studying at Singanesia. Here is what it says.
+
+Define an array b (0 ≤ b_i < k) with n integers. While there exists a pair (i, j) such that b_i ≠ b_j, do the following operation:
+
+  * Randomly pick a number i satisfying 0 ≤ i < n. Note that each number i has a probability of 1/n to be picked. 
+  * Randomly Pick a number j satisfying 0 ≤ j < k. 
+  * Change the value of b_i to j. It is possible for b_i to be changed to the same value. 
+
+
+
+Denote f(b) as the expected number of operations done to b until all elements of b are equal. 
+
+You are given two integers n and k, and an array a (-1 ≤ a_i < k) of n integers. 
+
+For every index i with a_i = -1, replace a_i with a random number j satisfying 0 ≤ j < k. Let c be the number of occurrences of -1 in a. There are k^c possibilites of a after the replacement, each with equal probability of being the final array.
+
+Find the expected value of f(a) modulo 10^9 + 7. 
+
+Formally, let M = 10^9 + 7. It can be shown that the answer can be expressed as an irreducible fraction p/q, where p and q are integers and q not ≡ 0 \pmod{M}. Output the integer equal to p ⋅ q^{-1} mod M. In other words, output such an integer x that 0 ≤ x < M and x ⋅ q ≡ p \pmod{M}.
+
+After reading the letter, Mr. Chanek gave the task to you. Solve it for the sake of their friendship!
+
+Input
+
+The first line contains two integers n and k (2 ≤ n ≤ 10^5, 2 ≤ k ≤ 10^9). 
+
+The second line contains n integers a_1, a_2, …, a_n (-1 ≤ a_i < k).
+
+Output
+
+Output an integer denoting the expected value of f(a) modulo 10^9 + 7.
+
+Examples
+
+Input
+
+
+2 2
+0 1
+
+
+Output
+
+
+2
+
+
+Input
+
+
+2 2
+0 -1
+
+
+Output
+
+
+1
+
+
+Input
+
+
+3 3
+0 1 1
+
+
+Output
+
+
+12
+
+
+Input
+
+
+3 3
+-1 -1 -1
+
+
+Output
+
+
+11
+
+
+Input
+
+
+10 9
+-1 0 -1 1 1 2 2 3 3 3
+
+
+Output
+
+
+652419213
+
+-------
+Important Note: You must follow the input output format. Input must be taken from standard input and output must be given to standard output. The code will be tested against multiple test cases and all the test cases must be passed.
+
+# Exemplars:
+Recall three (03) relevant and distinct problems (different from problem mentioned above). For each problem,
+1. describe it
+2. generate Python3 code step by step to solve that problem
+3. finally generate a planning to solve that problem
+
+# Algorithm:
+
+----------------
+Important:
+Your response must follow the following xml format-
+
+<root>
+<problem>
+# Recall three (03) relevant and distinct problems (different from problem mentioned above). 
+# Write each problem in the following format.
+<description>
+# Describe the problem.
+</description>
+<code>
+# Let's think step by step to solve this problem in Python3 programming language.
+</code>
+<planning>
+# Planning to solve this problem.
+</planning>
+</problem>
+
+# similarly add more problems here...
+
+<algorithm>
+# Identify the algorithm (Brute-force, Dynamic Programming, Divide-and-conquer, Greedy, Backtracking, Recursive, Binary search, and so on)
+that needs to be used to solve the original problem.
+# Write a useful tutorial about the above mentioned algorithms.
+# Provide a high level generic tutorial for solving this types of problem. 
+# Do not generate code.
+</algorithm>
+</root>
+
+```xml
+<root>
+<problem>
+<description><![CDATA[
+The problem involves finding the expected number of operations required to make all elements of an array equal, given certain constraints. The array can contain placeholders (-1) that can be replaced with random values. The challenge is to compute the expected value of operations efficiently, considering the randomness introduced by the placeholders.
+]]></description>
+<code><![CDATA[
+# Step 1: Read the input values for n and k, and the array a.
+n, k = map(int, input().split())
+a = list(map(int, input().split()))
+
+# Step 2: Count the number of -1s in the array.
+c = a.count(-1)
+
+# Step 3: Calculate the number of distinct values in the array excluding -1.
+distinct_values = set(x for x in a if x != -1)
+
+# Step 4: Calculate the expected number of operations based on the distinct values and the number of -1s.
+# If there are no -1s, the expected operations is based on the number of distinct values.
+if c == 0:
+    expected_operations = (n * (n - 1)) // len(distinct_values)
+else:
+    # If there are -1s, we need to consider all possible combinations.
+    expected_operations = 0
+    for j in range(1, c + 1):
+        expected_operations += (n * (n - 1)) // (k ** j)
+
+# Step 5: Output the expected value modulo 10^9 + 7.
+M = 10**9 + 7
+print(expected_operations % M)
+]]></code>
+<planning><![CDATA[
+1. Parse the input to get the values of n, k, and the array a.
+2. Count the occurrences of -1 in the array to determine how many random values can be assigned.
+3. Identify the distinct values in the array that are not -1.
+4. Calculate the expected number of operations based on the number of distinct values and the number of -1s.
+5. Use modular arithmetic to ensure the result fits within the required bounds.
+6. Print the final result.
+]]></planning>
+</problem>
+
+<problem>
+<description><![CDATA[
+The problem is to find the longest increasing subsequence (LIS) in a given array of integers. The LIS is defined as the longest subsequence of a sequence where all elements are in increasing order. The challenge is to do this efficiently, especially for larger arrays.
+]]></description>
+<code><![CDATA[
+# Step 1: Read the input array.
+arr = list(map(int, input().split()))
+
+# Step 2: Initialize an empty list to store the LIS.
+lis = []
+
+# Step 3: Iterate through each number in the array.
+for num in arr:
+    # Step 4: Use binary search to find the position to replace or extend the LIS.
+    pos = bisect.bisect_left(lis, num)
+    if pos == len(lis):
+        lis.append(num)  # Extend the LIS
+    else:
+        lis[pos] = num  # Replace to maintain the smallest possible tail
+
+# Step 5: The length of the LIS is the size of the lis list.
+print(len(lis))
+]]></code>
+<planning><![CDATA[
+1. Read the input array of integers.
+2. Initialize an empty list to keep track of the longest increasing subsequence.
+3. Iterate through each element in the array.
+4. For each element, use binary search to find its position in the LIS list.
+5. If the position is equal to the length of the LIS, append the element; otherwise, replace the element at the found position.
+6. The length of the LIS is the final answer.
+]]></planning>
+</problem>
+
+<problem>
+<description><![CDATA[
+The problem is to find the minimum cost to connect all points in a 2D plane, where the cost to connect two points is the Euclidean distance between them. This is a classic Minimum Spanning Tree (MST) problem that can be solved using Prim's or Kruskal's algorithm.
+]]></description>
+<code><![CDATA[
+# Step 1: Read the number of points and their coordinates.
+n = int(input())
+points = [tuple(map(int, input().split())) for _ in range(n)]
+
+# Step 2: Create a list to keep track of the minimum cost to connect each point.
+min_cost = [float('inf')] * n
+min_cost[0] = 0  # Start from the first point
+
+# Step 3: Use a priority queue to select the next point with the minimum cost.
+import heapq
+pq = [(0, 0)]  # (cost, point_index)
+
+# Step 4: Initialize a set to track visited points.
+visited = set()
+
+# Step 5: While there are points to process, continue connecting points.
+total_cost = 0
+while pq:
+    cost, u = heapq.heappop(pq)
+    if u in visited:
+        continue
+    visited.add(u)
+    total_cost += cost
+
+    # Step 6: Update the costs for connecting to unvisited points.
+    for v in range(n):
+        if v not in visited:
+            distance = ((points[u][0] - points[v][0]) ** 2 + (points[u][1] - points[v][1]) ** 2) ** 0.5
+            if distance < min_cost[v]:
+                min_cost[v] = distance
+                heapq.heappush(pq, (distance, v))
+
+# Step 7: Output the total cost to connect all points.
+print(total_cost)
+]]></code>
+<planning><![CDATA[
+1. Read the number of points and their coordinates from input.
+2. Initialize a list to keep track of the minimum cost to connect each point.
+3. Use a priority queue to manage the points based on their connection cost.
+4. Initialize a set to track which points have been visited.
+5. While there are points in the priority queue, process the point with the minimum cost.
+6. For each unvisited point, calculate the distance from the current point and update the minimum cost if it's lower.
+7. Sum the costs and print the total cost to connect all points.
+]]></planning>
+</problem>
+
+<algorithm><![CDATA[
+The algorithm used to solve the original problem is a combination of combinatorial probability and modular arithmetic. The expected number of operations is calculated based on the number of distinct values in the array and the number of placeholders (-1). 
+
+To solve such problems, one can follow these steps:
+1. **Understand the Problem**: Clearly define what is being asked and identify the variables involved.
+2. **Identify Constraints**: Note any constraints that may affect the solution, such as the range of values or the size of the input.
+3. **Choose an Approach**: Depending on the problem, choose an appropriate algorithm (e.g., dynamic programming, greedy, combinatorial).
+4. **Implement Efficiently**: Use data structures that allow for efficient computation, such as sets for distinct values or priority queues for minimum costs.
+5. **Use Modular Arithmetic**: When dealing with large numbers, especially in combinatorial problems, use modular arithmetic to keep numbers manageable and avoid overflow.
+6. **Test with Edge Cases**: Ensure the solution works for edge cases, such as minimum and maximum input sizes.
+
+This structured approach helps in tackling complex problems systematically and efficiently.
+]]></algorithm>
+</root>
+```
+Given a problem, provide relevant problems then identify the algorithm behind it and also explain the tutorial of the algorithm.
+# Problem:
+Mr. Chanek has an array a of n integers. The prettiness value of a is denoted as:
+
+$$$∑_{i=1}^{n} {∑_{j=1}^{n} {\gcd(a_i, a_j) ⋅ \gcd(i, j)}}$$$
+
+where \gcd(x, y) denotes the greatest common divisor (GCD) of integers x and y.
+
+In other words, the prettiness value of an array a is the total sum of \gcd(a_i, a_j) ⋅ \gcd(i, j) for all pairs (i, j).
+
+Help Mr. Chanek find the prettiness value of a, and output the result modulo 10^9 + 7!
+
+Input
+
+The first line contains an integer n (2 ≤ n ≤ 10^5).
+
+The second line contains n integers a_1, a_2, …, a_n (1 ≤ a_i ≤ 10^5).
+
+Output
+
+Output an integer denoting the prettiness value of a modulo 10^9 + 7.
+
+Example
+
+Input
+
+
+5
+3 6 2 1 4
+
+
+Output
+
+
+77
+
+-------
+Important Note: You must follow the input output format. Input must be taken from standard input and output must be given to standard output. The code will be tested against multiple test cases and all the test cases must be passed.
+
+# Exemplars:
+Recall three (03) relevant and distinct problems (different from problem mentioned above). For each problem,
+1. describe it
+2. generate Python3 code step by step to solve that problem
+3. finally generate a planning to solve that problem
+
+# Algorithm:
+
+----------------
+Important:
+Your response must follow the following xml format-
+
+<root>
+<problem>
+# Recall three (03) relevant and distinct problems (different from problem mentioned above). 
+# Write each problem in the following format.
+<description>
+# Describe the problem.
+</description>
+<code>
+# Let's think step by step to solve this problem in Python3 programming language.
+</code>
+<planning>
+# Planning to solve this problem.
+</planning>
+</problem>
+
+# similarly add more problems here...
+
+<algorithm>
+# Identify the algorithm (Brute-force, Dynamic Programming, Divide-and-conquer, Greedy, Backtracking, Recursive, Binary search, and so on)
+that needs to be used to solve the original problem.
+# Write a useful tutorial about the above mentioned algorithms.
+# Provide a high level generic tutorial for solving this types of problem. 
+# Do not generate code.
+</algorithm>
+</root>
+
+```xml
+<root>
+<problem>
+<description><![CDATA[
+The problem is to find the maximum sum of a contiguous subarray in a given array of integers. This is a classic problem known as the "Maximum Subarray Problem" or "Kadane's Algorithm". The goal is to identify the contiguous subarray that has the largest sum and return that sum.
+]]></description>
+<code><![CDATA[
+# Step 1: Initialize two variables, max_sum and current_sum, to the first element of the array.
+# Step 2: Iterate through the array starting from the second element.
+# Step 3: For each element, update current_sum to be the maximum of the current element and the sum of current_sum and the current element.
+# Step 4: Update max_sum to be the maximum of max_sum and current_sum.
+# Step 5: After iterating through the array, return max_sum.
+def max_subarray_sum(arr):
+    max_sum = current_sum = arr[0]
+    for num in arr[1:]:
+        current_sum = max(num, current_sum + num)
+        max_sum = max(max_sum, current_sum)
+    return max_sum
+]]></code>
+<planning><![CDATA[
+
+# 1. Read the input array.
+# 2. Initialize max_sum and current_sum.
+# 3. Loop through the array to calculate the maximum subarray sum using the steps outlined in the code.
+# 4. Print the result.
+]]></planning>
+</problem>
+
+<problem>
+<description><![CDATA[
+The problem is to find the longest increasing subsequence (LIS) in a given array of integers. The LIS is defined as the longest subsequence of a sequence in which the elements are in sorted order, and the subsequence does not need to be contiguous.
+]]></description>
+<code><![CDATA[
+# Step 1: Create an array dp where dp[i] will hold the length of the longest increasing subsequence that ends with arr[i].
+# Step 2: Initialize all elements of dp to 1 since the minimum length of LIS ending at each element is 1 (the element itself).
+# Step 3: Iterate through the array with two nested loops to compare each pair of elements.
+# Step 4: If arr[j] < arr[i], update dp[i] to be the maximum of dp[i] and dp[j] + 1.
+# Step 5: The length of the longest increasing subsequence will be the maximum value in dp.
+def longest_increasing_subsequence(arr):
+    n = len(arr)
+    dp = [1] * n
+    for i in range(1, n):
+        for j in range(i):
+            if arr[j] < arr[i]:
+                dp[i] = max(dp[i], dp[j] + 1)
+    return max(dp)
+]]></code>
+<planning><![CDATA[
+
+# 1. Read the input array.
+# 2. Initialize the dp array to store lengths of LIS.
+# 3. Use nested loops to fill the dp array based on the conditions outlined in the code.
+# 4. Find and return the maximum value in the dp array.
+]]></planning>
+</problem>
+
+<problem>
+<description><![CDATA[
+The problem is to determine if a given string is a palindrome. A palindrome is a string that reads the same backward as forward. The task is to check if the input string is a palindrome and return a boolean value.
+]]></description>
+<code><![CDATA[
+# Step 1: Normalize the string by converting it to lowercase and removing non-alphanumeric characters.
+# Step 2: Initialize two pointers, one at the start and one at the end of the string.
+# Step 3: While the start pointer is less than the end pointer, compare the characters at both pointers.
+# Step 4: If they are not equal, return False.
+# Step 5: If the loop completes, return True.
+def is_palindrome(s):
+    s = ''.join(c.lower() for c in s if c.isalnum())
+    left, right = 0, len(s) - 1
+    while left < right:
+        if s[left] != s[right]:
+            return False
+        left += 1
+        right -= 1
+    return True
+]]></code>
+<planning><![CDATA[
+
+# 1. Read the input string.
+# 2. Normalize the string to remove non-alphanumeric characters and convert to lowercase.
+# 3. Use two pointers to check for palindrome properties.
+# 4. Return the result based on the comparison.
+]]></planning>
+</problem>
+
+<algorithm><![CDATA[
+The algorithm that needs to be used to solve the original problem is a combination of mathematical properties of GCD and efficient summation techniques. The naive approach would involve a double loop to compute the GCD for each pair, which would be inefficient for large inputs.
+
+A more efficient approach involves:
+1. Precomputing the GCD values for all possible pairs using a sieve-like method.
+2. Using the properties of GCD to aggregate results based on the frequency of each GCD value.
+3. Utilizing modular arithmetic to handle large numbers, as the result needs to be returned modulo \(10^9 + 7\).
+
+Tutorial:
+1. **Understanding GCD**: The GCD of two numbers can be computed using the Euclidean algorithm, which is efficient and works in logarithmic time relative to the smaller of the two numbers.
+2. **Precomputation**: Instead of calculating GCD for every pair, we can precompute the GCD values for all integers up to the maximum value in the array. This can be done using a nested loop where we store the counts of each GCD value.
+3. **Summation**: Once we have the counts of GCD values, we can compute the contribution of each GCD value to the total prettiness value by multiplying it with the corresponding GCD of indices.
+4. **Modular Arithmetic**: Since the result can be very large, we will take modulo \(10^9 + 7\) at each step to ensure we do not encounter overflow issues.
+
+High-level generic tutorial for solving such problems:
+- Break down the problem into smaller components.
+- Identify mathematical properties that can simplify the computation.
+- Use efficient data structures and algorithms to reduce time complexity.
+- Always consider edge cases and constraints provided in the problem statement.
+- Optimize for large inputs by precomputing values or using memoization where applicable.
+]]></algorithm>
+</root>
+```
+Given a problem, provide relevant problems then identify the algorithm behind it and also explain the tutorial of the algorithm.
+# Problem:
+The Winter holiday will be here soon. Mr. Chanek wants to decorate his house's wall with ornaments. The wall can be represented as a binary string a of length n. His favorite nephew has another binary string b of length m (m ≤ n).
+
+Mr. Chanek's nephew loves the non-negative integer k. His nephew wants exactly k occurrences of b as substrings in a. 
+
+However, Mr. Chanek does not know the value of k. So, for each k (0 ≤ k ≤ n - m + 1), find the minimum number of elements in a that have to be changed such that there are exactly k occurrences of b in a.
+
+A string s occurs exactly k times in t if there are exactly k different pairs (p,q) such that we can obtain s by deleting p characters from the beginning and q characters from the end of t.
+
+Input
+
+The first line contains two integers n and m (1 ≤ m ≤ n ≤ 500) — size of the binary string a and b respectively.
+
+The second line contains a binary string a of length n.
+
+The third line contains a binary string b of length m.
+
+Output
+
+Output n - m + 2 integers — the (k+1)-th integer denotes the minimal number of elements in a that have to be changed so there are exactly k occurrences of b as a substring in a.
+
+Example
+
+Input
+
+
+9 3
+100101011
+101
+
+
+Output
+
+
+1 1 0 1 6 -1 -1 -1
+
+Note
+
+For k = 0, to make the string a have no occurrence of 101, you can do one character change as follows.
+
+100101011 → 100100011
+
+For k = 1, you can also change a single character.
+
+100101011 → 100001011
+
+For k = 2, no changes are needed.
+
+-------
+Important Note: You must follow the input output format. Input must be taken from standard input and output must be given to standard output. The code will be tested against multiple test cases and all the test cases must be passed.
+
+# Exemplars:
+Recall three (03) relevant and distinct problems (different from problem mentioned above). For each problem,
+1. describe it
+2. generate Python3 code step by step to solve that problem
+3. finally generate a planning to solve that problem
+
+# Algorithm:
+
+----------------
+Important:
+Your response must follow the following xml format-
+
+<root>
+<problem>
+# Recall three (03) relevant and distinct problems (different from problem mentioned above). 
+# Write each problem in the following format.
+<description>
+# Describe the problem.
+</description>
+<code>
+# Let's think step by step to solve this problem in Python3 programming language.
+</code>
+<planning>
+# Planning to solve this problem.
+</planning>
+</problem>
+
+# similarly add more problems here...
+
+<algorithm>
+# Identify the algorithm (Brute-force, Dynamic Programming, Divide-and-conquer, Greedy, Backtracking, Recursive, Binary search, and so on)
+that needs to be used to solve the original problem.
+# Write a useful tutorial about the above mentioned algorithms.
+# Provide a high level generic tutorial for solving this types of problem. 
+# Do not generate code.
+</algorithm>
+</root>
+
+```xml
+<root>
+<problem>
+<description><![CDATA[
+The problem is to find the longest common subsequence (LCS) between two strings. Given two strings, we need to determine the length of the longest subsequence that can be derived from both strings without changing the order of characters. This is a classic problem in computer science and has applications in file comparison, DNA sequencing, and more.
+]]></description>
+<code><![CDATA[
+# Step 1: Define the function to calculate LCS
+def lcs(X, Y):
+    m = len(X)
+    n = len(Y)
+    
+    # Step 2: Create a 2D array to store lengths of longest common subsequence
+    L = [[0] * (n + 1) for _ in range(m + 1)]
+    
+    # Step 3: Build the L array in a bottom-up manner
+    for i in range(m + 1):
+        for j in range(n + 1):
+            if i == 0 or j == 0:
+                L[i][j] = 0
+            elif X[i - 1] == Y[j - 1]:
+                L[i][j] = L[i - 1][j - 1] + 1
+            else:
+                L[i][j] = max(L[i - 1][j], L[i][j - 1])
+    
+    # Step 4: The length of LCS is in L[m][n]
+    return L[m][n]
+
+# Example usage
+X = "AGGTAB"
+Y = "GXTXAYB"
+print("Length of LCS is", lcs(X, Y))
+]]></code>
+<planning><![CDATA[
+# 1. Define the function lcs that takes two strings as input.
+# 2. Initialize a 2D list L to store the lengths of LCS for substrings.
+# 3. Use nested loops to fill the L array based on character matches.
+# 4. Return the value in L[m][n] which represents the length of the LCS.
+]]></planning>
+</problem>
+
+<problem>
+<description><![CDATA[
+The problem is to find the minimum edit distance between two strings. Given two strings, we need to determine the minimum number of operations (insertions, deletions, substitutions) required to transform one string into the other. This problem is widely used in spell checking, DNA sequence analysis, and natural language processing.
+]]></description>
+<code><![CDATA[
+# Step 1: Define the function to calculate edit distance
+def edit_distance(str1, str2):
+    m = len(str1)
+    n = len(str2)
+    
+    # Step 2: Create a 2D array to store edit distances
+    dp = [[0] * (n + 1) for _ in range(m + 1)]
+    
+    # Step 3: Initialize the first row and column
+    for i in range(m + 1):
+        dp[i][0] = i
+    for j in range(n + 1):
+        dp[0][j] = j
+    
+    # Step 4: Fill the dp array
+    for i in range(1, m + 1):
+        for j in range(1, n + 1):
+            if str1[i - 1] == str2[j - 1]:
+                dp[i][j] = dp[i - 1][j - 1]
+            else:
+                dp[i][j] = 1 + min(dp[i - 1][j],    # Deletion
+                                   dp[i][j - 1],    # Insertion
+                                   dp[i - 1][j - 1]) # Substitution
+    
+    # Step 5: The edit distance is in dp[m][n]
+    return dp[m][n]
+
+# Example usage
+str1 = "kitten"
+str2 = "sitting"
+print("Edit distance is", edit_distance(str1, str2))
+]]></code>
+<planning><![CDATA[
+# 1. Define the function edit_distance that takes two strings as input.
+# 2. Initialize a 2D list dp to store edit distances.
+# 3. Set up the base cases for the first row and column.
+# 4. Use nested loops to fill the dp array based on the minimum operations.
+# 5. Return the value in dp[m][n] which represents the edit distance.
+]]></planning>
+</problem>
+
+<problem>
+<description><![CDATA[
+The problem is to find the maximum sum of a contiguous subarray within a one-dimensional array of numbers. This is known as the "Maximum Subarray Problem" and can be solved efficiently using Kadane's algorithm. The goal is to find the contiguous subarray that has the largest sum and return that sum.
+]]></description>
+<code><![CDATA[
+# Step 1: Define the function to find maximum subarray sum
+def max_subarray_sum(arr):
+    max_current = max_global = arr[0]
+    
+    # Step 2: Iterate through the array
+    for i in range(1, len(arr)):
+        max_current = max(arr[i], max_current + arr[i])
+        if max_current > max_global:
+            max_global = max_current
+    
+    # Step 3: Return the maximum sum found
+    return max_global
+
+# Example usage
+arr = [-2,1,-3,4,-1,2,1,-5,4]
+print("Maximum subarray sum is", max_subarray_sum(arr))
+]]></code>
+<planning><![CDATA[
+# 1. Define the function max_subarray_sum that takes an array as input.
+# 2. Initialize two variables to track the current and global maximum sums.
+# 3. Iterate through the array, updating the current maximum sum.
+# 4. Update the global maximum sum if the current maximum exceeds it.
+# 5. Return the global maximum sum found.
+]]></planning>
+</problem>
+
+<algorithm><![CDATA[
+The algorithm that needs to be used to solve the original problem is a combination of Brute-force and Dynamic Programming. The brute-force approach would involve checking all possible substrings and counting occurrences, while dynamic programming can be used to efficiently calculate the minimum changes needed to achieve the desired number of occurrences.
+
+Dynamic Programming Tutorial:
+Dynamic programming is a method for solving complex problems by breaking them down into simpler subproblems. It is applicable when the problem can be divided into overlapping subproblems that can be solved independently. The key steps in dynamic programming are:
+
+1. **Define the State**: Identify the parameters that define the state of the problem.
+2. **Recurrence Relation**: Establish a relation that expresses the solution of the problem in terms of solutions to smaller subproblems.
+3. **Base Cases**: Define the base cases that will serve as the foundation for building up the solution.
+4. **Iterative or Recursive Approach**: Implement the solution using either an iterative approach (bottom-up) or a recursive approach (top-down with memoization).
+5. **Optimization**: Optimize the space complexity if necessary by using techniques like rolling arrays.
+
+High-Level Generic Tutorial:
+1. **Understand the Problem**: Clearly define what is being asked and identify the inputs and outputs.
+2. **Identify Constraints**: Note any constraints that may affect the solution, such as time complexity and space complexity.
+3. **Choose the Right Algorithm**: Based on the problem type, choose an appropriate algorithm (e.g., dynamic programming, greedy, etc.).
+4. **Implement the Solution**: Write the code step by step, testing as you go to ensure correctness.
+5. **Test with Edge Cases**: Validate the solution with various test cases, including edge cases to ensure robustness.
+]]></algorithm>
+</root>
+```
+Given a problem, provide relevant problems then identify the algorithm behind it and also explain the tutorial of the algorithm.
+# Problem:
+Chanek Jones is back, helping his long-lost relative Indiana Jones, to find a secret treasure in a maze buried below a desert full of illusions.
+
+The map of the labyrinth forms a tree with n rooms numbered from 1 to n and n - 1 tunnels connecting them such that it is possible to travel between each pair of rooms through several tunnels.
+
+The i-th room (1 ≤ i ≤ n) has a_i illusion rate. To go from the x-th room to the y-th room, there must exist a tunnel between x and y, and it takes max(|a_x + a_y|, |a_x - a_y|) energy. |z| denotes the absolute value of z.
+
+To prevent grave robbers, the maze can change the illusion rate of any room in it. Chanek and Indiana would ask q queries.
+
+There are two types of queries to be done:
+
+  * 1\ u\ c — The illusion rate of the x-th room is changed to c (1 ≤ u ≤ n, 0 ≤ |c| ≤ 10^9). 
+  * 2\ u\ v — Chanek and Indiana ask you the minimum sum of energy needed to take the secret treasure at room v if they are initially at room u (1 ≤ u, v ≤ n). 
+
+
+
+Help them, so you can get a portion of the treasure!
+
+Input
+
+The first line contains two integers n and q (2 ≤ n ≤ 10^5, 1 ≤ q ≤ 10^5) — the number of rooms in the maze and the number of queries.
+
+The second line contains n integers a_1, a_2, …, a_n (0 ≤ |a_i| ≤ 10^9) — inital illusion rate of each room.
+
+The i-th of the next n-1 lines contains two integers s_i and t_i (1 ≤ s_i, t_i ≤ n), meaning there is a tunnel connecting s_i-th room and t_i-th room. The given edges form a tree.
+
+The next q lines contain the query as described. The given queries are valid.
+
+Output
+
+For each type 2 query, output a line containing an integer — the minimum sum of energy needed for Chanek and Indiana to take the secret treasure.
+
+Example
+
+Input
+
+
+6 4
+10 -9 2 -1 4 -6
+1 5
+5 4
+5 6
+6 2
+6 3
+2 1 2
+1 1 -3
+2 1 2
+2 3 3
+
+
+Output
+
+
+39
+32
+0
+
+Note
+
+<image>
+
+In the first query, their movement from the 1-st to the 2-nd room is as follows.
+
+  * 1 → 5 — takes max(|10 + 4|, |10 - 4|) = 14 energy. 
+  * 5 → 6 — takes max(|4 + (-6)|, |4 - (-6)|) = 10 energy. 
+  * 6 → 2 — takes max(|-6 + (-9)|, |-6 - (-9)|) = 15 energy. 
+
+In total, it takes 39 energy.
+
+In the second query, the illusion rate of the 1-st room changes from 10 to -3.
+
+In the third query, their movement from the 1-st to the 2-nd room is as follows.
+
+  * 1 → 5 — takes max(|-3 + 4|, |-3 - 4|) = 7 energy. 
+  * 5 → 6 — takes max(|4 + (-6)|, |4 - (-6)|) = 10 energy. 
+  * 6 → 2 — takes max(|-6 + (-9)|, |-6 - (-9)|) = 15 energy. 
+
+
+
+Now, it takes 32 energy.
+
+-------
+Important Note: You must follow the input output format. Input must be taken from standard input and output must be given to standard output. The code will be tested against multiple test cases and all the test cases must be passed.
+
+# Exemplars:
+Recall three (03) relevant and distinct problems (different from problem mentioned above). For each problem,
+1. describe it
+2. generate Python3 code step by step to solve that problem
+3. finally generate a planning to solve that problem
+
+# Algorithm:
+
+----------------
+Important:
+Your response must follow the following xml format-
+
+<root>
+<problem>
+# Recall three (03) relevant and distinct problems (different from problem mentioned above). 
+# Write each problem in the following format.
+<description>
+# Describe the problem.
+</description>
+<code>
+# Let's think step by step to solve this problem in Python3 programming language.
+</code>
+<planning>
+# Planning to solve this problem.
+</planning>
+</problem>
+
+# similarly add more problems here...
+
+<algorithm>
+# Identify the algorithm (Brute-force, Dynamic Programming, Divide-and-conquer, Greedy, Backtracking, Recursive, Binary search, and so on)
+that needs to be used to solve the original problem.
+# Write a useful tutorial about the above mentioned algorithms.
+# Provide a high level generic tutorial for solving this types of problem. 
+# Do not generate code.
+</algorithm>
+</root>
+
+```xml
+<root>
+<problem>
+<description><![CDATA[
+The problem involves finding the shortest path in a weighted graph where the weights are determined by the values of nodes. Given a tree structure, we need to handle updates to node values and compute the minimum energy required to traverse between two nodes based on the current values.
+]]></description>
+<code><![CDATA[
+# Step 1: Parse the input to get the number of rooms (nodes) and queries.
+n, q = map(int, input().split())
+# Step 2: Read the illusion rates for each room.
+illusion_rates = list(map(int, input().split()))
+# Step 3: Construct the tree using adjacency lists.
+from collections import defaultdict
+tree = defaultdict(list)
+for _ in range(n - 1):
+    s, t = map(int, input().split())
+    tree[s].append(t)
+    tree[t].append(s)
+# Step 4: Define a function to calculate the energy between two rooms.
+def calculate_energy(x, y):
+    return max(abs(illusion_rates[x - 1] + illusion_rates[y - 1]), abs(illusion_rates[x - 1] - illusion_rates[y - 1]))
+# Step 5: Handle the queries.
+for _ in range(q):
+    query = list(map(int, input().split()))
+    if query[0] == 1:  # Update query
+        u, c = query[1], query[2]
+        illusion_rates[u - 1] = c
+    elif query[0] == 2:  # Energy calculation query
+        u, v = query[1], query[2]
+        # Perform a BFS or DFS to find the path from u to v and calculate the total energy.
+        # (This part would require additional implementation for pathfinding.)
+]]></code>
+]]></planning>
+<planning><![CDATA[
+# 1. Read the number of rooms and queries.
+# 2. Read the initial illusion rates for each room.
+# 3. Construct the tree using an adjacency list.
+# 4. Implement a function to calculate the energy required to move between two rooms.
+# 5. For each query:
+#    - If it's an update query, change the illusion rate of the specified room.
+#    - If it's an energy calculation query, find the path from the starting room to the destination room and sum the energy costs.
+# 6. Output the results for each energy calculation query.
+]]></planning>
+</problem>
+
+<problem>
+<description><![CDATA[
+Given a grid of size m x n filled with 0s and 1s, where 1 represents land and 0 represents water, the task is to count the number of islands. An island is surrounded by water and is formed by connecting adjacent lands horizontally or vertically.
+]]></description>
+<code><![CDATA[
+# Step 1: Parse the input to get the dimensions of the grid.
+m, n = map(int, input().split())
+# Step 2: Read the grid.
+grid = [list(map(int, input().split())) for _ in range(m)]
+# Step 3: Define a function to perform DFS to mark the visited land.
+def dfs(i, j):
+    if i < 0 or i >= m or j < 0 or j >= n or grid[i][j] == 0:
+        return
+    grid[i][j] = 0  # Mark the land as visited
+    # Explore all four directions
+    dfs(i + 1, j)
+    dfs(i - 1, j)
+    dfs(i, j + 1)
+    dfs(i, j - 1)
+# Step 4: Count the number of islands.
+island_count = 0
+for i in range(m):
+    for j in range(n):
+        if grid[i][j] == 1:  # Found an unvisited land
+            dfs(i, j)  # Mark all connected lands
+            island_count += 1
+# Step 5: Output the number of islands.
+print(island_count)
+]]></code>
+]]></planning>
+<planning><![CDATA[
+# 1. Read the dimensions of the grid.
+# 2. Read the grid data.
+# 3. Implement a DFS function to explore and mark connected lands.
+# 4. Iterate through each cell in the grid, and for each unvisited land, call the DFS function and increment the island count.
+# 5. Print the total number of islands found.
+]]></planning>
+</problem>
+
+<problem>
+<description><![CDATA[
+You are given an array of integers and a target sum. The task is to find all unique combinations of numbers in the array that add up to the target sum. Each number in the array can be used multiple times in the combination.
+]]></description>
+<code><![CDATA[
+# Step 1: Parse the input to get the array and the target sum.
+arr = list(map(int, input().split()))
+target = int(input())
+# Step 2: Sort the array to facilitate combination generation.
+arr.sort()
+# Step 3: Define a function to find combinations using backtracking.
+def backtrack(start, path, remaining):
+    if remaining == 0:
+        result.append(path)
+        return
+    for i in range(start, len(arr)):
+        if arr[i] > remaining:  # No need to continue if the number exceeds the remaining sum
+            break
+        backtrack(i, path + [arr[i]], remaining - arr[i])
+# Step 4: Initialize the result list and call the backtracking function.
+result = []
+backtrack(0, [], target)
+# Step 5: Output the unique combinations found.
+for combination in result:
+    print(combination)
+]]></code>
+]]></planning>
+<planning><![CDATA[
+# 1. Read the array and the target sum.
+# 2. Sort the array to help with combination generation.
+# 3. Implement a backtracking function to explore all possible combinations.
+# 4. For each valid combination that sums to the target, add it to the result list.
+# 5. Print all unique combinations found.
+]]></planning>
+</problem>
+
+<algorithm><![CDATA[
+The algorithm used to solve the original problem is a combination of Depth-First Search (DFS) for pathfinding in the tree structure and dynamic updates for the illusion rates. 
+
+### Tutorial on DFS:
+Depth-First Search (DFS) is a fundamental algorithm used for traversing or searching tree or graph data structures. The algorithm starts at the root (or an arbitrary node) and explores as far as possible along each branch before backtracking. 
+
+**Steps to implement DFS:**
+1. **Initialization**: Start from a node and mark it as visited.
+2. **Recursion**: For each unvisited adjacent node, call the DFS function recursively.
+3. **Backtracking**: Once all adjacent nodes are visited, backtrack to explore other branches.
+
+**Use Cases**: DFS is used in various applications such as finding connected components in a graph, solving puzzles, and pathfinding in mazes.
+
+### High-Level Generic Tutorial for Solving Similar Problems:
+1. **Understand the Problem**: Clearly define the inputs, outputs, and constraints.
+2. **Choose the Right Data Structure**: Depending on the problem, select appropriate data structures (e.g., trees, graphs, arrays).
+3. **Identify the Algorithm**: Determine if the problem can be solved using DFS, BFS, dynamic programming, etc.
+4. **Implement the Solution**: Write the code step by step, ensuring to handle edge cases.
+5. **Test the Solution**: Validate the solution with various test cases to ensure correctness and efficiency.
+]]></algorithm>
+</root>
+```
+Given a problem, provide relevant problems then identify the algorithm behind it and also explain the tutorial of the algorithm.
+# Problem:
+Chanek Jones is back, helping his long-lost relative Indiana Jones, to find a secret treasure in a maze buried below a desert full of illusions.
+
+The map of the labyrinth forms a tree with n rooms numbered from 1 to n and n - 1 tunnels connecting them such that it is possible to travel between each pair of rooms through several tunnels.
+
+The i-th room (1 ≤ i ≤ n) has a_i illusion rate. To go from the x-th room to the y-th room, there must exist a tunnel between x and y, and it takes max(|a_x + a_y|, |a_x - a_y|) energy. |z| denotes the absolute value of z.
+
+To prevent grave robbers, the maze can change the illusion rate of any room in it. Chanek and Indiana would ask q queries.
+
+There are two types of queries to be done:
+
+  * 1\ u\ c — The illusion rate of the x-th room is changed to c (1 ≤ u ≤ n, 0 ≤ |c| ≤ 10^9). 
+  * 2\ u\ v — Chanek and Indiana ask you the minimum sum of energy needed to take the secret treasure at room v if they are initially at room u (1 ≤ u, v ≤ n). 
+
+
+
+Help them, so you can get a portion of the treasure!
+
+Input
+
+The first line contains two integers n and q (2 ≤ n ≤ 10^5, 1 ≤ q ≤ 10^5) — the number of rooms in the maze and the number of queries.
+
+The second line contains n integers a_1, a_2, …, a_n (0 ≤ |a_i| ≤ 10^9) — inital illusion rate of each room.
+
+The i-th of the next n-1 lines contains two integers s_i and t_i (1 ≤ s_i, t_i ≤ n), meaning there is a tunnel connecting s_i-th room and t_i-th room. The given edges form a tree.
+
+The next q lines contain the query as described. The given queries are valid.
+
+Output
+
+For each type 2 query, output a line containing an integer — the minimum sum of energy needed for Chanek and Indiana to take the secret treasure.
+
+Example
+
+Input
+
+
+6 4
+10 -9 2 -1 4 -6
+1 5
+5 4
+5 6
+6 2
+6 3
+2 1 2
+1 1 -3
+2 1 2
+2 3 3
+
+
+Output
+
+
+39
+32
+0
+
+Note
+
+<image>
+
+In the first query, their movement from the 1-st to the 2-nd room is as follows.
+
+  * 1 → 5 — takes max(|10 + 4|, |10 - 4|) = 14 energy. 
+  * 5 → 6 — takes max(|4 + (-6)|, |4 - (-6)|) = 10 energy. 
+  * 6 → 2 — takes max(|-6 + (-9)|, |-6 - (-9)|) = 15 energy. 
+
+In total, it takes 39 energy.
+
+In the second query, the illusion rate of the 1-st room changes from 10 to -3.
+
+In the third query, their movement from the 1-st to the 2-nd room is as follows.
+
+  * 1 → 5 — takes max(|-3 + 4|, |-3 - 4|) = 7 energy. 
+  * 5 → 6 — takes max(|4 + (-6)|, |4 - (-6)|) = 10 energy. 
+  * 6 → 2 — takes max(|-6 + (-9)|, |-6 - (-9)|) = 15 energy. 
+
+
+
+Now, it takes 32 energy.
+
+-------
+Important Note: You must follow the input output format. Input must be taken from standard input and output must be given to standard output. The code will be tested against multiple test cases and all the test cases must be passed.
+
+# Exemplars:
+Recall three (03) relevant and distinct problems (different from problem mentioned above). For each problem,
+1. describe it
+2. generate Python3 code step by step to solve that problem
+3. finally generate a planning to solve that problem
+
+# Algorithm:
+
+----------------
+Important:
+Your response must follow the following xml format-
+
+<root>
+<problem>
+# Recall three (03) relevant and distinct problems (different from problem mentioned above). 
+# Write each problem in the following format.
+<description>
+# Describe the problem.
+</description>
+<code>
+# Let's think step by step to solve this problem in Python3 programming language.
+</code>
+<planning>
+# Planning to solve this problem.
+</planning>
+</problem>
+
+# similarly add more problems here...
+
+<algorithm>
+# Identify the algorithm (Brute-force, Dynamic Programming, Divide-and-conquer, Greedy, Backtracking, Recursive, Binary search, and so on)
+that needs to be used to solve the original problem.
+# Write a useful tutorial about the above mentioned algorithms.
+# Provide a high level generic tutorial for solving this types of problem. 
+# Do not generate code.
+</algorithm>
+</root>
+
+```xml
+<root>
+<problem>
+<description><![CDATA[
+The problem involves finding the shortest path in a weighted graph where the weights are determined by the values associated with the nodes. The graph is a tree structure, and the challenge is to efficiently handle updates to node values and compute the minimum energy required to traverse between two nodes.
+]]></description>
+<code><![CDATA[
+# Step 1: Parse the input to get the number of rooms (nodes) and queries.
+n, q = map(int, input().split())
+# Step 2: Read the illusion rates for each room.
+a = list(map(int, input().split()))
+# Step 3: Construct the tree using adjacency lists.
+from collections import defaultdict
+tree = defaultdict(list)
+for _ in range(n - 1):
+    s, t = map(int, input().split())
+    tree[s].append(t)
+    tree[t].append(s)
+
+# Step 4: Define a function to calculate the energy between two rooms.
+def energy(x, y):
+    return max(abs(a[x - 1] + a[y - 1]), abs(a[x - 1] - a[y - 1]))
+
+# Step 5: Handle the queries.
+for _ in range(q):
+    query = list(map(int, input().split()))
+    if query[0] == 1:
+        # Update the illusion rate of room u to c.
+        u, c = query[1], query[2]
+        a[u - 1] = c
+    elif query[0] == 2:
+        # Calculate the minimum energy from room u to room v.
+        u, v = query[1], query[2]
+        # Use BFS or DFS to find the path from u to v and calculate total energy.
+        # (This part would require additional implementation for pathfinding.)
+]]></code>
+]]></planning>
+<planning><![CDATA[
+# 1. Read the number of rooms and queries.
+# 2. Read the initial illusion rates for each room.
+# 3. Construct the tree using an adjacency list.
+# 4. Define a function to calculate the energy required to move between two rooms.
+# 5. Process each query:
+#    - For type 1 queries, update the illusion rate of the specified room.
+#    - For type 2 queries, find the path from the starting room to the destination room and calculate the total energy required.
+# 6. Output the results for each type 2 query.
+]]></planning>
+</problem>
+
+<problem>
+<description><![CDATA[
+Given a grid of size m x n, where each cell contains a non-negative integer representing the cost to enter that cell, the goal is to find the minimum cost to reach the bottom-right corner from the top-left corner, moving only down or right.
+]]></description>
+<code><![CDATA[
+# Step 1: Parse the input to get the dimensions of the grid and the grid itself.
+m, n = map(int, input().split())
+grid = [list(map(int, input().split())) for _ in range(m)]
+
+# Step 2: Create a DP table to store the minimum cost to reach each cell.
+dp = [[0] * n for _ in range(m)]
+dp[0][0] = grid[0][0]
+
+# Step 3: Fill the first row and first column of the DP table.
+for i in range(1, m):
+    dp[i][0] = dp[i - 1][0] + grid[i][0]
+for j in range(1, n):
+    dp[0][j] = dp[0][j - 1] + grid[0][j]
+
+# Step 4: Fill the rest of the DP table.
+for i in range(1, m):
+    for j in range(1, n):
+        dp[i][j] = min(dp[i - 1][j], dp[i][j - 1]) + grid[i][j]
+
+# Step 5: The minimum cost to reach the bottom-right corner is in dp[m-1][n-1].
+print(dp[m - 1][n - 1])
+]]></code>
+]]></planning>
+<planning><![CDATA[
+# 1. Read the dimensions of the grid and the grid values.
+# 2. Initialize a DP table to store the minimum costs.
+# 3. Fill the first row and first column of the DP table based on the grid values.
+# 4. Iterate through the grid, filling the DP table with the minimum cost to reach each cell.
+# 5. Output the minimum cost to reach the bottom-right corner of the grid.
+]]></planning>
+</problem>
+
+<problem>
+<description><![CDATA[
+You are given a list of integers representing the heights of bars in a histogram. The task is to find the area of the largest rectangle that can be formed within the histogram.
+]]></description>
+<code><![CDATA[
+# Step 1: Parse the input to get the number of bars and their heights.
+heights = list(map(int, input().split()))
+
+# Step 2: Initialize a stack to keep track of the indices of the bars.
+stack = []
+max_area = 0
+
+# Step 3: Iterate through the heights.
+for i in range(len(heights)):
+    while stack and heights[stack[-1]] > heights[i]:
+        h = heights[stack.pop()]
+        w = i if not stack else i - stack[-1] - 1
+        max_area = max(max_area, h * w)
+    stack.append(i)
+
+# Step 4: Handle remaining bars in the stack.
+while stack:
+    h = heights[stack.pop()]
+    w = len(heights) if not stack else len(heights) - stack[-1] - 1
+    max_area = max(max_area, h * w)
+
+# Step 5: Output the maximum area found.
+print(max_area)
+]]></code>
+]]></planning>
+<planning><![CDATA[
+# 1. Read the heights of the bars in the histogram.
+# 2. Initialize a stack to keep track of the indices of the bars.
+# 3. Iterate through the heights, using the stack to calculate the area of rectangles formed by the bars.
+# 4. After processing all bars, handle any remaining bars in the stack to calculate their areas.
+# 5. Output the maximum area found.
+]]></planning>
+</problem>
+
+<algorithm><![CDATA[
+The algorithm used to solve the original problem is a combination of Depth-First Search (DFS) for pathfinding in a tree and dynamic programming for efficiently calculating the energy costs based on the illusion rates.
+
+### Tutorial on DFS and Dynamic Programming:
+1. **Depth-First Search (DFS)**:
+   - DFS is a traversal algorithm used for exploring nodes and edges of a graph. It starts at a root node and explores as far as possible along each branch before backtracking.
+   - It can be implemented using recursion or a stack.
+   - DFS is useful for problems involving tree structures, such as finding paths or calculating properties of nodes.
+
+2. **Dynamic Programming (DP)**:
+   - DP is an optimization technique used to solve problems by breaking them down into simpler subproblems and storing the results of these subproblems to avoid redundant calculations.
+   - It is particularly effective for problems with overlapping subproblems and optimal substructure properties.
+   - In the context of the original problem, DP can be used to store the minimum energy costs for paths between rooms, allowing for efficient updates and queries.
+
+### High-Level Generic Tutorial:
+- Identify the structure of the problem (e.g., tree, graph, grid).
+- Determine if the problem can be broken down into smaller subproblems (DP).
+- Choose an appropriate traversal method (DFS/BFS) for exploring the structure.
+- Implement the solution iteratively or recursively, ensuring to handle updates and queries efficiently.
+- Test the solution against various cases to ensure correctness and performance.
+]]></algorithm>
+</root>
+```

@@ -38,7 +38,8 @@ parser.add_argument(
         "Analogical",
         "MapCoder",
         "MapCoder_test",
-        "MapCoder_without_KB"
+        "MapCoder_without_KB",
+        "MapCoder_moreDebug"
     ]
 )
 parser.add_argument(
