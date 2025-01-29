@@ -5,7 +5,7 @@ import json
 import re
 import sys
 import time
-import promptings.agents as agents
+
 from copy import deepcopy
 import xml.etree.ElementTree as ET
 
@@ -42,14 +42,12 @@ class MapCoder(BaseStrategy):
         self,
         k: int = 3,
         t: int = 5,
-        usage: dict = {},
         *args,
         **kwargs
     ):
         super().__init__(*args, **kwargs)
         self.k = k
         self.t = t
-        self.usage = usage
 
     def xml_to_dict(self, element):
         result = {}
@@ -144,18 +142,6 @@ class MapCoder(BaseStrategy):
             code_str = response
 
         return code_str
-    
-    def update_usage(self,item:dict,pr_tok,com_tok) -> None:
-        item.setdefault('api_calls', 0)
-        self.usage.setdefault('pr_tok', 0)
-        self.usage.setdefault('com_tok', 0)
-        self.usage.setdefault('api_calls', 0)
-
-        # 更新计数
-        item['api_calls'] += 1
-        self.usage['pr_tok'] += pr_tok
-        self.usage['com_tok'] += com_tok
-        self.usage['api_calls'] = item['api_calls']
 
     @staticmethod
     def trim_text(text: str, trimmed_text: str):
@@ -180,19 +166,58 @@ class MapCoder(BaseStrategy):
     def run_single_pass(self, item: dict):
         print("", flush=True)
 
-        task = self.data.get_prompt(item)
+        input_kb_exemplars = [
+            {
+                "role": "user",
+                "content": f"""Given a problem, provide relevant problems then identify the algorithm behind it and also explain the tutorial of the algorithm.
+# Problem:
+{self.data.get_prompt(item)}
 
-        # Knowledge Retrieval Agent
-        kb_name = "knowledge retrieval agent"
-        kb_prompt = agents.get_knowledge_retrieval_agent(self.k, task)
+# Exemplars:
+Recall {mapping[self.k]} relevant and distinct problems (different from problem mentioned above). For each problem,
+1. describe it
+2. generate {self.language} code step by step to solve that problem
+3. finally generate a planning to solve that problem
 
-        agents.get_input(kb_name, kb_prompt)
+# Algorithm:
+
+----------------
+Important:
+Your response must follow the following xml format-
+
+<root>
+<problem>
+# Recall {mapping[self.k]} relevant and distinct problems (different from problem mentioned above). Write each problem in the following format.
+<description>
+# Describe the problem.
+</description>
+<code>
+# Let's think step by step to solve this problem in {self.language} programming language.
+</code>
+<planning>
+# Planning to solve this problem.
+</planning>
+</problem>
+
+# similarly add more problems here...
+
+<algorithm>
+# Identify the algorithm (Brute-force, Dynamic Programming, Divide-and-conquer, Greedy, Backtracking, Recursive, Binary search, and so on) that needs to be used to solve the original problem.
+# Write a useful tutorial about the above mentioned algorithms. Provide a high level generic tutorial for solving this types of problem. Do not generate code.
+</algorithm>
+</root>
+""",
+            },
+        ]
+
+        print("\n\n________________________")
+        print("Input for knowledge base and exemplars: ")
+        print(input_kb_exemplars[0]['content'], flush=True)
 
         response, pr_tok, com_tok = self.gpt_chat(
-            processed_input= kb_prompt
+            processed_input=input_kb_exemplars
         )
-
-        self.update_usage(item,pr_tok,com_tok)
+        item['api_calls'] = item.get('api_calls', 0) + 1
 
         # Post processing
         response = self.trim_text(
@@ -208,7 +233,10 @@ class MapCoder(BaseStrategy):
         response = self.replace_tag(response, 'code')
         response = self.replace_tag(response, 'planning')
 
-        agents.get_output(kb_name, response)
+        print("\n\n________________________")
+        print("Response from knowledge base and exemplars: ")
+        print(response, flush=True)
+
         response = self.parse_xml(response)
 
         algorithm_prompt = f"## Relevant Algorithm to solve the next problem:\n{ response['algorithm']}"
@@ -220,30 +248,50 @@ class MapCoder(BaseStrategy):
             example_problem = example["description"]
             example_planning = example["planning"]
 
-            planning_name = "planning agent"
-            planning_prompt = agents.get_planning_agent(example_problem, example_planning, algorithm_prompt, task, sample_io_prompt)
+            input_for_problem_planning = [
+                {
+                    "role": "user",
+                    "content": f"Given a competitive programming problem generate a concrete planning to solve the problem.\n# Problem:\n{example_problem}\n# Planning:\n{example_planning}\n{algorithm_prompt}\n## Problem to be solved:\n{self.data.get_prompt(item)}\n{sample_io_prompt}\n## Planning:\n\n----------------\nImportant: You should give only the planning to solve the problem. Do not add extra explanation or words."
+                }
+            ]
 
-            agents.get_input(planning_name, planning_prompt)
+            print("\n\n________________________")
+            print(
+                f"Input for our problem planning using example: {example_no}: ")
+            print(input_for_problem_planning[0]['content'], flush=True)
 
-            planning, pr_tok, com_tok = self.gpt_chat(
-                planning_prompt
+            planning, pr_tok_1, com_tok_1 = self.gpt_chat(
+                input_for_problem_planning
             )
+            item['api_calls'] += 1
+            # time.sleep(1)
+            pr_tok += pr_tok_1
+            com_tok += com_tok_1
 
-            self.update_usage(item, pr_tok, com_tok)
+            # planning = self.parse_xml(planning)
+            # planning['confidence'] = int(str(planning['confidence']).strip())
 
-            agents.get_output(planning_name, planning)
+            print("\n\n________________________")
+            print("Response from our problem planning: ")
+            print(planning, flush=True)
 
-            
-            planning_verification_name = "planning verification agent"
-            plannign_verification_prompt = agents.get_planning_verification(task, planning)
+            input_for_planning_verification = [
+                {
+                    "role": "user",
+                    "content": f"Given a competitive programming problem and a plan to solve the problem in {self.language}, tell whether the plan is correct to solve this problem.\n\n# Problem:\n{self.data.get_prompt(item)}\n# Planning:\n{planning}\n\n----------------\nImportant: Your response must follow the following xml format-```\n<root>\n<explanation> Discuss whether the given competitive programming problem is solvable by using the above mentioned planning.</explanation>\n<confidence> Confidence score regarding the solvability of the problem. Must be an integer between 0 and 100. </confidence>\n</root>\n```"
+                }
+            ]
 
-            agents.get_input(planning_verification_name, plannign_verification_prompt)
-            
-            verification_res, pr_tok, com_tok = self.gpt_chat(
-                plannign_verification_prompt
+            print("Input for planning verification: ")
+            print(input_for_planning_verification[0]['content'], flush=True)
+
+            verification_res, pr_tok_1, com_tok_1 = self.gpt_chat(
+                input_for_planning_verification
             )
-
-            self.update_usage(item, pr_tok, com_tok)
+            item['api_calls'] += 1
+            # time.sleep(1)
+            pr_tok += pr_tok_1
+            com_tok += com_tok_1
 
             verification_res = self.replace_tag(
                 verification_res, 'explanation')
@@ -254,7 +302,8 @@ class MapCoder(BaseStrategy):
             verification_res['confidence'] = int(
                 str(verification_res['confidence']).strip())
 
-            agents.get_output(planning_verification_name, verification_res)
+            print("Response from planning verification: ")
+            print(verification_res, flush=True)
 
             plannings.append((
                 planning,
@@ -262,64 +311,84 @@ class MapCoder(BaseStrategy):
                 example
             ))
 
+            # if type(self.data) == MBPPDataset and verification_res['confidence'] == 100:
+            #     break
+
         plannings.sort(key=lambda x: x[1], reverse=True)
+        # time.sleep(1)
 
         if type(self.data) == APPSDataset or type(self.data) == CodeContestDataset or type(self.data) == XCodeDataset:
             std_input_prompt = "## Note: Strictly follow the input and output format. The input should be taken from Standard input and output should be given to standard output. If you are writing a function then after the function definition take input using `input()` function then call the function with specified parameters and finally print the output of the function. Do not add extra print statement otherwise it will failed the test cases."
         else:
             std_input_prompt = ""
+        
+        planning, confidence, example = plannings[0]
 
-        for planning_with_ex in plannings:
-            planning, confidence, example = planning_with_ex
+        input_for_final_code_generation = [
+            {
+                "role": "user",
+                "content": f"Given a competitive programming problem generate {self.language} code to solve the problem.\n{algorithm_prompt}\n## Problem to be solved:\n{self.data.get_prompt(item)}\n## Planning:\n{planning}\n{sample_io_prompt}\n## Let's think step by step.\n\n----------------\nImportant:\n{std_input_prompt}\n## Your response must contain only the {self.language} code to solve this problem. Do not add extra explanation or words."
+            }
+        ]
 
-            coding_agent_name = "coding agent"
-            coding_agent_prompt = agents.get_coding_agent(algorithm_prompt, task, planning, sample_io_prompt, std_input_prompt)
+        print("\n\n________________________")
+        print("Input for final code generation: ")
+        print(input_for_final_code_generation[0]['content'], flush=True)
 
-            agents.get_input(coding_agent_name, coding_agent_prompt)
+        code, pr_tok_1, com_tok_1 = self.gpt_chat(
+            input_for_final_code_generation
+        )
+        item['api_calls'] += 1
+        # time.sleep(1)
 
-            code, pr_tok, com_tok = self.gpt_chat(
-                coding_agent_prompt
+        code = self.parse_code(code)
+        pr_tok += pr_tok_1
+        com_tok += com_tok_1
+
+        print("\n\n________________________")
+        print("Response from final code generation: ")
+        print(code, flush=True)
+
+        response = f"## Planning: {planning}\n## Code:\n```\n{code}\n```"
+        passed = False
+
+        for i in range(1, self.t + 1):
+            passed, test_log = self.data.evaluate_sample_io(
+                item,
+                code,
+                self.language
             )
 
-            self.update_usage(item, pr_tok, com_tok)
-            
-            agents.get_output(coding_agent_name, code)
-            
-            code = self.parse_code(response)
-            
-            response = f"## Planning: {planning}\n## Code:\n```\n{code}\n```"
-            passed = False
-
-            for i in range(1, self.t + 1):
-                passed, test_log = self.data.evaluate_sample_io(
-                    item,
-                    code,
-                    self.language
-                )
-
-                if passed:
-                    break
-
-                print(f"Input for improving code generation: {i}")
-
-                debugging_agent_name = "debugging agent"
-                debugging_agent_prompt = agents.get_code_debug(algorithm_prompt, task, response, test_log, std_input_prompt)
-
-                agents.get_input(debugging_agent_name, debugging_agent_prompt)
-
-                response, pr_tok, com_tok = self.gpt_chat(
-                    debugging_agent_prompt
-                )
-
-                self.update_usage(item, pr_tok, com_tok)
-
-                agents.get_output(debugging_agent_name, response)
-
-                code = self.parse_code(response)
-
-            # got a code that passed all sample test cases
             if passed:
                 break
+
+            print(f"Input for improving code generation: {i}")
+            input_for_improving_code = [
+                {
+                    "role": "user",
+                    "content": f"Given a competitive programming problem you have generated {self.language} code to solve the problem. But the generated code can not pass sample test cases. Improve your code to solve the problem correctly.\n{algorithm_prompt}\n## Problem to be solved:\n{self.data.get_prompt(item)}\n{response}\n## Test Report:\n{test_log}\n## Modified Planning:\n## Let's think step by step to modify {self.language} Code for solving this problem.\n\n----------------\nImportant:\n{std_input_prompt}\n## Your response must contain the modified planning and then the {self.language} code inside ``` block to solve this problem."
+                }
+            ]
+
+            print("\n\n________________________")
+            print("Input for improving code generation: ")
+            print(input_for_improving_code[0]['content'], flush=True)
+
+            response, pr_tok_1, com_tok_1 = self.gpt_chat(
+                input_for_improving_code
+            )
+            item['api_calls'] += 1
+            # time.sleep(1)
+
+            code = self.parse_code(response)
+            pr_tok += pr_tok_1
+            com_tok += com_tok_1
+
+            print("\n\n________________________")
+            print("Response from improving code generation: ")
+            print(response, flush=True)
+
+        # got a code that passed all sample test cases
 
         print("________________________\n\n", flush=True)
         return code, pr_tok, com_tok

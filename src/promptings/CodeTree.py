@@ -1,36 +1,21 @@
 # LICENSE HEADER MANAGED BY add-license-header
 #
-# /*
-#  * Copyright (c) 2023, Salesforce, Inc.
-#  * SPDX-License-Identifier: Apache-2
-#  *
-#  * Licensed under the Apache License, Version 2.0 (the "License");
-#  * you may not use this file except in compliance with the License.
-#  * You may obtain a copy of the License at
-#  *
-#  *     http://www.apache.org/licenses/LICENSE-2.0
-#  *
-#  * Unless required by applicable law or agreed to in writing, software
-#  * distributed under the License is distributed on an "AS IS" BASIS,
-#  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-#  * See the License for the specific language governing permissions and
-#  * limitations under the License.
-#  */
-#
+#  gen test eval
+# executor
+# model
 
 import openai
 from utils import make_printv, write_jsonl
-from executors import executor_factory
-from generators import generator_factory, model_factory
+# from executors import executor_factory
+# from generators import generator_factory, model_factory
 from typing import List
 import sys
-from common import gen_test_eval
+# from common import gen_test_eval
 from collections import Counter
 
 sys.set_int_max_str_digits(100000)  # Increase the limit to 10000 digits
 
 ADD_HINT = "To solve the problem, you can refer the hint given by an expert, and complete the details by analyzing it first.\nHint:"
-
 # TODO: From sample to list
 class Node:
     def __init__(self, solution: str, parent=None, strategy="", reflection="", depth=0):
@@ -62,8 +47,15 @@ class Node:
     def update(self, reward: float):
         self.visits += 1
         self.value += reward
-
     # only keeps the most recent blocks
+def executor_factory():
+    pass
+
+def model_factory():
+    pass
+
+def generator_factory():
+    pass
 
 def eval_node(prompt, node:Node, gen, model, max_depth=3):
     """
@@ -98,6 +90,8 @@ def step_verify(gen, exe, item, solution, model):
 def rerank_list_of_nodes(list_of_nodes):
     return sorted(list_of_nodes, key=lambda x:x.value, reverse=True) # small value in the front
 
+
+
 def agent_guide(
         dataset: List[dict],
         model_name: str,
@@ -112,7 +106,7 @@ def agent_guide(
     print("max_depth", max_depth, "search_width", search_width)
     pass_problem_subset = []
     if Codecontests:
-        exe = executor_factory("code_contests")
+         exe = executor_factory("code_contests")
     else:
         exe = executor_factory(language, is_leet=False)
 

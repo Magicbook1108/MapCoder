@@ -37,9 +37,7 @@ parser.add_argument(
         "SelfPlanning",
         "Analogical",
         "MapCoder",
-        "MapCoder_test",
-        "MapCoder_without_KB",
-        "MapCoder_moreDebug"
+        "MapCoder_mergekb",
     ]
 )
 parser.add_argument(

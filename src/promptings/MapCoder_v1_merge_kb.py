@@ -40,7 +40,7 @@ mapping = {
 class MapCoder(BaseStrategy):
     def __init__(
         self,
-        k: int = 3,
+        k: int = 5,
         t: int = 5,
         usage: dict = {},
         *args,
@@ -156,7 +156,7 @@ class MapCoder(BaseStrategy):
         self.usage['pr_tok'] += pr_tok
         self.usage['com_tok'] += com_tok
         self.usage['api_calls'] = item['api_calls']
-
+        
     @staticmethod
     def trim_text(text: str, trimmed_text: str):
         return text.replace(trimmed_text, '').strip()
@@ -181,10 +181,27 @@ class MapCoder(BaseStrategy):
         print("", flush=True)
 
         task = self.data.get_prompt(item)
-
-        # Knowledge Retrieval Agent
+        
+        # Give complexity scores (which is K) for each task
+        complexity_name = "Complexity agent"
+        complexity_prompt = agents.get_complexity_agent(task)
+        
+        agents.get_input(complexity_name, complexity_prompt)
+        
+        response, pr_tok, com_tok = self.gpt_chat(
+            processed_input= complexity_prompt
+        )
+        
+        # The amount of similar problems we finally need
+        k = 2 if int(response) < 2 else int(response)
+        
+        self.update_usage(item, pr_tok, com_tok)
+        
+        agents.get_output(complexity_name, response)
+        
+        # Knowledge Retrieval Agent, generate 2k problems
         kb_name = "knowledge retrieval agent"
-        kb_prompt = agents.get_knowledge_retrieval_agent(self.k, task)
+        kb_prompt = agents.get_knowledge_retrieval_agent(k, task)
 
         agents.get_input(kb_name, kb_prompt)
 
@@ -193,7 +210,19 @@ class MapCoder(BaseStrategy):
         )
 
         self.update_usage(item,pr_tok,com_tok)
-
+        
+        agents.get_output(kb_name, response)
+        
+        # Select top k ones
+        k_problem_name = "get k problem agent"
+        k_problem_prompt = agents.get_k_problem_agent(k, task, response)
+        
+        agents.get_input(k_problem_name, k_problem_prompt)
+        
+        response, pr_tok, com_tok = self.gpt_chat(
+            processed_input=k_problem_prompt
+        )
+        
         # Post processing
         response = self.trim_text(
             response, "# Identify the algorithm (Brute-force, Dynamic Programming, Divide-and-conquer, Greedy, Backtracking, Recursive, Binary search, and so on) that needs to be used to solve the original problem.")
@@ -207,22 +236,29 @@ class MapCoder(BaseStrategy):
         response = self.replace_tag(response, 'description')
         response = self.replace_tag(response, 'code')
         response = self.replace_tag(response, 'planning')
-
-        agents.get_output(kb_name, response)
+        
+        self.update_usage(item,pr_tok,com_tok)
+        
+        agents.get_output(k_problem_name, response)
+        
         response = self.parse_xml(response)
-
+            
+        print(response)
+        
         algorithm_prompt = f"## Relevant Algorithm to solve the next problem:\n{ response['algorithm']}"
         sample_io_prompt = f"## Sample Test cases: \n{self.get_sample_io_str(item['sample_io'])}\n"
         # if type(self.data) != MBPPDataset and type(self.data) != XCodeDataset else ""
 
         plannings = []
+        plannings_str = ""
         for example_no, example in enumerate(response["problem"], start=1):
             example_problem = example["description"]
             example_planning = example["planning"]
 
             planning_name = "planning agent"
             planning_prompt = agents.get_planning_agent(example_problem, example_planning, algorithm_prompt, task, sample_io_prompt)
-
+            
+            print(f"Input for our problem planning using example: {example_no}: ")
             agents.get_input(planning_name, planning_prompt)
 
             planning, pr_tok, com_tok = self.gpt_chat(
@@ -240,37 +276,36 @@ class MapCoder(BaseStrategy):
             agents.get_input(planning_verification_name, plannign_verification_prompt)
             
             verification_res, pr_tok, com_tok = self.gpt_chat(
-                plannign_verification_prompt
+                processed_input=plannign_verification_prompt
             )
 
             self.update_usage(item, pr_tok, com_tok)
 
-            verification_res = self.replace_tag(
-                verification_res, 'explanation')
-            verification_res = self.replace_tag(verification_res, 'confidence')
+            plannings_str += f"Plan id: {example_no} \n {verification_res} \n\n"
+        
+        final_planning_name = "final planning agent"
+        final_planning_prompt = agents.get_final_planning_agent(plannings_str)
+        
+        agents.get_input(final_planning_name, final_planning_prompt)
+        
+        plannings, pr_tok, com_tok = self.gpt_chat(
+            processed_input= final_planning_prompt
+        )
+        
+        plannings = self.replace_tag(plannings, 'description')
+        plannings = self.replace_tag(plannings, 'score')
+        
+        self.update_usage(item,pr_tok, com_tok)
+        
+        agents.get_output(final_planning_name, plannings)
 
-            verification_res = self.parse_xml(verification_res)
-
-            verification_res['confidence'] = int(
-                str(verification_res['confidence']).strip())
-
-            agents.get_output(planning_verification_name, verification_res)
-
-            plannings.append((
-                planning,
-                verification_res['confidence'],
-                example
-            ))
-
-        plannings.sort(key=lambda x: x[1], reverse=True)
 
         if type(self.data) == APPSDataset or type(self.data) == CodeContestDataset or type(self.data) == XCodeDataset:
             std_input_prompt = "## Note: Strictly follow the input and output format. The input should be taken from Standard input and output should be given to standard output. If you are writing a function then after the function definition take input using `input()` function then call the function with specified parameters and finally print the output of the function. Do not add extra print statement otherwise it will failed the test cases."
         else:
             std_input_prompt = ""
 
-        for planning_with_ex in plannings:
-            planning, confidence, example = planning_with_ex
+        for plan_no, plan in enumerate(plannings["plan"], start = 1):
 
             coding_agent_name = "coding agent"
             coding_agent_prompt = agents.get_coding_agent(algorithm_prompt, task, planning, sample_io_prompt, std_input_prompt)
@@ -283,11 +318,11 @@ class MapCoder(BaseStrategy):
 
             self.update_usage(item, pr_tok, com_tok)
             
+            code = self.parse_code(code)
+            
             agents.get_output(coding_agent_name, code)
             
-            code = self.parse_code(response)
-            
-            response = f"## Planning: {planning}\n## Code:\n```\n{code}\n```"
+            response = f"## Planning: {plan}\n## Code:\n```\n{code}\n```"
             passed = False
 
             for i in range(1, self.t + 1):
@@ -310,12 +345,11 @@ class MapCoder(BaseStrategy):
                 response, pr_tok, com_tok = self.gpt_chat(
                     debugging_agent_prompt
                 )
-
+                code = self.parse_code(response)
+                
                 self.update_usage(item, pr_tok, com_tok)
 
                 agents.get_output(debugging_agent_name, response)
-
-                code = self.parse_code(response)
 
             # got a code that passed all sample test cases
             if passed:

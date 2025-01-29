@@ -164,6 +164,9 @@ class MapCoder(BaseStrategy):
         return sample_io
 
     def run_single_pass(self, item: dict):
+        output_dir = os.path.join("C:\\Users\\31646\\Desktop\\MapCoder", "outputs")
+        output_file = os.path.join(output_dir, "response_output.txt")
+        os.makedirs(output_dir, exist_ok=True)
         print("", flush=True)
 
         input_kb_exemplars = [
@@ -187,7 +190,8 @@ Your response must follow the following xml format-
 
 <root>
 <problem>
-# Recall {mapping[self.k]} relevant and distinct problems (different from problem mentioned above). Write each problem in the following format.
+# Recall {mapping[self.k]} relevant and distinct problems (different from problem mentioned above). 
+# Write each problem in the following format.
 <description>
 # Describe the problem.
 </description>
@@ -202,8 +206,11 @@ Your response must follow the following xml format-
 # similarly add more problems here...
 
 <algorithm>
-# Identify the algorithm (Brute-force, Dynamic Programming, Divide-and-conquer, Greedy, Backtracking, Recursive, Binary search, and so on) that needs to be used to solve the original problem.
-# Write a useful tutorial about the above mentioned algorithms. Provide a high level generic tutorial for solving this types of problem. Do not generate code.
+# Identify the algorithm (Brute-force, Dynamic Programming, Divide-and-conquer, Greedy, Backtracking, Recursive, Binary search, and so on)
+that needs to be used to solve the original problem.
+# Write a useful tutorial about the above mentioned algorithms.
+# Provide a high level generic tutorial for solving this types of problem. 
+# Do not generate code.
 </algorithm>
 </root>
 """,
@@ -213,7 +220,8 @@ Your response must follow the following xml format-
         print("\n\n________________________")
         print("Input for knowledge base and exemplars: ")
         print(input_kb_exemplars[0]['content'], flush=True)
-
+        with open(output_file, "a", encoding="utf-8") as file:
+            file.write(str(input_kb_exemplars[0]['content']) + "\n")
         response, pr_tok, com_tok = self.gpt_chat(
             processed_input=input_kb_exemplars
         )
@@ -237,6 +245,11 @@ Your response must follow the following xml format-
         print("Response from knowledge base and exemplars: ")
         print(response, flush=True)
 
+        # Write response into txt file
+        
+        with open(output_file, "a", encoding="utf-8") as file:
+            file.write(str(response) + "\n")
+            
         response = self.parse_xml(response)
 
         algorithm_prompt = f"## Relevant Algorithm to solve the next problem:\n{ response['algorithm']}"
@@ -251,7 +264,13 @@ Your response must follow the following xml format-
             input_for_problem_planning = [
                 {
                     "role": "user",
-                    "content": f"Given a competitive programming problem generate a concrete planning to solve the problem.\n# Problem:\n{example_problem}\n# Planning:\n{example_planning}\n{algorithm_prompt}\n## Problem to be solved:\n{self.data.get_prompt(item)}\n{sample_io_prompt}\n## Planning:\n\n----------------\nImportant: You should give only the planning to solve the problem. Do not add extra explanation or words."
+                    "content": f"""
+                    Given a competitive programming problem generate a concrete planning to solve the problem.
+                    \n# Problem:\n{example_problem}\n# Planning:\n{example_planning}\n{algorithm_prompt}
+                    \n## Problem to be solved:\n{self.data.get_prompt(item)}\n{sample_io_prompt}
+                    \n## Planning:\n\n----------------
+                    \nImportant: You should give only the planning to solve the problem. Do not add extra explanation or words.
+                    """
                 }
             ]
 
@@ -353,114 +372,45 @@ Your response must follow the following xml format-
             response = f"## Planning: {planning}\n## Code:\n```\n{code}\n```"
             passed = False
 
-            passed, test_log = self.data.evaluate_sample_io(
-                item,
-                code,
-                self.language
-            )
-
-            if passed:
-                break
-
-            input_for_improving_code = [
-{
-    "role": "user",
-    "content": f"""
-    Given an incorrect code implementation, your goal is to describe the existing issues and suggest methods on how to improve the code.
-
-    # Exemplars:
-    1. You should provide {mapping[self.k]} alternative reflections using various strategies. If the bug is clouded and ambiguous, you can use alternatives as different interpretations, too. 
-    2. Each reflection should:
-        - Briefly describe the issues and bugs in the current code.
-        - Specify the kind of improvement needed.
-        - Describe how to implement the correction step-by-step.
-    3. Each reflection must be complete and self-contained. If there are multiple bugs, they should be presented in a single reflection rather than separately.
-
-    ## Problem to be solved:
-    {self.data.get_prompt(item)}
-
-    ## Initial Code:
-    {response}
-
-    ## Test Report:
-    {test_log}
-
-    ----------------
-    Important:
-    Your response must follow the following XML format:
-
-    <root>
-    <problem>
-    
-    <description>
-    # Describe the original problem and briefly mention why the code fails.
-    </description>
-    
-    <reflection>
-    # Describe the issue or bug.
-    # Explain the necessary improvement.
-    # Provide step-by-step instructions to fix the code.
-    </reflection>
-    </problem>
-    
-    # similarily add more reflections here...
-    </root>
-    """
-}
-]
-
-            print("\n\n________________________")
-            print("Input for improving code generation: ")
-            print(input_for_improving_code[0]['content'], flush=True)
-
-            response, pr_tok_1, com_tok_1 = self.gpt_chat(
-                input_for_improving_code
-            )
-            item['api_calls'] += 1
-            # time.sleep(1)
-
-            response = self.replace_tag(response, 'description')
-            response = self.replace_tag(response, 'reflection')
-            
-            response = self.parse_xml(response)
-            print("\n\n________________________")
-            print("Response from improving code generation: ")
-            print(response, flush=True)
-
-            for reflection_no, reflection in enumerate(response["problem"], start=1):
-                
-                input_for_code_generation = [
-                {
-                    "role": "user",
-                    "content": f"Given a competitive programming problem generate {self.language} code to solve the problem.\n{algorithm_prompt}\n## Problem to be solved:\n{self.data.get_prompt(item)}\n## Planning:\n{reflection}\n{sample_io_prompt}\n## Let's think step by step.\n\n----------------\nImportant:\n{std_input_prompt}\n## Your response must contain only the {self.language} code to solve this problem. Do not add extra explanation or words."
-                }
-                ]
-
-                print("\n\n________________________")
-                print("Input for final code generation: ")
-                print(input_for_code_generation[0]['content'], flush=True)
-                
-                code, pr_tok_1, com_tok_1 = self.gpt_chat(
-                input_for_code_generation
-                )
-                item['api_calls'] += 1
-                # time.sleep(1)
-
-                code = self.parse_code(code)
-                pr_tok += pr_tok_1
-                com_tok += com_tok_1
-                # got a code that passed all sample test cases
-                
+            for i in range(1, self.t + 1):
                 passed, test_log = self.data.evaluate_sample_io(
-                item,
-                code,
-                self.language
+                    item,
+                    code,
+                    self.language
                 )
 
                 if passed:
                     break
-                
+
+                print(f"Input for improving code generation: {i}")
+                input_for_improving_code = [
+                    {
+                        "role": "user",
+                        "content": f"Given a competitive programming problem you have generated {self.language} code to solve the problem. But the generated code can not pass sample test cases. Improve your code to solve the problem correctly.\n{algorithm_prompt}\n## Problem to be solved:\n{self.data.get_prompt(item)}\n{response}\n## Test Report:\n{test_log}\n## Modified Planning:\n## Let's think step by step to modify {self.language} Code for solving this problem.\n\n----------------\nImportant:\n{std_input_prompt}\n## Your response must contain the modified planning and then the {self.language} code inside ``` block to solve this problem."
+                    }
+                ]
+
+                print("\n\n________________________")
+                print("Input for improving code generation: ")
+                print(input_for_improving_code[0]['content'], flush=True)
+
+                response, pr_tok_1, com_tok_1 = self.gpt_chat(
+                    input_for_improving_code
+                )
+                item['api_calls'] += 1
+                # time.sleep(1)
+
+                code = self.parse_code(response)
+                pr_tok += pr_tok_1
+                com_tok += com_tok_1
+
+                print("\n\n________________________")
+                print("Response from improving code generation: ")
+                print(response, flush=True)
+
+            # got a code that passed all sample test cases
             if passed:
-               break
+                break
+
         print("________________________\n\n", flush=True)
         return code, pr_tok, com_tok

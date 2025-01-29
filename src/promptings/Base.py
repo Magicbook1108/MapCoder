@@ -37,7 +37,7 @@ class BaseStrategy(object):
         
         num_items = len(self.data)
         num_success = 0
-
+        # num_items = 10
         for i, item in enumerate(self.data):
             print("", flush=True, end="")
 
@@ -98,7 +98,7 @@ class BaseStrategy(object):
                 #                       For each task run a single pass -> 
                 #                           Code reviewer to gather the code together
                 ###########################
-                # response, prompt_tokens, completion_tokens = self.run_pass(item)
+                
                 response, prompt_tokens, completion_tokens = self.run_single_pass(item)
                 #     break
                 # except Exception as e:

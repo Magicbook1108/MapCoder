@@ -198,11 +198,11 @@ class OpenAIModel(OpenAIBaseModel):
 
 class GPT4(OpenAIModel):
     def prompt(self, processed_input: list[dict]):
-        self.model_params["model"] = "gpt-4o-mini-2024-07-18"
+        self.model_params["model"] = "gpt-4-1106-preview"
         return super().prompt(processed_input)
 
-
+# Cheap
 class ChatGPT(OpenAIModel):
     def prompt(self, processed_input: list[dict]):
-        self.model_params["model"] = "gpt-3.5-turbo-1106"
+        self.model_params["model"] = "gpt-4o-mini"
         return super().prompt(processed_input)
