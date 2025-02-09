@@ -23,6 +23,9 @@ class CodeContestDataset(Dataset):
             lang=language
         )
     
+    def get_path(self, result_path):
+        return result_path + "_CC.txt"
+    
     def evaluate_sample_io(
         self,
         item: dict,

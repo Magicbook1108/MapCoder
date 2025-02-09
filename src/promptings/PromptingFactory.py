@@ -21,7 +21,7 @@ class PromptingFactory:
             return AnalogicalStrategy
         elif prompting_name == "SelfPlanning":
             return SelfPlanningStrategy
-        elif prompting_name =="MapCoder_1":
+        elif prompting_name =="MapCoder_single_merge":
             return MapCoder_merge_1
         elif prompting_name =="MapCoder_withoutKB_1":
             return MapCoder_withoutKB_1

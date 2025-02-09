@@ -28,6 +28,9 @@ class Dataset(object):
     ):
         raise NotImplementedError
 
+    def get_path(self, result_path):
+        return result_path+".txt"
+    
     @staticmethod
     def get_prompt(item):
         raise NotImplementedError

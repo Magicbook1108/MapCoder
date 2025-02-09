@@ -2,9 +2,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 # 数据准备
-methods = ["Direct", "MapCoder",]  # 方法名称
-acc =     [12.12,    20.61,  ]                        # 准确率（%）
-total_tokens = [237818, 7170454, ]       # 总令牌数（转换为百万单位）
+methods = ["Direct", "MapCoder", "without kb","Without kb and debug"]  # 方法名称
+acc =     [12.12,    20.61,  18.18, 17.58, ]                        # 准确率（%）
+total_tokens = [237818, 7170454, 5723343, ]       # 总令牌数（转换为百万单位）
 tokens_m = [x / 1e6 for x in total_tokens]      # 单位转换为百万（1.365M, 2.45M等）
 
 # 创建画布和主Y轴

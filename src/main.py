@@ -40,7 +40,8 @@ parser.add_argument(
         "MapCoder_1",
         "MapCoder_withoutKB_1",
         "MapCoder_withoutKB_2",
-        "MapCoder_without_kb_debug"
+        "MapCoder_without_kb_debug",
+        "MapCoder_single_merge"
     ]
 )
 parser.add_argument(
@@ -90,6 +91,16 @@ parser.add_argument(
         "0"
     ]
 )
+
+parser.add_argument(
+    "--tasks",
+    type=int,
+    default= -1,
+    chocies = [1,          
+    ]
+)
+
+
 
 args = parser.parse_args()
 

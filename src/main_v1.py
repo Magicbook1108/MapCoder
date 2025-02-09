@@ -18,19 +18,23 @@ from models.ModelFactory import ModelFactory
 # 初始化基础配置
 BASE_CONFIG = {
     "DATASET": "CC",
-    "STRATEGY": "MapCoder_withoutKB_1",
+    "STRATEGY": ["Direct", "MapCoder", "MapCoder_without_kb_debug", "MapCoder_withoutKB_1"],
     "MODEL_NAME": "ChatGPT", 
     "TEMPERATURE": 0,
     "PASS_AT_K": 1,
     "LANGUAGE": "Python3",
     "START_COUNT": 1,  # 新增起始计数
-    "MAX_COUNT": 1     # 新增最大计数
+    "MAX_COUNT": 1,
+    "task_amount": -1 # 新增最大计数
 }
 
-def run_single_count(current_count):
+
+
+def run_single_count(current_count, cur_strategy):
     """运行单个计数任务"""
     config = BASE_CONFIG.copy()
     config["COUNT"] = str(current_count)
+    config["STRATEGY"] = str(cur_strategy)
     
     run_name = f"{config['MODEL_NAME']}-{config['STRATEGY']}-{config['DATASET']}-{config['LANGUAGE']}-{config['TEMPERATURE']}-{config['PASS_AT_K']}-{config['COUNT']}"
     results_path = f"./outputs/{run_name}.jsonl"
@@ -45,7 +49,8 @@ def run_single_count(current_count):
         language=config['LANGUAGE'],
         pass_at_k=config['PASS_AT_K'],
         results=Results(results_path),
-        name=run_name
+        name=run_name,
+        task_amount=config['task_amount']
     )
 
     max_attempts = 15  # 设置最多尝试次数
@@ -64,12 +69,12 @@ def run_single_count(current_count):
         print(f"\n{' ' * 3} 5秒后重试计数 #{current_count}... (尝试 {attempt}/{max_attempts})")
         time.sleep(5)
 
-def count_sequencer():
+def count_sequencer(strategy):
     """计数任务序列控制器"""
     current_count = BASE_CONFIG["START_COUNT"]
     
     while current_count <= BASE_CONFIG["MAX_COUNT"]:
-        if run_single_count(current_count):
+        if run_single_count(current_count, strategy):
             current_count += 1  # 仅当成功完成时递增计数
         else:
             print(f"\n{''*3} 计数 #{current_count} 持续失败，保持当前计数")
@@ -77,8 +82,9 @@ def count_sequencer():
     print(f"\n{''*3} 所有计数任务完成（1-{BASE_CONFIG['MAX_COUNT']}）")
 
 if __name__ == "__main__":
-    print(f"#########################\n自动递增计数器启动\n最大目标计数: {BASE_CONFIG['MAX_COUNT']}\n初始时间: {datetime.now()}\n##########################")
+    for element in BASE_CONFIG["STRATEGY"]:
+        print(f"#########################\n自动递增计数器启动\n最大目标计数: {BASE_CONFIG['MAX_COUNT']}\n初始时间: {datetime.now()}\n##########################")
+
+        count_sequencer(element)
     
-    count_sequencer()
-    
-    print(f"\n#########################\n最终结束时间: {datetime.now()}\n##########################")
+        print(f"\n#########################\n最终结束时间: {datetime.now()}\n##########################")

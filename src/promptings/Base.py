@@ -17,6 +17,7 @@ class BaseStrategy(object):
         data: Dataset,
         language: str,
         pass_at_k: int,
+        task_amount: int,
         results: Results,
         name: str,
         verbose: bool = True,
@@ -28,7 +29,8 @@ class BaseStrategy(object):
         self.language = language
         self.verbose = verbose
         self.total_tokens = 0
-        self.path = f"./outputs/result.txt"
+        self.task_amount = task_amount
+        self.path = "./outputs/result"
         self.name = name
 
     def gpt_chat(self, processed_input: List[dict]) -> (str, int, int):
@@ -38,11 +40,10 @@ class BaseStrategy(object):
         pass
 
     def run(self):
-        
-        num_items = len(self.data)
+        num_items = len(self.data) if self.task_amount == -1 else self.task_amount
         num_success = 0
-
-        for i, item in enumerate(self.data):
+        self.total_tokens = 0
+        for i, item in enumerate(self.data[:num_items]):
             print("", flush=True, end="")
 
             if i < len(self.results):
@@ -103,6 +104,7 @@ class BaseStrategy(object):
                 print(
                     f'completed {i+1}/{num_items}, Solved: {self.results[i]["is_solved"]}, number of success = {num_success}/{i+1}, acc = {round(num_success/(i+1)*100, 2)}')
             temp = f"number of success = {num_success}/{i+1}, acc = {round(num_success/(i+1)*100, 2)}"
-        with open(self.path, 'a') as f:
+            
+        with open(self.data.get_path(self.path), 'a') as f:
             f.write(f"{self.name}{temp} total_tokens = {self.total_tokens}\n")
         return True

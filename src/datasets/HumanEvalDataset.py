@@ -35,6 +35,9 @@ class HumanDataset(Dataset):
             completion=cur_imp,            
         )
 
+    def get_path(self, result_path):
+        return result_path + "_HumanEval.txt"
+    
 
     @staticmethod
     def get_prompt(item):

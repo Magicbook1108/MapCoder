@@ -77,9 +77,8 @@ Your response must follow the following xml format-
 Important:
 Do NOT use `<`, `>`, `&` symbols directly in your planning description.
 Do NOT leave an unclosed <description> or a missing opening tag.
-
+You should give only the planning to solve the problem. Do not add extra explanation or words.
 ## Planning:
-
 
 """,
             },
@@ -181,14 +180,14 @@ Ensure the final plan is coherent and incorporates the most reliable information
 Important:
 Do NOT use `<`, `>`, `&` symbols directly in your planning description.
 Do NOT leave an unclosed <description> or a missing opening tag.
-Your response must follow the following xml format -
+You should give only the planning to solve the problem. Do not add extra explanation or words
 
 
 ## Plannings:
 {plans}
 
 ## Plan:
-```
+
         """
     }
 ]

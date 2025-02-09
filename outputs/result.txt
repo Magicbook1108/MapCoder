@@ -29,17 +29,23 @@ ChatGPT-Direct-CC-Python3-0-1-0number of success = 20/165, acc = 12.12 total_tok
 # CC - Original
 ChatGPT-MapCoder-CC-Python3-0-1-0number of success = 34/165, acc = 20.61 total_tokens = 7170454
 
-# MapCoder single merge
-ChatGPT-MapCoder_1-HumanEval-Python3-0-1-1number of success = 134/164, acc = 81.71 total_tokens = 2147791
-
-
 # MapCoder without kb_debug
 ChatGPT-MapCoder_without_kb_debug-HumanEval-Python3-0-1-1number of success = 147/164, acc = 89.63 total_tokens = 409077
 ChatGPT-MapCoder_without_kb_debug-HumanEval-Python3-0-1-2number of success = 146/164, acc = 89.02 total_tokens = 408317
 ChatGPT-MapCoder_without_kb_debug-HumanEval-Python3-0-1-3number of success = 148/164, acc = 90.24 total_tokens = 409701
 
-# MapCoder without kb and without debug(which means planning agent only)
+# MapCoder CC without kb and without debug(which means planning agent only)
 ChatGPT-MapCoder_without_kb_debug-CC-Python3-0-1-1number of success = 29/165, acc = 17.58 total_tokens = 6712445
 
-# MapCoder without kb
+# MapCoder CC without kb
 ChatGPT-MapCoder_withoutKB_1-CC-Python3-0-1-1number of success = 30/165, acc = 18.18 total_tokens = 5723343
+
+# MapCoder single merge
+ChatGPT-MapCoder_1-HumanEval-Python3-0-1-0 number of success = 134/164, acc = 81.71 total_tokens = 2147791
+
+ChatGPT-MapCoder_single_merge-HumanEval-Python3-0-1-1number of success = 141/164, acc = 85.98 total_tokens = 1352207
+ChatGPT-MapCoder_single_merge-HumanEval-Python3-0-1-2number of success = 140/164, acc = 85.37 total_tokens = 1324983
+ChatGPT-MapCoder_single_merge-HumanEval-Python3-0-1-3number of success = 147/164, acc = 89.63 total_tokens = 1313121
+
+ChatGPT-MapCoder_without_kb_debug-CC-Python3-0-1-1number of success = 29/165, acc = 17.58 total_tokens = 1260653
+ChatGPT-MapCoder_without_kb_debug-CC-Python3-0-1-1number of success = 29/165, acc = 17.58 total_tokens = 1260653
