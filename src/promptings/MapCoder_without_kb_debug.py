@@ -177,9 +177,8 @@ class MapCoder(BaseStrategy):
 
     def run_single_pass(self, item: dict):
         print("", flush=True)
-
+        
         task = self.data.get_prompt(item)
-
         agents = Agent("python",task)
 
         sample_io_prompt = f"## Sample Test cases: \n{self.get_sample_io_str(item['sample_io'])}\n"

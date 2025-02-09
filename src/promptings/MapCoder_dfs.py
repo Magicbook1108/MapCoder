@@ -1,4 +1,3 @@
-# Re structured MapCoder
 from typing import List
 import tiktoken
 import os
@@ -7,6 +6,7 @@ import re
 import sys
 import time
 from promptings.agents import *
+from promptings.node import *
 from copy import deepcopy
 import xml.etree.ElementTree as ET
 
@@ -177,161 +177,7 @@ class MapCoder(BaseStrategy):
         return sample_io
 
     def run_single_pass(self, item: dict):
-        print("", flush=True)
-
         task = self.data.get_prompt(item)
-
-        agents = Agent("python",task)
-
-        kb_name = "knowledge retrieval agent"
-        kb_prompt = agents.knowledge_retrieval_agent_prompt(self.k)
-
-        agents.get_input(kb_name, kb_prompt)
-
-        response, pr_tok, com_tok = self.gpt_chat(
-            processed_input= kb_prompt
-        )
-
-        item['api_calls'] = item.get('api_calls', 0) + 1
-
-        # Post processing
-        response = self.trim_text(
-            response, "# Identify the algorithm (Brute-force, Dynamic Programming, Divide-and-conquer, Greedy, Backtracking, Recursive, Binary search, and so on) that needs to be used to solve the original problem.")
-        response = self.trim_text(
-            response, "# Write a useful tutorial about the above mentioned algorithms. Provide a high level generic tutorial for solving this types of problem. Do not generate code.")
-        response = self.trim_text(
-            response, "# Planning to solve this problem:")
-        response = self.trim_text(
-            response, f"# Let's think step by step to solve this problem in {self.language} programming language.")
-        response = self.replace_tag(response, 'algorithm')
-        response = self.replace_tag(response, 'description')
-        response = self.replace_tag(response, 'code')
-        response = self.replace_tag(response, 'planning')
-
-        agents.get_output(kb_name, response)
-        response = self.parse_xml(response)
-
-        algorithm_prompt = f"## Relevant Algorithm to solve the next problem:\n{ response['algorithm']}"
-        sample_io_prompt = f"## Sample Test cases: \n{self.get_sample_io_str(item['sample_io'])}\n"
-
-        agents.set_algorithm_prompt(algorithm_prompt)
-        # if type(self.data) != MBPPDataset and type(self.data) != XCodeDataset else ""
-
-        plannings = []
-        for example_no, example in enumerate(response["problem"], start=1):
-            example_problem = example["description"]
-            example_planning = example["planning"]
-
-            planning_name = "planning agent"
-            planning_prompt = agents.planning_agent_prompt(example_problem, example_planning, sample_io_prompt)
-
-            agents.get_input(planning_name, planning_prompt)
-
-            planning, pr_tok_1, com_tok_1 = self.gpt_chat(
-                planning_prompt
-            )
-
-            item['api_calls'] += 1
-            pr_tok += pr_tok_1
-            com_tok += com_tok_1
-
-            agents.get_output(planning_name, planning)
-
-            
-            planning_verification_name = "planning verification agent"
-            plannign_verification_prompt = agents.planning_verification_agent_prompt(planning)
-
-            agents.get_input(planning_verification_name, plannign_verification_prompt)
-            
-            verification_res, pr_tok_1, com_tok_1 = self.gpt_chat(
-                plannign_verification_prompt
-            )
-
-            item['api_calls'] += 1
-            pr_tok += pr_tok_1
-            com_tok += com_tok_1
-
-            verification_res = self.replace_tag(
-                verification_res, 'explanation')
-            verification_res = self.replace_tag(verification_res, 'confidence')
-
-            verification_res = self.parse_xml(verification_res)
-
-            verification_res['confidence'] = int(
-                str(verification_res['confidence']).strip())
-
-            agents.get_output(planning_verification_name, verification_res)
-
-            plannings.append((
-                planning,
-                verification_res['confidence'],
-                example
-            ))
-
-        plannings.sort(key=lambda x: x[1], reverse=True)
-
-        if type(self.data) == APPSDataset or type(self.data) == CodeContestDataset or type(self.data) == XCodeDataset:
-            std_input_prompt = "## Note: Strictly follow the input and output format. The input should be taken from Standard input and output should be given to standard output. If you are writing a function then after the function definition take input using `input()` function then call the function with specified parameters and finally print the output of the function. Do not add extra print statement otherwise it will failed the test cases."
-        else:
-            std_input_prompt = ""
-
-        for planning_with_ex in plannings:
-            planning, confidence, example = planning_with_ex
-
-            agents.set_std_input_prompt(std_input_prompt)
-
-            coding_agent_name = "coding agent"
-            coding_agent_prompt = agents.coding_agent_prompt(planning, sample_io_prompt)
-
-            agents.get_input(coding_agent_name, coding_agent_prompt)
-
-            code, pr_tok_1, com_tok_1 = self.gpt_chat(
-                coding_agent_prompt
-            )
-
-            item['api_calls'] += 1
-            pr_tok += pr_tok_1
-            com_tok += com_tok_1
-
-            code = self.parse_code(code)
-
-            agents.get_output(coding_agent_name, code)
-
-            response = f"## Planning: {planning}\n## Code:\n```\n{code}\n```"
-            passed = False
-
-            for i in range(1, self.t + 1):
-                passed, test_log = self.data.evaluate_sample_io(
-                    item,
-                    code,
-                    self.language
-                )
-
-                if passed:
-                    break
-
-                print(f"Input for improving code generation: {i}")
-
-                debugging_agent_name = "debugging agent"
-                debugging_agent_prompt = agents.debugging_agent_prompt(response, test_log)
-
-                agents.get_input(debugging_agent_name, debugging_agent_prompt)
-
-                response, pr_tok_1, com_tok_1 = self.gpt_chat(
-                    debugging_agent_prompt
-                )
-
-                item['api_calls'] += 1
-                pr_tok += pr_tok_1
-                com_tok += com_tok_1
-
-                agents.get_output(debugging_agent_name, response)
-
-                code = self.parse_code(response)
-
-            # got a code that passed all sample test cases
-            if passed:
-                break
-
-        print("________________________\n\n", flush=True)
+        root = Node(task)
+        
         return code, pr_tok, com_tok
