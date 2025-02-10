@@ -238,7 +238,7 @@ class MapCoder(BaseStrategy):
             std_input_prompt = "## Note: Strictly follow the input and output format. The input should be taken from Standard input and output should be given to standard output. If you are writing a function then after the function definition take input using `input()` function then call the function with specified parameters and finally print the output of the function. Do not add extra print statement otherwise it will failed the test cases."
         else:
             std_input_prompt = ""
-
+        agents.set_std_input_prompt(std_input_prompt)
         for planning_with_ex in plannings_with_score:
             planning, confidence = planning_with_ex
 

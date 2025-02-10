@@ -1,3 +1,4 @@
+# Without knowledge retrieval agent
 from typing import List
 import tiktoken
 import os
@@ -6,7 +7,6 @@ import re
 import sys
 import time
 from promptings.agents import *
-from promptings.Node import *
 from copy import deepcopy
 import xml.etree.ElementTree as ET
 
@@ -42,7 +42,7 @@ class MapCoder(BaseStrategy):
     def __init__(
         self,
         k: int = 3,
-        t: int = 15,
+        t: int = 5,
         usage: dict = {},
         *args,
         **kwargs
@@ -50,8 +50,8 @@ class MapCoder(BaseStrategy):
         super().__init__(*args, **kwargs)
         self.k = k
         self.t = t
-        self.sample_io_prompt: str
-        self.cur_code: str
+        self.usage = usage
+
     def xml_to_dict(self, element):
         result = {}
         for child in element:
@@ -145,6 +145,16 @@ class MapCoder(BaseStrategy):
             code_str = response
 
         return code_str
+    
+    def get_input(agent_name, prompt):
+        print("\n\n________________________")
+        print(f"Input for {agent_name}: ")
+        print(prompt[0]['content'],flush=True)
+
+    def get_output(agent_name, response):
+        print("\n\n________________________")
+        print(f"Response from {agent_name}: ")
+        print(response, flush=True)
 
     @staticmethod
     def trim_text(text: str, trimmed_text: str):
@@ -166,81 +176,128 @@ class MapCoder(BaseStrategy):
                 return "\n".join([f"Input:\n{io['input']}\nExpected output:\n{io['output'][0]}" for io in sample_io])
         return sample_io
 
-    def run_gpt_chat(self, agents:Agent, agent_name, prompt, item, pr_tok, com_tok):
-        """统一 GPT 交互逻辑，减少代码重复"""
-        agents.get_input(agent_name, prompt)
-        response, pr_tok_1, com_tok_1 = self.gpt_chat(prompt)
+    def run_single_pass(self, item: dict):
+        print("", flush=True)
+
+        task = self.data.get_prompt(item)
+
+        agents = Agent("python",task)
+
+        sample_io_prompt = f"## Sample Test cases: \n{self.get_sample_io_str(item['sample_io'])}\n"
+
+        planning_name = "planning agent"
+        planning_prompt = agents.planning_without_knowledge_retrieval_prompt(self.k, sample_io_prompt)
+
+        agents.get_input(planning_name, planning_prompt)
+
+        plannings, pr_tok, com_tok = self.gpt_chat(
+            planning_prompt
+        )
+
         item['api_calls'] = item.get('api_calls', 0) + 1
-        pr_tok += pr_tok_1
-        com_tok += com_tok_1
-        agents.get_output(agent_name, response)
-        return response, pr_tok, com_tok
 
-    def verify_plan(self, agents, plan, item, pr_tok, com_tok):
-        """调用 planning verification agent 评估 plan 置信度"""
-        prompt = agents.planning_verification_agent_prompt(plan)
-        verification_res, pr_tok, com_tok = self.run_gpt_chat(agents, "planning verification agent", prompt, item, pr_tok, com_tok)
-        verification_res = self.parse_xml(verification_res)
-        return Node(plan, int(verification_res.get('confidence', 0))), pr_tok, com_tok
+        plannings = self.replace_tag(plannings, 'plan')
 
-    def get_plan(self, item, agents:Agent, node:Node, pr_tok, com_tok):
-        """生成初始计划，并按置信度排序"""
-        planning_prompt = agents.planning_without_knowledge_retrieval_prompt(self.k, self.sample_io_prompt)
-        plannings, pr_tok, com_tok = self.run_gpt_chat(agents, "planning agent", planning_prompt, item, pr_tok, com_tok)
+        agents.get_output(planning_name, plannings)
+
         plannings = self.parse_xml(plannings)
 
-        for problem in plannings['problem']:  # 避免 KeyError
-            child, pr_tok, com_tok = self.verify_plan(agents, problem.get('description', ""), item, pr_tok, com_tok)
-            node.children.append(child)
+        plannings_with_score = []
+        for plan_no, problem in enumerate(plannings["problem"], start=1):
+            plan = problem['description']
 
-        node.sort_children()
-        return node, pr_tok, com_tok
+            planning_verification_name = "planning verification agent"
+            plannign_verification_prompt = agents.planning_verification_agent_prompt(plan)
 
-    def dfs_tree(self, item, agents:Agent, node:Node, pr_tok, com_tok, depth, iter):
-        """递归 DFS 处理代码生成和反思"""
-        if depth == self.t or iter == self.k:
-            return self.cur_solution, pr_tok, com_tok
+            agents.get_input(planning_verification_name, plannign_verification_prompt)
         
-        depth += 1
-        for child in node.children:
-            coding_prompt = agents.coding_agent_prompt(child.plan, self.sample_io_prompt)
-            code, pr_tok, com_tok = self.run_gpt_chat(agents, "coding agent", coding_prompt, item, pr_tok, com_tok)
+            verification_res, pr_tok_1, com_tok_1 = self.gpt_chat(
+                plannign_verification_prompt
+            )
+
+            item['api_calls'] += 1
+            pr_tok += pr_tok_1
+            com_tok += com_tok_1
+
+            verification_res = self.replace_tag(
+                verification_res, 'explanation')
+            verification_res = self.replace_tag(verification_res, 'confidence')
+
+            verification_res = self.parse_xml(verification_res)
+
+            verification_res['confidence'] = int(
+                str(verification_res['confidence']).strip())
+
+            agents.get_output(planning_verification_name, verification_res)
+
+            plannings_with_score.append((
+                plan,
+                verification_res['confidence'],
+            ))
+
+        plannings_with_score.sort(key=lambda x: x[1], reverse=True)
+        if type(self.data) == APPSDataset or type(self.data) == CodeContestDataset or type(self.data) == XCodeDataset:
+            std_input_prompt = "## Note: Strictly follow the input and output format. The input should be taken from Standard input and output should be given to standard output. If you are writing a function then after the function definition take input using `input()` function then call the function with specified parameters and finally print the output of the function. Do not add extra print statement otherwise it will failed the test cases."
+        else:
+            std_input_prompt = ""
+
+        for planning_with_ex in plannings_with_score[:2]:
+            planning, confidence = planning_with_ex
+
+            agents.set_std_input_prompt(std_input_prompt)
+
+            coding_agent_name = "coding agent"
+            coding_agent_prompt = agents.coding_agent_prompt(planning, sample_io_prompt)
+
+            agents.get_input(coding_agent_name, coding_agent_prompt)
+
+            code, pr_tok_1, com_tok_1 = self.gpt_chat(
+                coding_agent_prompt
+            )
+
+            item['api_calls'] += 1
+            pr_tok += pr_tok_1
+            com_tok += com_tok_1
+
             code = self.parse_code(code)
 
-            passed, test_log = self.data.evaluate_sample_io(item, code, self.language)
+            agents.get_output(coding_agent_name, code)
+
+            response = f"## Planning: {planning}\n## Code:\n```\n{code}\n```"
+            passed = False
+
+            for i in range(1, self.t + 1):
+                passed, test_log = self.data.evaluate_sample_io(
+                    item,
+                    code,
+                    self.language
+                )
+
+                if passed:
+                    break
+
+                print(f"Input for improving code generation: {i}")
+
+                debugging_agent_name = "debugging agent"
+                debugging_agent_prompt = agents.debugging_agent_prompt(response, test_log)
+
+                agents.get_input(debugging_agent_name, debugging_agent_prompt)
+
+                response, pr_tok_1, com_tok_1 = self.gpt_chat(
+                    debugging_agent_prompt
+                )
+
+                item['api_calls'] += 1
+                pr_tok += pr_tok_1
+                com_tok += com_tok_1
+
+                agents.get_output(debugging_agent_name, response)
+
+                code = self.parse_code(response)
+
+            # got a code that passed all sample test cases
             if passed:
-                return code, pr_tok, com_tok
+                break
 
-            # 反思生成新计划
-            node.set_code(code)
-            reflection_prompt = agents.reflection_agent(self.k, self.sample_io_prompt, test_log, code)
-            reflection_plan, pr_tok, com_tok = self.run_gpt_chat(agents, "reflection agent", reflection_prompt, item, pr_tok, com_tok)
-            plannings = self.parse_xml(reflection_plan)
-
-            for problem in plannings['probelm']:  # 避免 KeyError
-                new_node, pr_tok, com_tok = self.verify_plan(agents, problem.get('description', ""), item, pr_tok, com_tok)
-                if new_node.score > node.score:
-                    child.children.append(new_node)
-
-            child.sort_children()
-            return self.dfs_tree(item, agents, child, pr_tok, com_tok, depth, iter+1)
-
+        print("________________________\n\n", flush=True)
         return code, pr_tok, com_tok
-
-    def run_single_pass(self, item):
-        """主流程，执行计划、代码生成和测试"""
-        task = self.data.get_prompt(item)
-        agents = Agent("python", task)
-        root = Node("", 0)
-
-        self.sample_io_prompt = f"## Sample Test cases: \n{self.get_sample_io_str(item['sample_io'])}\n"
-        node, pr_tok, com_tok = self.get_plan(item, agents, root, 0, 0)
-
-        # 设置标准输入提示
-        dataset_classes = (APPSDataset, CodeContestDataset, XCodeDataset)
-        std_input_prompt = (
-            "## Note: Strictly follow the input and output format. The input should be taken from Standard input..."
-            if isinstance(self.data, dataset_classes) else ""
-        )
-        agents.set_std_input_prompt(std_input_prompt)
-        return self.dfs_tree(item, agents, node, pr_tok, com_tok, depth=0, iter=0)

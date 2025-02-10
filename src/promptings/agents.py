@@ -245,3 +245,41 @@ Your response must follow the following xml format -
 """
         }
     ]
+
+    # dfs
+    def reflection_agent(self, k, sample_io_prompt, test_log, code):
+        {
+            "role":"user",
+            "content":f"""
+Given a competitive programming problem, you have generated {self.language} code to solve the problem. 
+But the generated code cannot pass sample test cases. Generate exactly {k} distinct plans to solve this competitive programming problem. 
+You should first identify the problem in the given solution, then explains how to solve this issues.
+
+# Problem:
+{self.task}
+{sample_io_prompt}
+
+# Test log
+{test_log}
+
+# Code
+{code}
+
+Important:
+Do NOT use `<`, `>`, `&` symbols directly in your planning description.
+Do NOT leave an unclosed <description> or a missing opening tag.
+Your response must follow the following xml format -
+
+<root>
+<problem>
+# Recall {k} plans to solve the problem
+<description>
+# Describe the plan here
+</description>
+</problem>
+
+# similarly add more plans here...
+</root>
+
+"""
+        }

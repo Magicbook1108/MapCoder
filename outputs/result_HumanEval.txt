@@ -32,3 +32,10 @@ ChatGPT-MapCoder_single_merge-HumanEval-Python3-0-1-3number of success = 147/164
 ChatGPT-MapCoder_without_kb_debug-HumanEval-Python3-0-1-1number of success = 147/164, acc = 89.63 total_tokens = 409077
 ChatGPT-MapCoder_without_kb_debug-HumanEval-Python3-0-1-2number of success = 146/164, acc = 89.02 total_tokens = 408317
 ChatGPT-MapCoder_without_kb_debug-HumanEval-Python3-0-1-3number of success = 148/164, acc = 90.24 total_tokens = 409701
+
+# MapCoder top 2 plan & without knowledge retrieval
+ChatGPT-MapCoder_withoutKB_3-HumanEval-Python3-0-1-1number of success = 149/164, acc = 90.85 total_tokens = 615396
+ChatGPT-MapCoder_withoutKB_3-HumanEval-Python3-0-1-2number of success = 146/164, acc = 89.02 total_tokens = 615098
+ChatGPT-MapCoder_withoutKB_3-HumanEval-Python3-0-1-3number of success = 143/164, acc = 87.2 total_tokens = 619893
+ChatGPT-MapCoder_dfs-HumanEval-Python3-0-1-1number of success = 1/1, acc = 100.0 total_tokens = 2380
+ChatGPT-MapCoder_dfs-HumanEval-Python3-0-1-1number of success = 1/1, acc = 100.0 total_tokens = 2368

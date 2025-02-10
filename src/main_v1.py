@@ -17,15 +17,15 @@ from datasets.DatasetFactory import DatasetFactory
 from models.ModelFactory import ModelFactory
 # 初始化基础配置
 BASE_CONFIG = {
-    "DATASET": "CC",
-    "STRATEGY": ["Direct", "MapCoder", "MapCoder_without_kb_debug", "MapCoder_withoutKB_1"],
+    "DATASET": "HumanEval",
+    "STRATEGY": ["MapCoder_dfs"],
     "MODEL_NAME": "ChatGPT", 
     "TEMPERATURE": 0,
     "PASS_AT_K": 1,
     "LANGUAGE": "Python3",
     "START_COUNT": 1,  # 新增起始计数
     "MAX_COUNT": 1,
-    "task_amount": -1 # 新增最大计数
+    "task_amount": 1 # 新增最大计数
 }
 
 

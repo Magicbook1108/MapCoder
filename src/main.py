@@ -40,8 +40,10 @@ parser.add_argument(
         "MapCoder_1",
         "MapCoder_withoutKB_1",
         "MapCoder_withoutKB_2",
+        "MapCoder_withoutKB_3",
         "MapCoder_without_kb_debug",
-        "MapCoder_single_merge"
+        "MapCoder_single_merge",
+        "MapCoder_dfs"
     ]
 )
 parser.add_argument(
