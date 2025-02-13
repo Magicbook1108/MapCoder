@@ -4,12 +4,16 @@ class Agent:
         self.task = task
         self.algorithm_prompt = None
         self.std_input_prompt = None
+        self.sample_io_prompt = None
 
     def set_algorithm_prompt(self, algorithm_prompt):
         self.algorithm_prompt = algorithm_prompt
 
     def set_std_input_prompt(self, std_input_prompt):
         self.std_input_prompt = std_input_prompt
+    
+    def set_sample_io_prompt(self, sample_io_prompt):
+        self.sample_io_prompt = sample_io_prompt
     
     def knowledge_retrieval_agent_prompt(self,k):
         return [
@@ -195,7 +199,8 @@ You should give only the planning to solve the problem. Do not add extra explana
         return [
             {
             "role": "user",
-            "content": f"""Given a competitive programming problem and a set of plan to solve the problem in {self.language},
+            "content": f"""
+Given a competitive programming problem and a set of plan to solve the problem in {self.language},
 tell whether the plan is correct to solve this problem.
 
 # Problem:
@@ -220,7 +225,8 @@ You must not change the planning, only provide a score between 1 - 100.
         return [
         {
             "role": "user",
-            "content": f"""Generate exactly {k} distinct plans to solve this competitive programming problem. Follow the format strictly.
+            "content": f"""
+Generate exactly {k} distinct plans to solve this competitive programming problem. Follow the format strictly.
 
 # Problem:
 {self.task}
@@ -228,15 +234,17 @@ You must not change the planning, only provide a score between 1 - 100.
 
 Important:
 Do NOT use `<`, `>`, `&` symbols directly in your planning description.
-Do NOT leave an unclosed <description> or a missing opening tag.
 Your response must follow the following xml format -
-
+For each plan, you must have a pair of 
 <root>
 <problem>
+
 # Recall {k} plans to solve the problem
+
 <description>
 # Describe the plan here
 </description>
+
 </problem>
 
 # similarly add more plans here...
@@ -247,7 +255,65 @@ Your response must follow the following xml format -
     ]
 
     # dfs
+    def planning_dfs(self, k):
+                return [
+        {
+                "role": "user",
+                "content": f"""
+Given a competitive programming problem generate a concrete planning to solve the problem.
+Generate exactly {k} distinct plans to solve this competitive programming problem. 
+
+## Problem to be solved:
+{self.task}
+{self.sample_io_prompt}
+
+Important:
+Do NOT use `<`, `>`, `&` symbols directly in your planning description.
+Do NOT leave an unclosed <description> or a missing opening tag.
+You should give only the planning to solve the problem. Do not add extra explanation or words.
+
+## Planning:
+Each plan must have a plan id
+
+""",
+            },
+        ]
+    
+    def planning_verificaion_dfs(self, planning):
+        return [
+            {
+                "role": "user",
+                "content": f"""
+    Given a competitive programming problem and a set of plans to solve the problem in {self.language},
+    evaluate whether each plan is correct and feasible.
+
+    # Problem:
+    {self.task}
+
+    # Planning:
+    {planning}
+
+    ----------------
+    Important:
+    Your response must follow the XML format below:
+
+    ```xml
+    <root>
+    <plan>
+    <description>
+    Copy the original planning here.
+    </description>
+    <confidence>
+    Confidence score (0-100) indicating how well the plan can solve the problem.
+    </confidence>
+    </plan>
+        
+        <!-- Add more plans here if needed -->
+    </root>
+    """}]
+    
     def reflection_agent(self, k, sample_io_prompt, test_log, code):
+        return [
         {
             "role":"user",
             "content":f"""
@@ -265,21 +331,15 @@ You should first identify the problem in the given solution, then explains how t
 # Code
 {code}
 
+
 Important:
 Do NOT use `<`, `>`, `&` symbols directly in your planning description.
 Do NOT leave an unclosed <description> or a missing opening tag.
-Your response must follow the following xml format -
+You should give only the planning to solve the problem. Do not add extra explanation or words.
 
-<root>
-<problem>
-# Recall {k} plans to solve the problem
-<description>
-# Describe the plan here
-</description>
-</problem>
+## Planning:
+Each plan must have a plan id
 
-# similarly add more plans here...
-</root>
-
-"""
+""",
         }
+        ]

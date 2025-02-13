@@ -2,9 +2,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 # 数据准备
-methods = ["Direct", "MapCoder", "without kb","Without kb and debug"]  # 方法名称
-acc =     [12.12,    20.61,  18.18, 17.58, ]                        # 准确率（%）
-total_tokens = [237818, 7170454, 5723343, 126053]       # 总令牌数（转换为百万单位）
+methods = ["Direct", "top 3", "top 2", "top 1", "top 3 out of 5"]  # 方法名称
+acc =     [85.37,    89.63,    89.02,   82.93,   88.41      ]                        # 准确率（%）
+total_tokens = [92972, 726800,   615098, 598315, 869985]       # 总令牌数（转换为百万单位）
 tokens_m = [x / 1e6 for x in total_tokens]      # 单位转换为百万（1.365M, 2.45M等）
 
 # 创建画布和主Y轴
@@ -17,7 +17,7 @@ bars_acc = ax1.bar(x - bar_width/2, acc, bar_width, color='#1f77b4', label='Accu
 
 # 设置主Y轴标签和范围
 ax1.set_ylabel('Accuracy (%)', color='#1f77b4')
-ax1.set_ylim(10, 30)
+ax1.set_ylim(80, 100)
 ax1.tick_params(axis='y', labelcolor='#1f77b4')
 
 # 创建次Y轴（共享同一X轴）
@@ -32,7 +32,7 @@ ax2.set_ylim(0, max(tokens_m) * 1.5)  # 自动调整范围
 ax2.tick_params(axis='y', labelcolor='#ff7f0e')
 
 # 添加标题、X轴标签和图例
-plt.title('performance on codecontests')
+plt.title('Performance on Humaneval while k varies and without kb')
 ax1.set_xticks(x)
 ax1.set_xticklabels(methods)
 fig.legend(loc="upper right", bbox_to_anchor=(0.9, 0.9))

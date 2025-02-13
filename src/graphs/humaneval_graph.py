@@ -2,9 +2,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 # 数据准备
-methods = ["Direct", "MapCoder", "Single merge", "top 1 plan","Without kb", "without kb & top 1 plan"]  # 方法名称
-acc =     [85.37,    89.63,      81.71,          89.02,       89.63, 87.2]                        # 准确率（%）
-total_tokens = [92972, 1462605, 2147791, 1173620, 726800, 509300]       # 总令牌数（转换为百万单位）
+methods = ["Direct", "MapCoder", "Merge",   "dfs",]  # 方法名称
+acc =     [85.37,    89.63,      85.98,      90.24, ]                        # 准确率（%）
+total_tokens = [92972, 1462605,  1352207,    607210,]       # 总令牌数（转换为百万单位）
 tokens_m = [x / 1e6 for x in total_tokens]      # 单位转换为百万（1.365M, 2.45M等）
 
 # 创建画布和主Y轴
@@ -32,7 +32,7 @@ ax2.set_ylim(0, max(tokens_m) * 1.2)  # 自动调整范围
 ax2.tick_params(axis='y', labelcolor='#ff7f0e')
 
 # 添加标题、X轴标签和图例
-plt.title('performance on humaneval')
+plt.title('Performance on humaneval')
 ax1.set_xticks(x)
 ax1.set_xticklabels(methods)
 fig.legend(loc="upper right", bbox_to_anchor=(0.9, 0.9))

@@ -1,4 +1,21 @@
-# Without knowledge retrieval agent
+# MapCoder_withoutKB_4: 
+#       MapCoder top 3 plan out of 5 & without knowledge retrieval
+#           k: int = 5
+#           for planning_with_ex in plannings_with_score[:3]
+# 
+# MapCoder_withoutKB_3： 
+#       Original MapCoder without knowledge retrieval agent, and considers the top 2 plans
+#           k: int = 3
+#           for planning_with_ex in plannings_with_score[:2]
+#
+# MapCoder_withoutKB_5:
+#       top 1 plan & without KB
+#          planning, confidence = plannings_with_score[0]
+#
+#
+#      Current version: MapCoder_withoutKB_5
+#
+#
 from typing import List
 import tiktoken
 import os
@@ -41,7 +58,7 @@ mapping = {
 class MapCoder(BaseStrategy):
     def __init__(
         self,
-        k: int = 3,
+        k: int = 5,
         t: int = 5,
         usage: dict = {},
         *args,
@@ -181,123 +198,113 @@ class MapCoder(BaseStrategy):
 
         task = self.data.get_prompt(item)
 
-        agents = Agent("python",task)
+        agent = Agent("python",task)
 
         sample_io_prompt = f"## Sample Test cases: \n{self.get_sample_io_str(item['sample_io'])}\n"
-
-        planning_name = "planning agent"
-        planning_prompt = agents.planning_without_knowledge_retrieval_prompt(self.k, sample_io_prompt)
-
-        agents.get_input(planning_name, planning_prompt)
-
+        agent.set_sample_io_prompt(sample_io_prompt)
+        
+        # Planning agent
+        planning_prompt = agent.planning_dfs(self.k)
+        agent.get_input("planning agent", planning_prompt)
+        
         plannings, pr_tok, com_tok = self.gpt_chat(
             planning_prompt
         )
-
-        item['api_calls'] = item.get('api_calls', 0) + 1
-
-        plannings = self.replace_tag(plannings, 'plan')
-
-        agents.get_output(planning_name, plannings)
-
-        plannings = self.parse_xml(plannings)
-
-        plannings_with_score = []
-        for plan_no, problem in enumerate(plannings["problem"], start=1):
-            plan = problem['description']
-
-            planning_verification_name = "planning verification agent"
-            plannign_verification_prompt = agents.planning_verification_agent_prompt(plan)
-
-            agents.get_input(planning_verification_name, plannign_verification_prompt)
         
-            verification_res, pr_tok_1, com_tok_1 = self.gpt_chat(
-                plannign_verification_prompt
-            )
-
-            item['api_calls'] += 1
-            pr_tok += pr_tok_1
-            com_tok += com_tok_1
-
-            verification_res = self.replace_tag(
-                verification_res, 'explanation')
-            verification_res = self.replace_tag(verification_res, 'confidence')
-
-            verification_res = self.parse_xml(verification_res)
-
-            verification_res['confidence'] = int(
-                str(verification_res['confidence']).strip())
-
-            agents.get_output(planning_verification_name, verification_res)
-
+        item['api_calls'] = item.get('api_calls', 0) + 1
+        
+        agent.get_output("planning agent", plannings)
+        
+        
+        # Planning verification agent
+        planning_verification_prompt = agent.planning_verificaion_dfs(plannings)
+        agent.get_input("planning verification agent", planning_verification_prompt)
+        
+        plans, pr_tok_1, com_tok_1 = self.gpt_chat(
+            planning_verification_prompt
+        )
+        
+        
+        
+        item['api_calls'] += 1
+        pr_tok += pr_tok_1
+        com_tok += com_tok_1 
+    
+        plans = self.replace_tag(plans, "description")
+        plans = self.replace_tag(plans, "confidence")
+        
+        verification_res = self.parse_xml(plans)
+        
+        agent.get_output("planning verification agent", plans)
+        plannings_with_score = []
+        
+        for plan in verification_res['plan']:
             plannings_with_score.append((
-                plan,
-                verification_res['confidence'],
+                plan['description'],
+                plan['confidence'],
             ))
 
         plannings_with_score.sort(key=lambda x: x[1], reverse=True)
+        
         if type(self.data) == APPSDataset or type(self.data) == CodeContestDataset or type(self.data) == XCodeDataset:
             std_input_prompt = "## Note: Strictly follow the input and output format. The input should be taken from Standard input and output should be given to standard output. If you are writing a function then after the function definition take input using `input()` function then call the function with specified parameters and finally print the output of the function. Do not add extra print statement otherwise it will failed the test cases."
         else:
             std_input_prompt = ""
 
-        for planning_with_ex in plannings_with_score[:2]:
-            planning, confidence = planning_with_ex
+        planning, confidence = plannings_with_score[0]
 
-            agents.set_std_input_prompt(std_input_prompt)
+        agent.set_std_input_prompt(std_input_prompt)
 
-            coding_agent_name = "coding agent"
-            coding_agent_prompt = agents.coding_agent_prompt(planning, sample_io_prompt)
+        coding_agent_name = "coding agent"
+        coding_agent_prompt = agent.coding_agent_prompt(planning, sample_io_prompt)
 
-            agents.get_input(coding_agent_name, coding_agent_prompt)
+        agent.get_input(coding_agent_name, coding_agent_prompt)
 
-            code, pr_tok_1, com_tok_1 = self.gpt_chat(
-                coding_agent_prompt
+        code, pr_tok_1, com_tok_1 = self.gpt_chat(
+            coding_agent_prompt
+        )
+
+        item['api_calls'] += 1
+        pr_tok += pr_tok_1
+        com_tok += com_tok_1
+
+        code = self.parse_code(code)
+
+        agent.get_output(coding_agent_name, code)
+
+        response = f"## Planning: {planning}\n## Code:\n```\n{code}\n```"
+        passed = False
+
+        for i in range(1, self.t + 1):
+            passed, test_log = self.data.evaluate_sample_io(
+                item,
+                code,
+                self.language
+            )
+
+            if passed:
+                break
+
+            print(f"Input for improving code generation: {i}")
+
+            debugging_agent_name = "debugging agent"
+            debugging_agent_prompt = agent.debugging_agent_prompt(response, test_log)
+
+            agent.get_input(debugging_agent_name, debugging_agent_prompt)
+
+            response, pr_tok_1, com_tok_1 = self.gpt_chat(
+                debugging_agent_prompt
             )
 
             item['api_calls'] += 1
             pr_tok += pr_tok_1
             com_tok += com_tok_1
 
-            code = self.parse_code(code)
+            agent.get_output(debugging_agent_name, response)
 
-            agents.get_output(coding_agent_name, code)
+            code = self.parse_code(response)
 
-            response = f"## Planning: {planning}\n## Code:\n```\n{code}\n```"
-            passed = False
-
-            for i in range(1, self.t + 1):
-                passed, test_log = self.data.evaluate_sample_io(
-                    item,
-                    code,
-                    self.language
-                )
-
-                if passed:
-                    break
-
-                print(f"Input for improving code generation: {i}")
-
-                debugging_agent_name = "debugging agent"
-                debugging_agent_prompt = agents.debugging_agent_prompt(response, test_log)
-
-                agents.get_input(debugging_agent_name, debugging_agent_prompt)
-
-                response, pr_tok_1, com_tok_1 = self.gpt_chat(
-                    debugging_agent_prompt
-                )
-
-                item['api_calls'] += 1
-                pr_tok += pr_tok_1
-                com_tok += com_tok_1
-
-                agents.get_output(debugging_agent_name, response)
-
-                code = self.parse_code(response)
-
-            # got a code that passed all sample test cases
-            if passed:
-                break
+        # got a code that passed all sample test cases
 
         print("________________________\n\n", flush=True)
         return code, pr_tok, com_tok

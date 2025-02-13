@@ -37,5 +37,21 @@ ChatGPT-MapCoder_without_kb_debug-HumanEval-Python3-0-1-3number of success = 148
 ChatGPT-MapCoder_withoutKB_3-HumanEval-Python3-0-1-1number of success = 149/164, acc = 90.85 total_tokens = 615396
 ChatGPT-MapCoder_withoutKB_3-HumanEval-Python3-0-1-2number of success = 146/164, acc = 89.02 total_tokens = 615098
 ChatGPT-MapCoder_withoutKB_3-HumanEval-Python3-0-1-3number of success = 143/164, acc = 87.2 total_tokens = 619893
-ChatGPT-MapCoder_dfs-HumanEval-Python3-0-1-1number of success = 1/1, acc = 100.0 total_tokens = 2380
-ChatGPT-MapCoder_dfs-HumanEval-Python3-0-1-1number of success = 1/1, acc = 100.0 total_tokens = 2368
+
+# MapCoder without kb & plan (debug only)
+ChatGPT-MapCoder_without_kb_plan-HumanEval-Python3-0-1-1number of success = 142/164, acc = 86.59 total_tokens = 153839
+ChatGPT-MapCoder_without_kb_plan-HumanEval-Python3-0-1-2number of success = 143/164, acc = 87.2 total_tokens = 167443
+ChatGPT-MapCoder_without_kb_plan-HumanEval-Python3-0-1-3number of success = 146/164, acc = 89.02 total_tokens = 151472
+
+# MapCoder dfs
+ChatGPT-MapCoder_dfs-HumanEval-Python3-0-1-1number of success = 149/164, acc = 90.85 total_tokens = 610035
+ChatGPT-MapCoder_dfs-HumanEval-Python3-0-1-2number of success = 148/164, acc = 90.24 total_tokens = 607210
+ChatGPT-MapCoder_dfs-HumanEval-Python3-0-1-3number of success = 148/164, acc = 90.24 total_tokens = 605402
+
+# MapCoder top 3 plan out of 5 & without knowledge retrieval
+ChatGPT-MapCoder_withoutKB_4-HumanEval-Python3-0-1-1number of success = 149/164, acc = 90.85 total_tokens = 842073
+ChatGPT-MapCoder_withoutKB_4-HumanEval-Python3-0-1-2number of success = 145/164, acc = 88.41 total_tokens = 869985
+ChatGPT-MapCoder_withoutKB_4-HumanEval-Python3-0-1-3number of success = 145/164, acc = 88.41 total_tokens = 861492
+
+# MapCoder top 1 & without knowledge retrieval
+hChatGPT-MapCoder_withoutKB_5-HumanEval-Python3-0-1-1number of success = 136/164, acc = 82.93 total_tokens = 598315

@@ -1,3 +1,4 @@
+# Without knowledge retrieval agent
 from typing import List
 import tiktoken
 import os
@@ -6,7 +7,6 @@ import re
 import sys
 import time
 from promptings.agents import *
-from promptings.Node import *
 from copy import deepcopy
 import xml.etree.ElementTree as ET
 
@@ -43,8 +43,6 @@ class MapCoder(BaseStrategy):
         self,
         k: int = 3,
         t: int = 5,
-        max_depth = 3,
-        max_iter = 5,
         usage: dict = {},
         *args,
         **kwargs
@@ -52,12 +50,8 @@ class MapCoder(BaseStrategy):
         super().__init__(*args, **kwargs)
         self.k = k
         self.t = t
-        self.sample_io_prompt: str
-        self.cur_code: str
-        self.max_depth = max_depth
-        self.max_iter = max_iter
-        self.iter = 0
-        
+        self.usage = usage
+
     def xml_to_dict(self, element):
         result = {}
         for child in element:
@@ -151,6 +145,16 @@ class MapCoder(BaseStrategy):
             code_str = response
 
         return code_str
+    
+    def get_input(agent_name, prompt):
+        print("\n\n________________________")
+        print(f"Input for {agent_name}: ")
+        print(prompt[0]['content'],flush=True)
+
+    def get_output(agent_name, response):
+        print("\n\n________________________")
+        print(f"Response from {agent_name}: ")
+        print(response, flush=True)
 
     @staticmethod
     def trim_text(text: str, trimmed_text: str):
@@ -171,160 +175,66 @@ class MapCoder(BaseStrategy):
             if type(sample_io[0]) == dict:
                 return "\n".join([f"Input:\n{io['input']}\nExpected output:\n{io['output'][0]}" for io in sample_io])
         return sample_io
-        
-    def run_single_pass(self, item:dict):
+
+    def run_single_pass(self, item: dict):
+        print("", flush=True)
+
         task = self.data.get_prompt(item)
-        agent = Agent("python", task)
-        root = Node("", 0)
-        root.depth = -1
-        
+        agents = Agent("python",task)
         sample_io_prompt = f"## Sample Test cases: \n{self.get_sample_io_str(item['sample_io'])}\n"
-        agent.set_sample_io_prompt(sample_io_prompt)
+
+        pr_tok = 0
+        com_tok = 0
+
+        coding_agent_name = "coding agent"
+        coding_agent_prompt = agents.coding_agent_prompt("",sample_io_prompt)
         
-        # Planning agent
-        planning_prompt = agent.planning_dfs(self.k)
-        agent.get_input("planning agent", planning_prompt)
-        
-        plannings, pr_tok, com_tok = self.gpt_chat(
-            planning_prompt
+
+        agents.get_input(coding_agent_name, coding_agent_prompt)
+
+        code, pr_tok_1, com_tok_1 = self.gpt_chat(
+            coding_agent_prompt
         )
-        
+
         item['api_calls'] = item.get('api_calls', 0) + 1
-        
-        agent.get_output("planning agent", plannings)
-        
-        
-        # Planning verification agent
-        planning_verification_prompt = agent.planning_verificaion_dfs(plannings)
-        agent.get_input("planning verification agent", planning_verification_prompt)
-        
-        plans, pr_tok_1, com_tok_1 = self.gpt_chat(
-            planning_verification_prompt
-        )
-        
-        
-        
-        item['api_calls'] += 1
         pr_tok += pr_tok_1
-        com_tok += com_tok_1 
-    
-        plans = self.replace_tag(plans, "description")
-        plans = self.replace_tag(plans, "confidence")
-        
-        verification_res = self.parse_xml(plans)
-        
-        agent.get_output("planning verification agent", plans)
+        com_tok += com_tok_1
 
-        for plan in verification_res['plan']:
-            description = plan['description']
-            score = int(str(plan['confidence']).strip())
-            node = Node(description, score)
-            root.children.append(node)
-        
-        root.sort_children()
-        
-        # Coding
-        code = None
+        code = self.parse_code(code)
+
+        agents.get_output(coding_agent_name, code)
+
+        response = f"## Planning: ""\n## Code:\n```\n{code}\n```"
         passed = False
-        stack = [root]
-        self.iter = 0
-        while stack and not passed and self.iter < self.max_iter:
-            print("go through while loop")
-            node = stack.pop()
 
-            
-            if node.depth >= self.max_depth:
-                continue
-            
-            for child in node.children:
-                print(" --- --- --- --- --- --- --- --- --- --\n ")
-                print("Status check \n")
-                print(f"depth: {node.depth}")
-                print(f"iter: {self.iter}\n")
-                print(" --- --- --- --- --- --- --- --- --- -- ")
-                child.depth = node.depth + 1
-                
-                if self.iter >= self.max_iter: break
-                
-                self.iter += 1
+        for i in range(1, self.t + 1):
+            passed, test_log = self.data.evaluate_sample_io(
+                item,
+                code,
+                self.language
+            )
 
-                coding_prompt = agent.coding_agent_prompt(child.plan, sample_io_prompt)
-                agent.get_input("coding agent", coding_prompt)
-                
-                code, pr_tok_1, com_tok_1 = self.gpt_chat(
-                    coding_prompt
-                )
-                
-                item['api_calls'] += 1
-                pr_tok += pr_tok_1
-                com_tok += com_tok_1
-                
-                code = self.parse_code(code)
-                agent.get_output("coding agent", code)
+            if passed:
+                break
 
-                passed, test_log = self.data.evaluate_sample_io(
-                    item,
-                    code,
-                    self.language
-                )
-                
-                if passed:
-                    print(" -------- Returning -------")
-                    print(code,"\n\n\n")
-                    return code, pr_tok, com_tok
-                
-                # debugging
-                reflection_prompt = agent.reflection_agent(self.k, sample_io_prompt, test_log, code)
-                agent.get_input("reflection_agent", reflection_prompt)
-                
-                plannings, pr_tok_1, com_tok_1 = self.gpt_chat(
-                    reflection_prompt
-                )
-                
-                item['api_calls'] += 1
-                pr_tok += pr_tok_1
-                com_tok += com_tok_1
-                
-                agent.get_output("reflection_agent", plans)
-                
-                # verification
-                planning_verification_prompt = agent.planning_verificaion_dfs(plannings)
-                agent.get_input("planning verification agent", planning_verification_prompt)
-                
-                plans, pr_tok_1, com_tok_1 = self.gpt_chat(
-                    planning_verification_prompt
-                )
-                
-                item['api_calls'] += 1
-                pr_tok += pr_tok_1
-                com_tok += com_tok_1 
-            
-                plans = self.replace_tag(plans, "description")
-                plans = self.replace_tag(plans, "confidence")
-                
-                verification_res = self.parse_xml(plans)
-                
-                agent.get_output("planning verification agent", plans)
-                
-                for plan in verification_res['plan']:
-                    print(plan)
-                    description = plan['description']
-                    score = int(str(plan['confidence']).strip())
-                    
-                    if score > node.score:
-                        new_node = Node(description, score)
-                        child.children.append(new_node)
-                
-                if child.children:
-                    child.sort_children()
-                    stack.append(child)
-                
-                if code is None:
-                    print("ERROR: gpt_chat() returned None")
-        print(" --------Ends Returning -------")
-        print(stack)
-        print(self.iter)
-        print(code,"\n\n\n")            
+            print(f"Input for improving code generation: {i}")
+
+            debugging_agent_name = "debugging agent"
+            debugging_agent_prompt = agents.debugging_agent_prompt(response, test_log)
+
+            agents.get_input(debugging_agent_name, debugging_agent_prompt)
+
+            response, pr_tok_1, com_tok_1 = self.gpt_chat(
+                debugging_agent_prompt
+            )
+
+            item['api_calls'] += 1
+            pr_tok += pr_tok_1
+            com_tok += com_tok_1
+
+            agents.get_output(debugging_agent_name, response)
+
+            code = self.parse_code(response)
+
+        print("________________________\n\n", flush=True)
         return code, pr_tok, com_tok
-            
-            
