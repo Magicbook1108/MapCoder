@@ -17,14 +17,14 @@ from datasets.DatasetFactory import DatasetFactory
 from models.ModelFactory import ModelFactory
 # 初始化基础配置
 BASE_CONFIG = {
-    "DATASET": "HumanEval",
-    "STRATEGY": ["MapCoder_withoutKB_5", ],
+    "DATASET": "CC",
+    "STRATEGY": [ "MapCoder_dfs15"] ,#  "MapCoder_dfs"],
     "MODEL_NAME": "ChatGPT", 
     "TEMPERATURE": 0,
     "PASS_AT_K": 1,
     "LANGUAGE": "Python3",
     "START_COUNT": 1,  # 新增起始计数
-    "MAX_COUNT": 3,
+    "MAX_COUNT": 1,
     "task_amount": -1 # 新增最大计数
 }
 
@@ -35,8 +35,8 @@ def run_single_count(current_count, cur_strategy):
     config = BASE_CONFIG.copy()
     config["COUNT"] = str(current_count)
     config["STRATEGY"] = str(cur_strategy)
-    
-    run_name = f"{config['MODEL_NAME']}-{config['STRATEGY']}-{config['DATASET']}-{config['LANGUAGE']}-{config['TEMPERATURE']}-{config['PASS_AT_K']}-{config['COUNT']}"
+    name = "MapCoder_dfs15"
+    run_name = f"{config['MODEL_NAME']}-{name}-{config['DATASET']}-{config['LANGUAGE']}-{config['TEMPERATURE']}-{config['PASS_AT_K']}-{config['COUNT']}"
     results_path = f"./outputs/{run_name}.jsonl"
 
     print(f"\n{''*3} 启动计数 #{current_count} {''*3}")
@@ -87,4 +87,4 @@ if __name__ == "__main__":
 
         count_sequencer(element)
     
-        print(f"\n#########################\n最终结束时间: {datetime.now()}\n##########################")
+        print(f"\n#########################\n最终结束时间: {datetime.now()}\n##########################") 

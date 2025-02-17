@@ -1,3 +1,8 @@
+# v1: max_iter = 5
+# v2: max_iter = 10
+# v3: max_iter = 15
+# Cur version: v1
+
 from typing import List
 import tiktoken
 import os
@@ -44,7 +49,7 @@ class MapCoder(BaseStrategy):
         k: int = 3,
         t: int = 5,
         max_depth = 3,
-        max_iter = 5,
+        max_iter = 10,
         usage: dict = {},
         *args,
         **kwargs

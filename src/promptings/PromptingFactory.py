@@ -10,8 +10,7 @@ from promptings.MapCoder_withoutKB_3 import MapCoder as MapCoder_withoutKB_3
 from promptings.MapCoder_without_kb_debug import MapCoder as MapCoder_without_kb_debug
 from promptings.MapCoder_dfs import MapCoder as MapCoder_dfs
 from promptings.MapCoder_without_kb_plan import MapCoder as MapCoder_without_kb_plan
-
-
+from promptings.MapCoder_dfs15 import MapCoder as MapCoder_dfs15
 
 
 
@@ -46,5 +45,7 @@ class PromptingFactory:
             return MapCoder_without_kb_plan
         elif prompting_name == "MapCoder_withoutKB_5":
             return MapCoder_withoutKB_3
+        elif prompting_name =="MapCoder_dfs15":
+            return MapCoder_dfs15
         else:
             raise Exception(f"Unknown prompting name {prompting_name}")

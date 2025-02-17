@@ -295,6 +295,7 @@ Each plan must have a plan id
 
     ----------------
     Important:
+    Each plan must be enclosed in a separate `<plan></plan>` tag. **Do NOT put multiple plans inside one `<description></description>`**.
     Your response must follow the XML format below:
 
     ```xml

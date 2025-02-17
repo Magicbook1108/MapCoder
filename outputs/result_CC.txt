@@ -9,3 +9,11 @@ ChatGPT-MapCoder_without_kb_debug-CC-Python3-0-1-1number of success = 29/165, ac
 
 # MapCoder without knowledge retrieval agent
 ChatGPT-MapCoder_withoutKB_1-CC-Python3-0-1-1number of success = 30/165, acc = 18.18 total_tokens = 5723343
+
+# MapCoder dfs - max iter 5
+ChatGPT-MapCoder_dfs-CC-Python3-0-1-1number of success = 32/165, acc = 19.39 total_tokens = 3352918
+
+# MapCoder dfs - max iter 10
+ChatGPT-MapCoder_dfs10-CC-Python3-0-1-1number of success = 37/165, acc = 22.42 total_tokens = 5815054
+
+# MapCoder dfs - max iter 15
