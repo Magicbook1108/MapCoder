@@ -17,3 +17,4 @@ ChatGPT-MapCoder_dfs-CC-Python3-0-1-1number of success = 32/165, acc = 19.39 tot
 ChatGPT-MapCoder_dfs10-CC-Python3-0-1-1number of success = 37/165, acc = 22.42 total_tokens = 5815054
 
 # MapCoder dfs - max iter 15
+ChatGPT-MapCoder_dfs15-CC-Python3-0-1-1number of success = 36/165, acc = 21.82 total_tokens = 8150425

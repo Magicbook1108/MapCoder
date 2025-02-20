@@ -11,7 +11,7 @@ import re
 import sys
 import time
 from promptings.agents import *
-from promptings.Node import *
+from promptings.node import *
 from copy import deepcopy
 import xml.etree.ElementTree as ET
 
