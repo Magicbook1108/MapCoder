@@ -1,0 +1,44 @@
+--------------------------------------------------
+2405.13966v1（提示词差异）
+--------------------------------------------------
+1. 研究发现，示例任务（Exemplars）对 LLM 性能影响最大，而非 ReAct 机制本身。
+2. 基于 Chain-of-Thought（CoT）的结构比 ReAct 传统的 `think:` 提示更稳定。
+3. 子任务分解（Subgoal decomposition）比单一 `think:` 提示更有效，例如：
+   - First, locate the object.
+   - Next, pick it up.
+   - Then, place it at the target location.
+4. 失败反馈和错误解释（Failure + Explanation）有助于提升 LLM 适应性。
+5. ReAct 的 "推理+行动" 并非 LLM 任务成功的核心，LLM 更依赖示例任务的相似性。
+
+推荐的提示策略：
+- 任务描述: "To solve the task, I need to..."
+- 子任务拆分: "First, locate the object." → "Next, pick it up." → "Then, place it."
+- 失败处理: "If X is missing, do Y instead."
+- 失败解释: "Nothing happens because I do not have object X."
+
+应避免的提示：
+- 依赖 `think:` 交错执行，研究表明这对 LLM 并无明显推理提升作用。
+- 使用无意义的安慰剂提示（如 "Take a deep breath and work on this problem step by step"）。
+- 忽视示例任务的相似性，LLM 主要依赖示例匹配，而非推理能力。
+
+最终结论：
+- ReAct 并未真正增强 LLM 的推理能力，而是通过示例任务的相似性提升性能。
+- 更优提示应侧重于提供高质量的示例任务和结构化的任务分解。
+
+LLM 所表现出的推理能力实际上来源于示例-查询的相似性和近似检索，而非任何内在的推理能力
+
+
+
+--------------------------------------------------
+2502.02533v1(Mass)
+--------------------------------------------------
+prompt > topologies
+
+
+# MapCoder Notes
+KB = few shot ? 
+没答案，学习不到
+
+复杂的算法并不一定有效，确定流程，尝试优化prompt
+
+采样 代替MCTS， 简单
