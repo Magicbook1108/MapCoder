@@ -7,6 +7,11 @@ __pycache__
 samples/*
 desktop.ini
 logs/*
+Mass/*
+ADAS/*
 
 test.ipynb
 ExecEval
+
+Main.html
+Main.ipynb
