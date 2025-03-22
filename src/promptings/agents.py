@@ -116,6 +116,7 @@ Discuss whether the given competitive programming problem is solvable by using t
         "role": "user",
         "content":
             f"""Given a competitive programming problem, generate {self.language} code to solve the problem.
+            
 {self.algorithm_prompt}
 ## Problem to be solved:
 {self.task}
@@ -340,6 +341,129 @@ You should give only the planning to solve the problem. Do not add extra explana
 
 ## Planning:
 Each plan must have a plan id
+
+""",
+        }
+        ]
+    
+    # dfs_optimized
+    def planning_dfs_optimized(self, k):
+                return [
+        {
+                "role": "user",
+                "content": f"""
+Given a programming task and a sample input-output prompt, generate {k} distinct plans outlining different strategies for implementing the solution.
+Provide a structured reasoning for each plan that explains the thought process behind the approach. Ensure that the plans are actionable and clearly delineate the steps necessary to solve the task.
+
+## Problem to be solved:
+{self.task}
+{self.sample_io_prompt}
+
+Your response must follow the XML format, make sure each opening tag `<tag>` has a corresponding closing tag `</tag>`:
+
+<root>
+<plan>
+<reasoning>
+Reasoning here
+</reasoning>
+<description>
+Planning to solve the problem, each plan is considered as a single string contain multiple steps
+</description>
+</plan>
+
+Add more plans here
+</root>
+""",
+            },
+        ]
+                
+    def planning_verification_optimized(self, planning):
+        return [
+            {
+                "role": "user",
+                "content": f"""
+Evaluate the given plan by generating a detailed reasoning that explains the thought process behind the plan's execution.
+And assign a score that quantifies its feasibility and effectiveness based on the criteria established for successful task completion.
+
+# Problem:
+{self.task}
+
+# Planning:
+{planning}
+
+Your response must follow the XML format, make sure each opening tag `<tag>` has a corresponding closing tag `</tag>`:
+
+<root>
+<reasoning>
+Reasoning here
+</reasoning>
+<score>
+Score here, a single str from 0-100
+</score>
+</root>
+"""}]
+    
+    def coding_optimized(self, planning):
+        return [
+            {
+        "role": "user",
+        "content":
+            f"""In a high-stakes programming competition, you are tasked with transforming a given problem into executable code.
+Given the fields task, plan, and sample_io_prompt, your objective is to produce {self.language} code.
+Remember, the accuracy of your solution could determine the outcome of the competition, so be thorough and precise in your coding.
+
+## Problem to be solved:
+{self.task}
+{self.sample_io_prompt}
+
+## Planning:
+{planning}
+
+
+----------------
+Important:
+{self.std_input_prompt}
+
+# Your response must contain only the {self.language} code to solve this problem. 
+Do not add extra explanation or words.
+"""
+   }
+]
+    
+    def reflection_optimized(self, k, test_log, code):
+        return [
+        {
+            "role":"user",
+            "content":f"""
+Given the task description, and the test log from previous attempts, generate {k} distinct plans for solving the programming task.
+Ensure to provide reasoning for each plan to clarify the decision-making process behind the proposed approaches.
+Utilize the sample input/output prompt to guide the planning process effectively.
+
+## Problem to be solved:
+{self.task}
+
+{self.sample_io_prompt}
+
+# Test log
+{test_log}
+
+# Code
+{code}
+
+Your response must follow the XML format, make sure each opening tag `<tag>` has a corresponding closing tag `</tag>`:
+
+<root>
+<plan>
+<reasoning>
+Reasoning here
+</reasoning>
+<description>
+Planning to solve the problem, each plan is considered as a single string contain multiple steps
+</description>
+</plan>
+
+Add more plans here
+</root>
 
 """,
         }

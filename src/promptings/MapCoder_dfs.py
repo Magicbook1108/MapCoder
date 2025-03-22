@@ -1,7 +1,7 @@
 # v1: max_iter = 5
 # v2: max_iter = 10
 # v3: max_iter = 15
-# Cur version: v1
+# Cur version: v2
 
 from typing import List
 import tiktoken

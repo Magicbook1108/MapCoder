@@ -18,3 +18,18 @@ ChatGPT-MapCoder_dfs10-CC-Python3-0-1-1number of success = 37/165, acc = 22.42 t
 
 # MapCoder dfs - max iter 15
 ChatGPT-MapCoder_dfs15-CC-Python3-0-1-1number of success = 36/165, acc = 21.82 total_tokens = 8150425
+
+GPT4-CoT-10-CC-Python3-0-1-1number of success = 14/165, acc = 8.48 total_tokens = 514044
+
+GPT4-Direct-10-CC-Python3-0-1-1number of success = 22/165, acc = 13.33 total_tokens = 239634
+
+GPT4-SelfPlanning-10-CC-Python3-0-1-1number of success = 24/165, acc = 14.55 total_tokens = 811836
+
+GPT4-CoT-10-CC-Python3-0-1-1number of success = 14/165, acc = 8.48 total_tokens = 514044
+GPT4-CoT-10-CC-Python3-0-1-2number of success = 13/165, acc = 7.88 total_tokens = 513960
+GPT4-CoT-10-CC-Python3-0-1-3number of success = 18/165, acc = 10.91 total_tokens = 514441
+
+GPT4-Direct-10-CC-Python3-0-1-1number of success = 22/165, acc = 13.33 total_tokens = 239634
+GPT4-MapCoder_without_plan-10-CC-Python3-0-1-1number of success = 24/165, acc = 14.55 total_tokens = 1007101
+GPT4-MapCoder_without_plan-10-CC-Python3-0-1-2number of success = 29/165, acc = 17.58 total_tokens = 1019353
+GPT4-MapCoder_without_plan-10-CC-Python3-0-1-3number of success = 22/165, acc = 13.33 total_tokens = 1030792

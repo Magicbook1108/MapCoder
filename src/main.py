@@ -43,7 +43,9 @@ parser.add_argument(
         "MapCoder_withoutKB_3",
         "MapCoder_without_kb_debug",
         "MapCoder_single_merge",
-        "MapCoder_dfs"
+        "MapCoder_dfs",
+        "MapCoder_dfs_optimized",
+        "MapCoder_without_plan"
     ]
 )
 parser.add_argument(
@@ -95,11 +97,9 @@ parser.add_argument(
 )
 
 parser.add_argument(
-    "--tasks",
-    type=int,
-    default= -1,
-    chocies = [1,          
-    ]
+    "--debugging",
+    type=bool,
+    default= False,
 )
 
 
@@ -113,6 +113,7 @@ TEMPERATURE = args.temperature
 PASS_AT_K = args.pass_at_k
 LANGUAGE = args.language
 COUNT = args.count
+DEBUGGING = args.debugging
 
 RUN_NAME = f"{MODEL_NAME}-{STRATEGY}-{DATASET}-{LANGUAGE}-{TEMPERATURE}-{PASS_AT_K}-{COUNT}"
 RESULTS_PATH = f"./outputs/{RUN_NAME}.jsonl"
@@ -125,10 +126,12 @@ strategy = PromptingFactory.get_prompting_class(STRATEGY)(
     language=LANGUAGE,
     pass_at_k=PASS_AT_K,
     results=Results(RESULTS_PATH),
-    name = RUN_NAME
+    debugging = DEBUGGING,
+    name = RUN_NAME,
 )
 
 strategy.run()
+
 
 print(f"#########################\nRunning end {RUN_NAME}, Time: {datetime.now()}\n##########################\n")
 

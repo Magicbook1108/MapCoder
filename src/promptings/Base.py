@@ -3,7 +3,6 @@ import tiktoken
 import os
 import copy
 import time
-
 from models.Base import BaseModel
 from datasets.Dataset import Dataset
 from results.Results import Results
@@ -17,7 +16,7 @@ class BaseStrategy(object):
         data: Dataset,
         language: str,
         pass_at_k: int,
-        task_amount: int,
+        debugging: bool,
         results: Results,
         name: str,
         verbose: bool = True,
@@ -29,7 +28,7 @@ class BaseStrategy(object):
         self.language = language
         self.verbose = verbose
         self.total_tokens = 0
-        self.task_amount = task_amount
+        self.debugging = debugging
         self.path = "./outputs/result"
         self.name = name
 
@@ -40,7 +39,7 @@ class BaseStrategy(object):
         pass
 
     def run(self):
-        num_items = len(self.data) if self.task_amount == -1 else self.task_amount
+        num_items = 1 if self.debugging else len(self.data)
         num_success = 0
         self.total_tokens = 0
         for i, item in enumerate(self.data[:num_items]):

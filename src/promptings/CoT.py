@@ -910,8 +910,7 @@ def main():
 main()
 
 """
-        
-        
+
         input_for_planning = [
             {
                 "role": "user",
