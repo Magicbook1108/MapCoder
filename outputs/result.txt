@@ -49,3 +49,4 @@ ChatGPT-MapCoder_single_merge-HumanEval-Python3-0-1-3number of success = 147/164
 
 ChatGPT-MapCoder_without_kb_debug-CC-Python3-0-1-1number of success = 29/165, acc = 17.58 total_tokens = 1260653
 ChatGPT-MapCoder_without_kb_debug-CC-Python3-0-1-1number of success = 29/165, acc = 17.58 total_tokens = 1260653
+GPT4-Direct-MBPP-Python3-0-1-0number of success = 270/397, acc = 68.01 total_tokens = 142826

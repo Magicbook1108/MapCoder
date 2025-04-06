@@ -63,28 +63,22 @@ Your response must follow the following xml format-
     def planning_agent_prompt(self, example_problem, example_planning, sample_io_prompt):
         return [
         {
-                "role": "user",
-                "content": f"""Given a competitive programming problem generate a concrete planning to solve the problem.
-
-
+        "role": "user",
+        "content": f"""
+Given a competitive programming problem generate a concrete planning to solve the problem.
 # Problem:
 {example_problem}
-
 # Planning:
 {example_planning}
 {self.algorithm_prompt}
-
 ## Problem to be solved:
 {self.task}
 {sample_io_prompt}
-
-Important:
-Do NOT use `<`, `>`, `&` symbols directly in your planning description.
-Do NOT leave an unclosed <description> or a missing opening tag.
-You should give only the planning to solve the problem. Do not add extra explanation or words.
 ## Planning:
 
-""",
+----------------
+Important: You should give only the planning to solve the problem. Do not add extra explanation or words.
+"""
             },
         ]
     
@@ -97,7 +91,7 @@ You should give only the planning to solve the problem. Do not add extra explana
 # Problem:
 {self.task}
 # Planning:
-{planning}\
+{planning}
     
 ----------------
 Important: Your response must follow the following xml format-```
@@ -224,6 +218,7 @@ You must not change the planning, only provide a score between 1 - 100.
     def planning_without_knowledge_retrieval_prompt(self, k, sample_io_prompt):
         return [
         {
+            
             "role": "user",
             "content": f"""
 Generate exactly {k} distinct plans to solve this competitive programming problem. Follow the format strictly.
@@ -233,23 +228,21 @@ Generate exactly {k} distinct plans to solve this competitive programming proble
 {sample_io_prompt}
 
 Important:
-Do NOT use `<`, `>`, `&` symbols directly in your planning description.
-Your response must follow the following xml format -
-For each plan, you must have a pair of 
+Do NOT use `<`, `>`, and `&` symbols directly in your planning description.
+All tags must be properly closed.
+
+Your response must be valid XML with a single <root> tag containing exactly {k} <problem> blocks.
+Each <problem> block must contain exactly one <description> block.
+
+Example of the structure:
 <root>
-<problem>
-
-# Recall {k} plans to solve the problem
-
-<description>
-# Describe the plan here
-</description>
-
-</problem>
-
-# similarly add more plans here...
+    <problem>
+        <description>
+            # Describe the plan here
+        </description>
+    </problem>
+    <!-- similarly add more plans up to {k} ... -->
 </root>
-
 """
         }
     ]
@@ -266,15 +259,12 @@ Generate exactly {k} distinct plans to solve this competitive programming proble
 ## Problem to be solved:
 {self.task}
 {self.sample_io_prompt}
-
-Important:
-Do NOT use `<`, `>`, `&` symbols directly in your planning description.
-Do NOT leave an unclosed <description> or a missing opening tag.
-You should give only the planning to solve the problem. Do not add extra explanation or words.
-
 ## Planning:
 Each plan must have a plan id
 
+----------------
+Important: You should give only the planning to solve the problem.
+Do not add extra explanation or words.
 """,
             },
         ]
@@ -304,12 +294,14 @@ Each plan must have a plan id
     <description>
     Copy the original planning here.
     </description>
+    <explanation> 
+    Discuss whether the given competitive programming problem is solvable by using the above mentioned planning.</explanation>
     <confidence>
-    Confidence score (0-100) indicating how well the plan can solve the problem.
+    Confidence score regarding the solvability of the problem. Must be an integer between 0 and 100.
     </confidence>
     </plan>
         
-        <!-- Add more plans here if needed -->
+    # similarly add more plans here...
     </root>
     """}]
     

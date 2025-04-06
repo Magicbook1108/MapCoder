@@ -1,0 +1,16 @@
+GPT4-MapCoder_dfs-MBPP-Python3-0-1-1 
+number of success = 88/100, acc = 88.0
+total_tokens = 293841
+
+GPT4-MapCoder-MBPP-Python3-0-1-1 
+number of success = 87/100, acc = 87.0
+total_tokens = 921615
+
+GPT4-Direct-MBPP-Python3-0-1-1 
+number of success = 77/100, acc = 77.0
+total_tokens = 45514
+
+GPT4-CoT-MBPP-Python3-0-1-1 
+number of success = 77/100, acc = 77.0
+total_tokens = 18853
+

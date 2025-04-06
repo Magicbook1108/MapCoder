@@ -41,7 +41,7 @@ mapping = {
 class MapCoder(BaseStrategy):
     def __init__(
         self,
-        k: int = 3,
+        k: int = 4,
         t: int = 5,
         usage: dict = {},
         *args,
@@ -209,6 +209,7 @@ class MapCoder(BaseStrategy):
         response = self.replace_tag(response, 'planning')
 
         agents.get_output(kb_name, response)
+
         response = self.parse_xml(response)
 
         algorithm_prompt = f"## Relevant Algorithm to solve the next problem:\n{ response['algorithm']}"

@@ -37,13 +37,13 @@ parser.add_argument(
         "SelfPlanning",
         "Analogical",
         "MapCoder",
-        "MapCoder_1",
-        "MapCoder_withoutKB_1",
-        "MapCoder_withoutKB_2",
-        "MapCoder_withoutKB_3",
-        "MapCoder_without_kb_debug",
-        "MapCoder_single_merge",
-        "MapCoder_dfs"
+        "MapCoder_dfs",
+        "MapCoder_debug",
+        "MapCoder_plan",
+        "MapCoder_retrieval",
+        "MapCoder_retrieval_plan",
+        "MapCoder_retrieval_debug",
+        "MapCoder_plan_debug"
     ]
 )
 parser.add_argument(
@@ -94,13 +94,6 @@ parser.add_argument(
     ]
 )
 
-parser.add_argument(
-    "--tasks",
-    type=int,
-    default= -1,
-    chocies = [1,          
-    ]
-)
 
 
 
@@ -125,7 +118,7 @@ strategy = PromptingFactory.get_prompting_class(STRATEGY)(
     language=LANGUAGE,
     pass_at_k=PASS_AT_K,
     results=Results(RESULTS_PATH),
-    name = RUN_NAME
+    name = RUN_NAME,
 )
 
 strategy.run()

@@ -3,7 +3,7 @@ import tiktoken
 import os
 import copy
 import time
-
+import random
 from models.Base import BaseModel
 from datasets.Dataset import Dataset
 from results.Results import Results
@@ -17,7 +17,6 @@ class BaseStrategy(object):
         data: Dataset,
         language: str,
         pass_at_k: int,
-        task_amount: int,
         results: Results,
         name: str,
         verbose: bool = True,
@@ -29,8 +28,7 @@ class BaseStrategy(object):
         self.language = language
         self.verbose = verbose
         self.total_tokens = 0
-        self.task_amount = task_amount
-        self.path = "./outputs/result"
+        self.path = f"./experiment_result/CodeContests_result.txt"
         self.name = name
 
     def gpt_chat(self, processed_input: List[dict]) -> (str, int, int):
@@ -39,11 +37,21 @@ class BaseStrategy(object):
     def run_single_pass(self, item: dict):
         pass
 
-    def run(self):
-        num_items = len(self.data) if self.task_amount == -1 else self.task_amount
+    def run(self, dataset):
+        random.seed(42)
+        if dataset == "MBPP":
+            self.path = f"./experiment_result/MBPP_result.txt" 
+        elif dataset == "APPS":
+            self.path = f"./experiment_result/APPS_result.txt" 
+        elif dataset == "HumanEval":
+            self.path = f"./experiment_result/HumanEval_result.txt"
+        sub_data = random.sample(list(self.data), 100)
+
+        num_items = len(sub_data)
         num_success = 0
         self.total_tokens = 0
-        for i, item in enumerate(self.data[:num_items]):
+
+        for i, item in enumerate(sub_data):
             print("", flush=True, end="")
 
             if i < len(self.results):
@@ -105,6 +113,6 @@ class BaseStrategy(object):
                     f'completed {i+1}/{num_items}, Solved: {self.results[i]["is_solved"]}, number of success = {num_success}/{i+1}, acc = {round(num_success/(i+1)*100, 2)}')
             temp = f"number of success = {num_success}/{i+1}, acc = {round(num_success/(i+1)*100, 2)}"
             
-        with open(self.data.get_path(self.path), 'a') as f:
-            f.write(f"{self.name}{temp} total_tokens = {self.total_tokens}\n")
+        with open(self.path, 'a') as f:
+            f.write(f"{self.name} \n{temp}\ntotal_tokens = {self.total_tokens}\n\n")
         return True

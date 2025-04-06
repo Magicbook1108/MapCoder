@@ -67,3 +67,7 @@ ChatGPT-MapCoder_dfs10-HumanEval-Python3-0-1-3number of success = 148/164, acc =
 ChatGPT-MapCoder_dfs15-HumanEval-Python3-0-1-1number of success = 151/164, acc = 92.07 total_tokens = 898911
 ChatGPT-MapCoder_dfs15-HumanEval-Python3-0-1-2number of success = 149/164, acc = 90.85 total_tokens = 914602
 ChatGPT-MapCoder_dfs15-HumanEval-Python3-0-1-3number of success = 151/164, acc = 92.07 total_tokens = 877513
+ChatGPT-MapCoder_debug-HumanEval-Python3-0-1-0number of success = 140/164, acc = 85.37 total_tokens = 190740
+
+
+GPT4-MapCoder_plan-10-HumanEval-Python3-0-1-1number of success = 143/164, acc = 87.2 total_tokens = 418925

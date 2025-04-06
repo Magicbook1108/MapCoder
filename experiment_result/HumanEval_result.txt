@@ -1,0 +1,120 @@
+GPT4-MapCoder-HumanEval-Python3-0-1-1 
+number of success = 94/100, acc = 94.0
+total_tokens = 1162822
+
+GPT4-MapCoder-HumanEval-Python3-0-1-2 
+number of success = 94/100, acc = 94.0
+total_tokens = 1152952
+
+GPT4-MapCoder-HumanEval-Python3-0-1-3 
+number of success = 93/100, acc = 93.0
+total_tokens = 1138247
+
+GPT4-MapCoder_plan-HumanEval-Python3-0-1-1 
+number of success = 90/100, acc = 90.0
+total_tokens = 250003
+
+GPT4-MapCoder_plan-HumanEval-Python3-0-1-2 
+number of success = 89/100, acc = 89.0
+total_tokens = 250285
+
+GPT4-MapCoder_plan-HumanEval-Python3-0-1-3 
+number of success = 91/100, acc = 91.0
+total_tokens = 249436
+
+GPT4-MapCoder_debug-HumanEval-Python3-0-1-1 
+number of success = 88/100, acc = 88.0
+total_tokens = 113889
+
+GPT4-MapCoder_debug-HumanEval-Python3-0-1-2 
+number of success = 86/100, acc = 86.0
+total_tokens = 115150
+
+GPT4-MapCoder_debug-HumanEval-Python3-0-1-3 
+number of success = 86/100, acc = 86.0
+total_tokens = 108164
+
+GPT4-MapCoder_retrieval-HumanEval-Python3-0-1-1 
+number of success = 84/100, acc = 84.0
+total_tokens = 260211
+
+GPT4-MapCoder_retrieval-HumanEval-Python3-0-1-2 
+number of success = 87/100, acc = 87.0
+total_tokens = 258814
+
+GPT4-MapCoder_retrieval-HumanEval-Python3-0-1-3 
+number of success = 87/100, acc = 87.0
+total_tokens = 261456
+
+GPT4-MapCoder_dfs-HumanEval-Python3-0-1-1 
+number of success = 94/100, acc = 94.0
+total_tokens = 509804
+
+GPT4-MapCoder_dfs-HumanEval-Python3-0-1-2 
+number of success = 94/100, acc = 94.0
+total_tokens = 486022
+
+GPT4-MapCoder_dfs-HumanEval-Python3-0-1-3 
+number of success = 90/100, acc = 90.0
+total_tokens = 512848
+
+GPT4-MapCoder_retrieval_plan-HumanEval-Python3-0-1-1 
+number of success = 90/100, acc = 90.0
+total_tokens = 779532
+
+GPT4-MapCoder_retrieval_plan-HumanEval-Python3-0-1-2 
+number of success = 92/100, acc = 92.0
+total_tokens = 785154
+
+GPT4-MapCoder_retrieval_plan-HumanEval-Python3-0-1-3 
+number of success = 92/100, acc = 92.0
+total_tokens = 781942
+
+GPT4-MapCoder_retrieval_debug-HumanEval-Python3-0-1-1 
+number of success = 89/100, acc = 89.0
+total_tokens = 570096
+
+GPT4-MapCoder_retrieval_debug-HumanEval-Python3-0-1-2 
+number of success = 82/100, acc = 82.0
+total_tokens = 576430
+
+GPT4-MapCoder_retrieval_debug-HumanEval-Python3-0-1-3 
+number of success = 89/100, acc = 89.0
+total_tokens = 579222
+
+GPT4-MapCoder_plan_debug-HumanEval-Python3-0-1-1 
+number of success = 91/100, acc = 91.0
+total_tokens = 448111
+
+GPT4-MapCoder_plan_debug-HumanEval-Python3-0-1-2 
+number of success = 91/100, acc = 91.0
+total_tokens = 447170
+
+GPT4-MapCoder_plan_debug-HumanEval-Python3-0-1-3 
+number of success = 93/100, acc = 93.0
+total_tokens = 438244
+
+GPT4-Direct-HumanEval-Python3-0-1-1 
+number of success = 90/100, acc = 90.0
+total_tokens = 56002
+
+GPT4-Direct-HumanEval-Python3-0-1-2 
+number of success = 90/100, acc = 90.0
+total_tokens = 55516
+
+GPT4-Direct-HumanEval-Python3-0-1-3 
+number of success = 90/100, acc = 90.0
+total_tokens = 55321
+
+GPT4-Direct-HumanEval-Python3-0-1-1 
+number of success = 90/100, acc = 90.0
+total_tokens = 56002
+
+GPT4-Direct-HumanEval-Python3-0-1-2 
+number of success = 90/100, acc = 90.0
+total_tokens = 55516
+
+GPT4-Direct-HumanEval-Python3-0-1-3 
+number of success = 90/100, acc = 90.0
+total_tokens = 55321
+

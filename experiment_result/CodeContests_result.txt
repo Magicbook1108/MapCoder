@@ -1,0 +1,96 @@
+GPT4-MapCoder-CC-Python3-0-1-1 
+number of success = 19/100, acc = 19.0
+total_tokens = 5986580
+
+GPT4-MapCoder_dfs-CC-Python3-0-1-1 
+number of success = 22/100, acc = 22.0
+total_tokens = 4028694
+
+GPT4-MapCoder_plan-CC-Python3-0-1-1 
+number of success = 14/100, acc = 14.0
+total_tokens = 769333
+
+GPT4-MapCoder_retrieval-CC-Python3-0-1-1 
+number of success = 16/100, acc = 16.0
+total_tokens = 720114
+
+GPT4-MapCoder_debug-CC-Python3-0-1-1 
+number of success = 17/100, acc = 17.0
+total_tokens = 1015106
+
+GPT4-MapCoder_retrieval_plan-CC-Python3-0-1-1 
+number of success = 16/100, acc = 16.0
+total_tokens = 1886516
+
+GPT4-MapCoder_retrieval_debug-CC-Python3-0-1-1 
+number of success = 21/100, acc = 21.0
+total_tokens = 4563236
+
+GPT4-MapCoder_plan_debug-CC-Python3-0-1-1 
+number of success = 22/100, acc = 22.0
+total_tokens = 3474940
+
+GPT4-Direct-HumanEval-Python3-0-1-1 
+number of success = 90/100, acc = 90.0
+total_tokens = 56002
+
+GPT4-CoT-HumanEval-Python3-0-1-1 
+number of success = 91/100, acc = 91.0
+total_tokens = 196698
+
+GPT4-Direct-CC-Python3-0-1-1 
+number of success = 11/100, acc = 11.0
+total_tokens = 143621
+
+GPT4-CoT-CC-Python3-0-1-1 
+number of success = 7/100, acc = 7.0
+total_tokens = 309868
+
+GPT4-MapCoder_plan-CC-Python3-0-1-1 
+number of success = 14/100, acc = 14.0
+total_tokens = 769333
+
+GPT4-MapCoder_plan-CC-Python3-0-1-2 
+number of success = 18/100, acc = 18.0
+total_tokens = 775599
+
+GPT4-MapCoder_plan-CC-Python3-0-1-1 
+number of success = 14/100, acc = 14.0
+total_tokens = 769333
+
+GPT4-MapCoder_plan-CC-Python3-0-1-2 
+number of success = 18/100, acc = 18.0
+total_tokens = 775599
+
+GPT4-MapCoder_plan-CC-Python3-0-1-3 
+number of success = 16/100, acc = 16.0
+total_tokens = 787650
+
+GPT4-MapCoder_debug-CC-Python3-0-1-1 
+number of success = 17/100, acc = 17.0
+total_tokens = 1015106
+
+GPT4-MapCoder_debug-CC-Python3-0-1-2 
+number of success = 13/100, acc = 13.0
+total_tokens = 1036938
+
+GPT4-MapCoder_debug-CC-Python3-0-1-3 
+number of success = 17/100, acc = 17.0
+total_tokens = 1006174
+
+GPT4-MapCoder_retrieval-CC-Python3-0-1-1 
+number of success = 16/100, acc = 16.0
+total_tokens = 720114
+
+GPT4-MapCoder_retrieval-CC-Python3-0-1-2 
+number of success = 15/100, acc = 15.0
+total_tokens = 726973
+
+GPT4-MapCoder_retrieval-CC-Python3-0-1-3 
+number of success = 16/100, acc = 16.0
+total_tokens = 722432
+
+GPT4-MapCoder_retrieval_debug-CC-Python3-0-1-1 
+number of success = 21/100, acc = 21.0
+total_tokens = 4563236
+

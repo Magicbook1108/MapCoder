@@ -1,7 +1,7 @@
 # v1: max_iter = 5
 # v2: max_iter = 10
 # v3: max_iter = 15
-# Cur version: v1
+# Cur version: v2
 
 from typing import List
 import tiktoken
@@ -186,6 +186,12 @@ class MapCoder(BaseStrategy):
         sample_io_prompt = f"## Sample Test cases: \n{self.get_sample_io_str(item['sample_io'])}\n"
         agent.set_sample_io_prompt(sample_io_prompt)
         
+        if type(self.data) == APPSDataset or type(self.data) == CodeContestDataset or type(self.data) == XCodeDataset:
+            std_input_prompt = "## Note: Strictly follow the input and output format. The input should be taken from Standard input and output should be given to standard output. If you are writing a function then after the function definition take input using `input()` function then call the function with specified parameters and finally print the output of the function. Do not add extra print statement otherwise it will failed the test cases."
+        else:
+            std_input_prompt = ""
+        agent.set_std_input_prompt(std_input_prompt)
+        
         # Planning agent
         planning_prompt = agent.planning_dfs(self.k)
         agent.get_input("planning agent", planning_prompt)
@@ -272,11 +278,10 @@ class MapCoder(BaseStrategy):
                     code,
                     self.language
                 )
-                
+
                 if passed:
-                    print(" -------- Returning -------")
-                    print(code,"\n\n\n")
                     return code, pr_tok, com_tok
+                
                 
                 # debugging
                 reflection_prompt = agent.reflection_agent(self.k, sample_io_prompt, test_log, code)
@@ -290,7 +295,7 @@ class MapCoder(BaseStrategy):
                 pr_tok += pr_tok_1
                 com_tok += com_tok_1
                 
-                agent.get_output("reflection_agent", plans)
+                agent.get_output("reflection_agent", plannings)
                 
                 # verification
                 planning_verification_prompt = agent.planning_verificaion_dfs(plannings)
@@ -312,7 +317,6 @@ class MapCoder(BaseStrategy):
                 agent.get_output("planning verification agent", plans)
                 
                 for plan in verification_res['plan']:
-                    print(plan)
                     description = plan['description']
                     score = int(str(plan['confidence']).strip())
                     
@@ -323,13 +327,7 @@ class MapCoder(BaseStrategy):
                 if child.children:
                     child.sort_children()
                     stack.append(child)
-                
-                if code is None:
-                    print("ERROR: gpt_chat() returned None")
-        print(" --------Ends Returning -------")
-        print(stack)
-        print(self.iter)
-        print(code,"\n\n\n")            
+                       
         return code, pr_tok, com_tok
             
             

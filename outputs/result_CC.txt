@@ -4,6 +4,9 @@ ChatGPT-Direct-CC-Python3-0-1-1number of success = 20/165, acc = 12.12 total_tok
 # MapCoder
 ChatGPT-MapCoder-CC-Python3-0-1-1number of success = 34/165, acc = 20.61 total_tokens = 7170454
 
+# MapCoder without kb
+ChatGPT-MapCoder_without_kb_debug-CC-Python3-0-1-1number of success = 29/165, acc = 17.58 total_tokens = 1260653
+
 # MapCoder without kb and without debug
 ChatGPT-MapCoder_without_kb_debug-CC-Python3-0-1-1number of success = 29/165, acc = 17.58 total_tokens = 1260653
 

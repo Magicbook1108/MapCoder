@@ -3,16 +3,15 @@ from promptings.Direct import DirectStrategy
 from promptings.Analogical import AnalogicalStrategy
 from promptings.SelfPlanning import SelfPlanningStrategy
 from promptings.Mapcoder_v1 import MapCoder
-from promptings.MapCoder_merge_planning_1 import MapCoder as MapCoder_merge_1
-from promptings.MapCoder_withoutKB_1 import MapCoder as MapCoder_withoutKB_1
-from promptings.MapCoder_withoutKB_2 import MapCoder as MapCoder_withoutKB_2
-from promptings.MapCoder_withoutKB_3 import MapCoder as MapCoder_withoutKB_3
-from promptings.MapCoder_without_kb_debug import MapCoder as MapCoder_without_kb_debug
 from promptings.MapCoder_dfs import MapCoder as MapCoder_dfs
-from promptings.MapCoder_without_kb_plan import MapCoder as MapCoder_without_kb_plan
-from promptings.MapCoder_dfs15 import MapCoder as MapCoder_dfs15
 
+from promptings.MapCoder_debug import MapCoder as MapCoder_debug
+from promptings.MapCoder_plan import MapCoder as MapCoder_plan
+from promptings.MapCoder_retrieval import MapCoder as MapCoder_retrieval
 
+from promptings.MapCoder_plan_debug import MapCoder as MapCoder_plan_debug
+from promptings.MapCoder_retrieval_debug import MapCoder as MapCoder_retireval_debug
+from promptings.MapCoder_retrieval_plan import MapCoder as MapCoder_retrieval_plan
 
 class PromptingFactory:
     @staticmethod
@@ -27,25 +26,21 @@ class PromptingFactory:
             return AnalogicalStrategy
         elif prompting_name == "SelfPlanning":
             return SelfPlanningStrategy
-        elif prompting_name =="MapCoder_single_merge":
-            return MapCoder_merge_1
-        elif prompting_name =="MapCoder_withoutKB_1":
-            return MapCoder_withoutKB_1
-        elif prompting_name =="MapCoder_withoutKB_2":
-            return MapCoder_withoutKB_2
-        elif prompting_name =="MapCoder_without_kb_debug":
-            return MapCoder_without_kb_debug
-        elif prompting_name =="MapCoder_withoutKB_3":
-            return MapCoder_withoutKB_3
-        elif prompting_name =="MapCoder_withoutKB_4":
-            return MapCoder_withoutKB_3
+        elif prompting_name =="MapCoder_plan":
+            return MapCoder_plan
         elif prompting_name =="MapCoder_dfs":
             return MapCoder_dfs
-        elif prompting_name == "MapCoder_without_kb_plan":
-            return MapCoder_without_kb_plan
-        elif prompting_name == "MapCoder_withoutKB_5":
-            return MapCoder_withoutKB_3
-        elif prompting_name =="MapCoder_dfs15":
-            return MapCoder_dfs15
+        elif prompting_name =="MapCoder_debug":
+            return MapCoder_debug
+        elif prompting_name =="MapCoder_plan":
+            return MapCoder_plan
+        elif prompting_name =="MapCoder_retrieval":
+            return MapCoder_retrieval
+        elif prompting_name =="MapCoder_retrieval_plan":
+            return MapCoder_retrieval_plan
+        elif prompting_name =="MapCoder_retrieval_debug":
+            return MapCoder_retireval_debug
+        elif prompting_name =="MapCoder_plan_debug":
+            return MapCoder_plan_debug
         else:
             raise Exception(f"Unknown prompting name {prompting_name}")

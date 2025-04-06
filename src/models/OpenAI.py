@@ -198,7 +198,7 @@ class OpenAIModel(OpenAIBaseModel):
 
 class GPT4(OpenAIModel):
     def prompt(self, processed_input: list[dict]):
-        self.model_params["model"] = "gpt-4-1106-preview"
+        self.model_params["model"] = "gpt-4o-mini"
         return super().prompt(processed_input)
 
 
